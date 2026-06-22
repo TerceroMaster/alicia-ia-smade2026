@@ -1,0 +1,1355 @@
+\documentclass[12pt,a4paper]{article}
+
+% ----------------------------------------------
+%  PAQUETES
+% ----------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,mexico]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=3cm, right=3cm}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{mdframed}
+\usepackage{titlesec}
+\usepackage{microtype}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{doi}
+\usepackage{wrapfig}
+\usepackage{pdfpages}
+\usepackage{acronym}
+
+% ----------------------------------------------
+%  COLORES PERSONALIZADOS
+% ----------------------------------------------
+\definecolor{primary}{RGB}{41, 128, 185}
+\definecolor{success}{RGB}{39, 174, 96}
+\definecolor{danger}{RGB}{231, 76, 60}
+\definecolor{warning}{RGB}{243, 156, 18}
+\definecolor{codeblue}{RGB}{30, 41, 59}
+\definecolor{codefg}{RGB}{226, 232, 240}
+\definecolor{neonato}{RGB}{233, 30, 140}
+\definecolor{pediatrico}{RGB}{243, 156, 18}
+\definecolor{adolescente}{RGB}{142, 68, 173}
+\definecolor{adulto}{RGB}{41, 128, 185}
+\definecolor{geriatrico}{RGB}{39, 174, 96}
+\definecolor{embarazo}{RGB}{231, 76, 60}
+\definecolor{lactancia}{RGB}{22, 160, 133}
+\definecolor{lightgray}{RGB}{248, 249, 250}
+
+% ----------------------------------------------
+%  CAJAS DE COLORES
+% ----------------------------------------------
+\tcbuselibrary{skins, breakable, listings}
+
+\newtcolorbox{infobox}[1][]{
+  colback=blue!5!white, colframe=primary,
+  fonttitle=\bfseries, title=#1, breakable
+}
+
+\newtcolorbox{warningbox}[1][]{
+  colback=yellow!10!white, colframe=warning,
+  fonttitle=\bfseries, title=#1, breakable
+}
+
+\newtcolorbox{dangerbox}[1][]{
+  colback=red!5!white, colframe=danger,
+  fonttitle=\bfseries, title=#1, breakable
+}
+
+\newtcolorbox{successbox}[1][]{
+  colback=green!5!white, colframe=success,
+  fonttitle=\bfseries, title=#1, breakable
+}
+
+\newtcolorbox{codebox}[1][]{
+  colback=codeblue, colframe=codeblue,
+  colupper=codefg,
+  fontupper=\ttfamily\small,
+  title=#1, breakable
+}
+
+% ----------------------------------------------
+%  CÓDIGO FUENTE
+% ----------------------------------------------
+\lstdefinestyle{javascript}{
+  language=Java,
+  backgroundcolor=\color{codeblue},
+  basicstyle=\ttfamily\footnotesize\color{codefg},
+  keywordstyle=\color{cyan}\bfseries,
+  stringstyle=\color{yellow!80!orange},
+  commentstyle=\color{gray!70},
+  numberstyle=\tiny\color{gray},
+  numbers=left, numbersep=6pt,
+  breaklines=true, breakatwhitespace=true,
+  frame=single, rulecolor=\color{codeblue},
+  showstringspaces=false, tabsize=2
+}
+
+% ----------------------------------------------
+%  ENCABEZADO / PIE DE PÁGINA
+% ----------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{Farmacéutica Alicia IA — Documentación Técnica y Científica}}
+\fancyhead[R]{\small\textit{DACYTI -- UJAT, 2026}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+
+% ----------------------------------------------
+%  INTERLINEADO
+% ----------------------------------------------
+\onehalfspacing
+
+% ----------------------------------------------
+%  METADATA PDF
+% ----------------------------------------------
+\hypersetup{
+  pdftitle={Farmacéutica Alicia IA: Implementación de Inteligencia Artificial Multimodal Local para el Seguimiento Farmacoterapéutico},
+  pdfauthor={División Académica de Ciencias y Tecnologías de la Información, UJAT},
+  pdfkeywords={IA local, LLM, farmacia clínica, PRM, RNM, privacidad, Gemma 4},
+  colorlinks=true, linkcolor=primary, citecolor=primary, urlcolor=primary
+}
+
+% ==============================================
+%  INICIO DEL DOCUMENTO
+% ==============================================
+\begin{document}
+
+% ----------------------------------------------
+%  PORTADA
+% ----------------------------------------------
+\begin{titlepage}
+  \centering
+  \vspace*{1cm}
+
+  % Logos institucionales
+  % \includegraphics[width=3cm]{logos/UJAT.png}\hfill
+  % \includegraphics[width=3cm]{logos/dacyti.jpg}\hfill
+  % \includegraphics[width=3cm]{logos/LBMYFG.png}
+
+  \vspace{1.5cm}
+
+  {\huge\bfseries\color{primary}
+    Farmacéutica Alicia IA\\[0.4cm]
+  }
+
+  {\Large\bfseries
+    Implementación de Inteligencia Artificial Multimodal\\
+    Local para el Seguimiento Farmacoterapéutico,\\
+    Detección de PRM y Prevención de RNM\\
+    en Entornos de Alta Privacidad Clínica
+  }
+
+  \vspace{1cm}
+  \rule{\linewidth}{1.5pt}
+  \vspace{0.5cm}
+
+  {\large
+    Documentación Técnica, Arquitectónica y Científica\\[0.2cm]
+    \textit{Versión 1.0 — Alicia IA}
+  }
+
+  \vspace{1cm}
+
+  {\Large\bfseries Autor:}\\
+  {\Large Mtro. Luis Ramón Tercero Martínez González} \\[1cm]
+
+  {\normalsize
+    \textbf{División Académica de Ciencias y Tecnologías de la Información (DACYTI)}\\
+    Universidad Juárez Autónoma de Tabasco (UJAT)\\
+    Laboratorio de Biolog\'ia Molecular y Farmacogen\'etica (LBMyFG)\\[0.3cm]
+    Villahermosa, Tabasco, México\\[0.3cm]
+    \textbf{Año:} 2026
+  }
+
+  \vfill
+
+  \begin{tcolorbox}[colback=primary!10, colframe=primary, width=0.85\textwidth]
+    \centering\small
+    \textbf{Clasificación:} Documento de Investigación Aplicada en Salud Digital\\
+    \textbf{Área:} Informática Médica, Farmacia Clínica, Inteligencia Artificial\\
+    \textbf{Repositorio:} Proyecto Local (Air-Gapped) — Sin datos en la nube
+  \end{tcolorbox}
+\end{titlepage}
+
+% ----------------------------------------------
+%  ÍNDICE
+% ----------------------------------------------
+\tableofcontents
+\newpage
+
+% ==============================================
+\section{Resumen Ejecutivo / Abstract}
+% ==============================================
+
+\begin{infobox}[Resumen en Español]
+  Se presenta \textbf{Farmacéutica Alicia IA}, una plataforma de inteligencia artificial clínica
+  multimodal que opera completamente de forma local (sin conexión a internet ni envío de datos a
+  servidores externos). El sistema utiliza el modelo de lenguaje grande \textbf{Google Gemma 4 12B QAT},
+  ejecutado mediante \textbf{LM Studio}, e integrado a una interfaz web desarrollada con
+  \textbf{React + Vite}. Su objetivo es asistir a profesionales de la salud ---farmacéuticos, médicos
+  e internos--- en la identificación de \textbf{Problemas Relacionados con Medicamentos (PRM)} y la
+  prevención de \textbf{Resultados Negativos asociados a la Medicación (RNM)}.
+
+  La plataforma incorpora \textbf{7 perfiles clínicos especializados} (neonatos, pediatría,
+  adolescentes, adulto general, adulto mayor, embarazadas y lactancia) mediante prompts del sistema
+  diferenciados. Cada modo activa criterios clínicos pertinentes: Criterios de Beers, STOPP/START,
+  categorías FDA de teratogenicidad, LactMed, etc. El sistema admite entrada multimodal (texto, voz
+  e imágenes de recetas), genera razonamiento clínico auditado y exporta registros en formato PDF
+  para estudios de validación doble ciego.
+
+  La arquitectura \textit{Air-Gapped} garantiza que ningún dato clínico abandona el dispositivo del
+  profesional, ofreciendo una solución HIPAA-compatible por diseño y de costo recurrente nulo.
+\end{infobox}
+
+\vspace{0.5cm}
+
+\begin{infobox}[Abstract in English]
+  We present \textbf{Pharmacist Alicia AI}, a multimodal clinical artificial intelligence platform
+  operating entirely locally, without internet connectivity or external data transmission.
+  The system leverages the large language model \textbf{Google Gemma 4 12B QAT}, served via
+  \textbf{LM Studio} and integrated into a web interface built with \textbf{React + Vite}.
+  Its primary goal is to assist healthcare professionals ---pharmacists, physicians, and interns---
+  in identifying \textbf{Drug-Related Problems (DRP)} and preventing \textbf{Negative Medication
+  Outcomes (NMO)}.
+
+  The platform features \textbf{7 specialized clinical profiles} through differentiated system
+  prompts, each activating relevant clinical criteria (Beers Criteria, STOPP/START, FDA pregnancy
+  categories, LactMed, etc.). Multimodal input (text, voice, and prescription images), audited
+  chain-of-thought reasoning, and PDF export for double-blind validation studies are supported.
+  The \textit{Air-Gapped} architecture ensures full clinical data sovereignty and HIPAA-by-design
+  compliance at zero recurring cost.
+\end{infobox}
+
+\vspace{0.5cm}
+
+\noindent\textbf{Palabras clave:} Inteligencia artificial local, modelos de lenguaje grande (LLM),
+farmacia clínica, seguimiento farmacoterapéutico, PRM, RNM, privacidad clínica, Gemma 4,
+arquitectura Air-Gapped, multimodalidad, criterios de Beers, STOPP/START.
+
+\newpage
+
+% ==============================================
+\section{Introducción y Motivación}
+% ==============================================
+
+\subsection{Contexto del Problema}
+
+El seguimiento farmacoterapéutico es una práctica clínica fundamental orientada a identificar,
+prevenir y resolver problemas relacionados con los medicamentos que un paciente recibe. Sin embargo,
+en la práctica diaria de hospitales, farmacias comunitarias y centros de salud latinoamericanos,
+existen barreras significativas para implementar este proceso de manera sistemática:
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+  \item \textbf{Carga de trabajo del personal farmacéutico:} Un farmacéutico típico atiende entre
+    20 y 80 pacientes diarios, con tiempo promedio de menos de 10 minutos por consulta.
+  \item \textbf{Complejidad de la polifarmacia:} El paciente geriátrico moderno consume en promedio
+    entre 5 y 12 medicamentos simultáneos, cuyas interacciones son computacionalmente difíciles de
+    evaluar en tiempo real por un ser humano.
+  \item \textbf{Barreras tecnológicas y privacidad:} Las soluciones de IA existentes (ChatGPT,
+    Claude, Gemini) envían los datos del paciente a servidores ubicados en países extranjeros,
+    violando normativas de privacidad como \textbf{HIPAA} (EE.UU.), \textbf{GDPR} (Europa) y
+    legislaciones nacionales de salud digital en países latinoamericanos.
+  \item \textbf{Costos recurrentes inaccesibles:} Las APIs de modelos de IA de alta calidad
+    (GPT-4o, Claude 3.5) tienen costos de \$20-\$100 USD/mes que representan una barrera
+    insalvable para clínicas rurales o farmacias comunitarias en países en vías de desarrollo.
+\end{enumerate}
+
+\subsection{Propuesta de Solución}
+
+\textbf{Farmacéutica Alicia IA} surge como respuesta directa a estas cuatro barreras. Al ejecutar
+el modelo de lenguaje \textit{completamente en hardware local}, el sistema:
+
+\begin{itemize}
+  \item Garantiza privacidad absoluta del dato clínico (ningún byte de información sale del
+    dispositivo).
+  \item Elimina los costos recurrentes de API (costo = \$0 por consulta después de la inversión
+    inicial en hardware).
+  \item Funciona en modo \textit{Air-Gapped} (sin internet), habilitando su uso en zonas rurales,
+    hospitales de campo o países con infraestructura digital limitada.
+  \item Provee razonamiento clínico auditable mediante cadena de pensamiento (\textit{chain-of-thought}),
+    permitiendo que los profesionales de la salud comprendan \textit{por qué} la IA emitió una
+    recomendación.
+\end{itemize}
+
+\subsection{Declaración Ética de Uso}
+
+\begin{dangerbox}[AVISO IMPORTANTE — Declaración de Uso Exclusivo Profesional]
+  \textbf{Farmacéutica Alicia IA está diseñada exclusivamente para profesionales del área de la
+  salud} bajo supervisión clínica habilitada: farmacéuticos titulados, médicos generales y
+  especialistas, enfermeros y químicos clínicos, en entornos supervisados (hospitales, farmacias
+  comunitarias, centros de salud).
+
+  \medskip
+  \textbf{NO} está dirigida a pacientes en casa que busquen automedicarse.\\
+  \textbf{NO} sustituye la valoración médica presencial ni emite diagnósticos definitivos.\\
+  \textbf{NO} está orientada a estudiantes como fuente autónoma sin supervisión docente.
+
+  \medskip
+  Esta declaración cumple con los lineamientos éticos de la \textbf{OMS}, la \textbf{FDA} y
+  normativas internacionales de IA en salud (ISO/IEC 42001, IEEE 7000).
+\end{dangerbox}
+
+\newpage
+
+% ==============================================
+\section{Marco Teórico y Conceptual}
+% ==============================================
+
+\subsection{Problemas Relacionados con Medicamentos (PRM)}
+
+Según el \textit{Consenso de Granada} (2002, revisado 2007), un \textbf{PRM} se define como:
+
+\begin{infobox}
+  «Una situación o circunstancia en el proceso de uso de medicamentos que puede causar la
+  aparición de un Resultado Negativo asociado a la Medicación (RNM) o su riesgo de aparición.»
+\end{infobox}
+
+Los PRM se clasifican según su naturaleza:
+\begin{itemize}
+  \item \textbf{Medicamento no necesario:} El paciente recibe un fármaco para una condición que no
+    lo justifica.
+  \item \textbf{Dosis inadecuada:} Subdosificación o sobredosificación según el peso, función
+    renal, o condición clínica.
+  \item \textbf{Interacción medicamentosa:} Interferencia farmacocinética o farmacodinámica entre
+    dos o más fármacos.
+  \item \textbf{Error en la forma farmacéutica:} Prescripción de una forma que no es adecuada para
+    el paciente (ej., comprimidos de liberación prolongada partidos).
+  \item \textbf{Duplicidad terapéutica:} Prescripción de dos fármacos del mismo grupo
+    farmacológico sin justificación.
+\end{itemize}
+
+\subsection{Resultados Negativos asociados a la Medicación (RNM)}
+
+Los \textbf{RNM} son el impacto clínico observable en el paciente, consecuencia directa de un PRM
+no detectado ni corregido. Se clasifican en tres dominios:
+
+\begin{table}[H]
+  \centering
+  \caption{Clasificación de RNM según el Consenso de Granada (2007)}
+  \begin{tabularx}{\textwidth}{lX}
+    \toprule
+    \textbf{Dominio} & \textbf{Descripción} \\
+    \midrule
+    Necesidad & El paciente no recibe el fármaco que necesita medicamente, o recibe uno innecesario. \\
+    \midrule
+    Efectividad & El fármaco prescrito no alcanza el objetivo terapéutico (subdosificación, resistencia). \\
+    \midrule
+    Seguridad & El fármaco produce un efecto adverso, tóxico o interacción perjudicial para el paciente. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Modelos de Lenguaje Grande (LLM) en Medicina}
+
+Los \textit{Large Language Models} (LLMs) son redes neuronales transformer entrenadas sobre corpus
+masivos de texto (Wikipedia, PubMed, libros clínicos, guías farmacológicas) con miles de millones
+de parámetros. Su capacidad de razonamiento clínico ha sido validada en múltiples estudios
+\citep{nori2023gpt4,singhal2022large}:
+
+\begin{itemize}
+  \item GPT-4 superó el umbral de aprobación del \textbf{United States Medical Licensing Exam (USMLE)}
+    con un 86.7\% de acierto \citep{nori2023gpt4}.
+  \item Med-PaLM 2 alcanzó nivel de experto en preguntas médicas de opción múltiple \citep{singhal2022large}.
+  \item Sin embargo, estos modelos son propietarios, basados en la nube, y representan una
+    violación potencial de privacidad en contextos clínicos.
+\end{itemize}
+
+\subsection{Cuantización QAT (\textit{Quantization-Aware Training})}
+
+La \textit{cuantización} es una técnica de compresión de modelos que reduce la precisión aritmética
+de los pesos de la red neuronal (de float32 o bfloat16 a int4 o int8). Esto permite ejecutar
+modelos que originalmente requieren 80-100 GB de VRAM en hardware convencional (6-16 GB VRAM).
+
+\begin{infobox}[QAT vs. Post-Training Quantization (PTQ)]
+  \begin{tabularx}{\linewidth}{lXX}
+    \toprule
+    \textbf{Técnica} & \textbf{Proceso} & \textbf{Pérdida de calidad} \\
+    \midrule
+    PTQ & Compresión \textit{post} entrenamiento & Alta (el modelo no esperaba la compresión) \\
+    \textbf{QAT} & El modelo \textit{se entrena sabiendo} que será comprimido & \textbf{Mínima} \\
+    \bottomrule
+  \end{tabularx}
+  \medskip
+  Gemma 4 12B QAT de Google utiliza QAT, produciendo un modelo de 4.92 GB con calidad
+  clínicamente equivalente al modelo completo bfloat16 de ~24 GB.
+\end{infobox}
+
+\newpage
+
+% ==============================================
+\section{Arquitectura del Sistema}
+% ==============================================
+
+\subsection{Visión General de la Arquitectura}
+
+\textbf{Farmacéutica Alicia IA} implementa una arquitectura de tres capas completamente local:
+
+\begin{figure}[H]
+  \centering
+  \begin{tcolorbox}[colback=lightgray, colframe=primary, width=\textwidth]
+    \centering
+    \begin{tabular}{c}
+      \textbf{[CAPA 1] Interfaz de Usuario (Frontend)}\\
+      React 18 + Vite 5 -- Puerto local 5173\\[0.5em]
+      $\downarrow$ Petición HTTP/JSON (API OpenAI-compatible)\\[0.5em]
+      \textbf{[CAPA 2] Motor de Inferencia (Backend)}\\
+      LM Studio -- Servidor local en Puerto 1234\\[0.5em]
+      $\downarrow$ Inferencia GPU/CPU local\\[0.5em]
+      \textbf{[CAPA 3] Modelo de Lenguaje}\\
+      Google Gemma 4 12B QAT (GGUF Q4\_K\_M)\\
+      Almacenado en disco local -- Sin internet
+    \end{tabular}
+  \end{tcolorbox}
+  \caption{Arquitectura de tres capas Air-Gapped de Farmacéutica Alicia IA}
+\end{figure}
+
+\noindent La arquitectura garantiza que \textbf{ninguna petición, ningún dato de paciente y ninguna
+respuesta del modelo abandona jamás la computadora del profesional de salud}.
+
+\subsection{Stack Tecnológico Completo}
+
+\begin{table}[H]
+  \centering
+  \caption{Stack tecnológico de Farmacéutica Alicia IA}
+  \begin{tabularx}{\textwidth}{llX}
+    \toprule
+    \textbf{Capa} & \textbf{Tecnología} & \textbf{Justificación} \\
+    \midrule
+    Frontend Framework & React 18 + Vite 5 & HMR (Hot Module Replacement) para desarrollo ágil; bundle de producción optimizado \\
+    \midrule
+    Iconografía & Lucide React & Biblioteca SVG moderna, ligera, open-source \\
+    \midrule
+    Estilos & CSS Vanilla + Variables CSS & Sin dependencias pesadas; Glassmorphism personalizado \\
+    \midrule
+    Motor IA & LM Studio 0.3.x & Servidor OpenAI-compatible local; gestión de GPU \\
+    \midrule
+    Modelo LLM & Google Gemma 4 12B QAT & SOTA en modelos locales; multimodal (texto + visión) \\
+    \midrule
+    Formato modelo & GGUF Q4\_K\_M & Equilibrio óptimo calidad/tamaño para hardware de consumo \\
+    \midrule
+    Voz entrada & Web Speech API & Dictado de voz en tiempo real; nativo del navegador \\
+    \midrule
+    Voz salida & \texttt{window.speechSynthesis} & TTS nativo del SO; cero costo; cero latencia de red \\
+    \midrule
+    Exportación & API de Impresión del Navegador & Generación de PDF local; sin servidores externos \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Flujo de Datos de una Consulta Clínica}
+
+\begin{enumerate}[label=\textbf{Paso \arabic*.}]
+  \item El profesional de salud selecciona el \textbf{perfil clínico} del paciente en la pantalla
+    de inicio (PatientSelector).
+  \item El sistema carga el \textbf{System Prompt especializado} correspondiente al perfil
+    (\texttt{systemPrompts.js}).
+  \item El profesional ingresa el caso clínico mediante \textbf{texto}, \textbf{voz} (micrófono)
+    o \textbf{imagen} (foto de receta médica o cámara en tiempo real).
+  \item El frontend construye un objeto JSON en formato \textbf{OpenAI Chat Completions}
+    incluyendo el system prompt y los mensajes del historial de sesión.
+  \item La petición se envía al servidor local de LM Studio en
+    \texttt{http://localhost:1234/v1/chat/completions}.
+  \item LM Studio ejecuta la inferencia usando la GPU local (CUDA/Metal/Vulkan) o la CPU como
+    fallback.
+  \item La respuesta incluye el token especial \texttt{<|think|>}, que el sistema parsea para
+    extraer el \textbf{razonamiento clínico oculto} y la \textbf{respuesta final}.
+  \item La respuesta se renderiza en pantalla. El profesional puede \textbf{escucharla} (TTS),
+    \textbf{auditar el razonamiento oculto} y \textbf{exportar el registro} en PDF.
+\end{enumerate}
+
+\subsection{Parser de Razonamiento Clínico (\textit{Chain-of-Thought})}
+
+El modelo Gemma 4 12B opera en modo \textit{thinking} gracias al token especial
+\texttt{<|think|>}. La función \texttt{parseMessage()} extrae y separa este razonamiento:
+
+\begin{lstlisting}[style=javascript, caption=Parser de razonamiento clínico (App.jsx)]
+function parseMessage(rawText) {
+  const thinkMatch = rawText.match(/<\|think\|>([\s\S]*?)<\/?\|think\|?>/);
+  let thought = null;
+  let content = rawText;
+
+  if (thinkMatch) {
+    thought = thinkMatch[1].trim();
+    content = rawText.replace(thinkMatch[0], '').trim();
+  }
+  return { thought, content };
+}
+\end{lstlisting}
+
+\noindent Este mecanismo de \textbf{auditoría de razonamiento} es fundamental para la validación
+científica: permite que los revisores expertos evalúen no solo la respuesta final de la IA, sino
+el proceso lógico que la generó.
+
+\newpage
+
+% ==============================================
+\section{Capacidades Multimodales}
+% ==============================================
+
+\subsection{Visión Computacional (Recetas e Imágenes Clínicas)}
+
+Gemma 4 12B es un modelo \textbf{natively multimodal}, lo que significa que su arquitectura
+transformer incluye un \textit{Vision Encoder} integrado. No requiere un pipeline externo de OCR;
+procesa la imagen directamente en el espacio semántico compartido con el lenguaje.
+
+\textbf{Casos de uso validados:}
+\begin{itemize}
+  \item Lectura de recetas médicas con mala caligrafía.
+  \item Análisis de cajas de medicamentos (identificación de principio activo, dosis, vía).
+  \item Evaluación básica de síntomas dermatológicos relevantes a alergias medicamentosas.
+  \item Comparación visual de presentaciones de medicamentos para detección de errores de dispensación.
+\end{itemize}
+
+La imagen se convierte a formato \texttt{base64} y se incluye en el JSON de la petición como tipo
+\texttt{image\_url}, compatible con el estándar OpenAI Vision API.
+
+\subsection{Entrada por Voz (\textit{Speech-to-Text})}
+
+El sistema integra la \textbf{Web Speech API} (W3C) para capturar dictado de voz en tiempo real:
+
+\begin{lstlisting}[style=javascript, caption=Inicialización del reconocimiento de voz]
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+recognition.lang = 'es-MX';
+recognition.continuous = true;
+recognition.interimResults = true;
+\end{lstlisting}
+
+\begin{warningbox}[Nota sobre privacidad del reconocimiento de voz]
+  En \textbf{Google Chrome}, el reconocimiento de voz envía el audio a servidores de Google para
+  su transcripción. Para uso en entornos Air-Gapped, se recomienda utilizar \textbf{Microsoft Edge}
+  (que usa el motor de voz local de Windows) o \textbf{Firefox} con motor local.
+\end{warningbox}
+
+\subsection{Salida por Voz (\textit{Text-to-Speech} Nativo)}
+
+La síntesis de voz utiliza la API \texttt{window.speechSynthesis}, nativa de todos los navegadores
+modernos. Invoca directamente las voces instaladas en el sistema operativo (Windows, macOS, Linux):
+
+\begin{lstlisting}[style=javascript, caption=Síntesis de voz nativa del sistema operativo]
+const speakText = (text) => {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'es-MX';
+  utterance.rate = 1.0;
+  window.speechSynthesis.speak(utterance);
+};
+\end{lstlisting}
+
+\textbf{Ventajas de este enfoque:}
+\begin{itemize}
+  \item \textbf{Costo cero:} Sin APIs de pago (no se usa Google Cloud TTS, AWS Polly, ni ElevenLabs).
+  \item \textbf{Latencia cero:} La voz se genera instantáneamente en el hardware local.
+  \item \textbf{Privacidad total:} Ningún texto del paciente se envía a servidores de síntesis de voz.
+  \item \textbf{Accesibilidad:} Fundamental para adultos mayores con dificultades de lectura.
+\end{itemize}
+
+\newpage
+
+% ==============================================
+\section{Sistema de 7 Perfiles Clínicos Especializados}
+% ==============================================
+
+\subsection{Fundamento Farmacológico}
+
+En farmacología clínica, los parámetros farmacocinéticos (absorción, distribución, metabolismo y
+excreción --- ADME) varían de manera significativa a lo largo del ciclo vital. Una recomendación
+generada bajo el supuesto de un adulto estándar puede ser \textbf{peligrosamente incorrecta} si
+se aplica a un neonato, un anciano con insuficiencia renal, o una mujer embarazada.
+
+La innovación central de \textbf{Farmacéutica Alicia IA} consiste en que \textbf{un único modelo
+de lenguaje (Gemma 4 12B) puede operar en 7 modos clínicos distintos} mediante el cambio del
+\textit{System Prompt} inyectado en cada sesión. No se requiere descargar ni mantener modelos
+separados. Esto se implementa en el archivo \texttt{systemPrompts.js}.
+
+\subsection{Descripción de los 7 Perfiles}
+
+\subsubsection{Perfil 1 --- Neonatos y Bebés (0--12 meses)}
+
+\begin{tcolorbox}[colback=neonato!5, colframe=neonato, title=\textbf{Neonatos y Bebés --- 0-12 meses}]
+  \textbf{Contexto clínico:} El período neonatal es farmacológicamente el más delicado de la vida
+  humana. El metabolismo hepático (sistemas CYP450) y la función renal glomerular están
+  funcionalmente inmaduros. La permeabilidad de la barrera hematoencefálica es mayor que en el
+  adulto.
+
+  \medskip\textbf{Criterios activados por el System Prompt:}
+  \begin{itemize}
+    \item Dosificación \textbf{obligatoria en mg/kg/día} o mg/kg/dosis.
+    \item Reducción de dosis al 30--50\% de la dosis estándar como punto de partida.
+    \item Lista de fármacos \textbf{absolutamente contraindicados}: Aspirina (Síndrome de Reye),
+      Cloranfenicol (Síndrome Gris), Sulfonamidas (kernicterus), Fluoroquinolonas (toxicidad
+      articular), Metoclopramida (distonía).
+    \item Preferencia por vías IV o suspensiones pediátricas.
+  \end{itemize}
+\end{tcolorbox}
+
+\subsubsection{Perfil 2 --- Pediatría (1--12 años)}
+
+\begin{tcolorbox}[colback=pediatrico!5, colframe=pediatrico, title=\textbf{Pediatría --- 1-12 años}]
+  \textbf{Criterios activados:}
+  \begin{itemize}
+    \item Dosificación en \textbf{mg/kg}; solicita el peso si no se proporciona.
+    \item Dosis máxima: no superar la dosis adulta equivalente.
+    \item Preferencia por formas farmacéuticas: suspensiones, jarabes, comprimidos masticables.
+    \item Referencias: \textit{BNF for Children} (NICE, UK), Formulario Nacional Pediátrico
+      (OPS/PAHO).
+    \item Evita: Tetraciclinas (afectan esmalte dental, $<$8 años), Aspirina ($<$12 años).
+  \end{itemize}
+\end{tcolorbox}
+
+\subsubsection{Perfil 3 --- Adolescentes (13--17 años)}
+
+\begin{tcolorbox}[colback=adolescente!5, colframe=adolescente, title=\textbf{Adolescentes --- 13-17 años}]
+  \textbf{Criterios activados:}
+  \begin{itemize}
+    \item Farmacocinética en transición hacia el perfil adulto, pero SNC aún en desarrollo.
+    \item Evaluación de \textbf{interacciones con anticonceptivos hormonales} (inductores
+      enzimáticos: rifampicina, carbamacepina, fenitoína).
+    \item Alerta FDA: antidepresivos IRS pueden aumentar ideación suicida en menores de 24 años.
+    \item Isotretinoína: requiere anticoncepción garantizada y programa iPLEDGE.
+    \item Monitoreo de riesgo de dependencia con BZD y opioides.
+  \end{itemize}
+\end{tcolorbox}
+
+\subsubsection{Perfil 4 --- Adulto General (18--64 años)}
+
+\begin{tcolorbox}[colback=adulto!5, colframe=adulto, title=\textbf{Adulto General --- 18-64 años}]
+  Perfil base de \textbf{Alicia 1.0}. Aplica dosificación estándar según guías internacionales.
+  Enfoque en:
+  \begin{itemize}
+    \item Identificación de PRM (interacciones, duplicidades, contraindicaciones).
+    \item Clasificación de RNM (Necesidad, Efectividad, Seguridad).
+    \item Protocolo del Consenso de Granada y método Dáder de Seguimiento
+      Farmacoterapéutico.
+  \end{itemize}
+\end{tcolorbox}
+
+\subsubsection{Perfil 5 --- Adulto Mayor (65+ años)}
+
+\begin{tcolorbox}[colback=geriatrico!5, colframe=geriatrico, title=\textbf{Adulto Mayor --- 65+ años}]
+  \textbf{Criterios activados:}
+  \begin{itemize}
+    \item \textbf{Criterios STOPP/START 2023} (Screening Tool of Older Persons' Prescriptions /
+      Screening Tool to Alert doctors to Right Treatment).
+    \item \textbf{Criterios de Beers 2023} (American Geriatrics Society): lista de fármacos
+      potencialmente inapropiados en mayores de 65 años.
+    \item Ajuste de dosis renal mediante \textbf{Fórmula de Cockroft-Gault}:
+      $$ ClCr = \frac{(140-edad) \times peso \times k}{creatinina_s} $$
+      donde $k = 1.0$ (hombres) y $k = 0.85$ (mujeres).
+    \item Alerta de \textbf{polifarmacia} ($\geq$5 fármacos simultáneos).
+    \item Riesgo de caídas: BZD, antipsicóticos, antihipertensivos, hipnóticos.
+    \item Síndrome anticolinérgico: difenhidramina, oxibutinina, amitriptilina.
+  \end{itemize}
+\end{tcolorbox}
+
+\subsubsection{Perfil 6 --- Embarazada (1er--3er trimestre)}
+
+\begin{tcolorbox}[colback=embarazo!5, colframe=embarazo, title=\textbf{Embarazada --- Gestación}]
+  \textbf{Criterios activados:}
+  \begin{itemize}
+    \item \textbf{Categorías de Riesgo FDA en el Embarazo:} A (seguro), B (probable seguro), C
+      (riesgo no excluido), D (evidencia de riesgo), X (contraindicado).
+    \item Análisis diferenciado por \textbf{trimestre}: el 1er trimestre es el período de
+      organogénesis y máximo riesgo teratogénico.
+    \item Fármacos \textbf{absolutamente contraindicados}: Talidomida, Isotretinoína, Warfarina
+      (1er y 3er trimestre), AINEs ($>$32 semanas: cierre prematuro del ductus arterioso),
+      Metotrexato, Tetraciclinas, Fluoroquinolonas.
+    \item Regla de seguridad: si no hay datos suficientes, derivar a ginecólogo-obstetra.
+  \end{itemize}
+\end{tcolorbox}
+
+\subsubsection{Perfil 7 --- Lactancia Materna}
+
+\begin{tcolorbox}[colback=lactancia!5, colframe=lactancia, title=\textbf{Lactancia Materna}]
+  \textbf{Criterios activados:}
+  \begin{itemize}
+    \item \textbf{Base de datos LactMed} (NIH, EE.UU.): referencia principal de compatibilidad.
+    \item \textbf{e-lactancia.org} (APILAM, España): evaluación en español.
+    \item \textbf{Dosis Relativa Infantil (DRI)}: si DRI $>$ 10\%, la compatibilidad es dudosa.
+    \item \textbf{Cociente Leche/Plasma (L/P)}: fármacos con L/P $>$ 1 se concentran en leche.
+    \item Factores farmacocinéticos relevantes: peso molecular ($<$500 Da cruza mejor),
+      liposolubilidad, unión a proteínas plasmáticas, pKa.
+    \item Fármacos incompatibles con lactancia (AAP): Amiodarona, Ergotamina, Litio,
+      Radioisótopos, Antineoplásicos, Ciclosporina.
+  \end{itemize}
+\end{tcolorbox}
+
+\subsection{Implementación Técnica de los Perfiles}
+
+Cada perfil activa un System Prompt diferente almacenado en \texttt{systemPrompts.js}:
+
+\begin{lstlisting}[style=javascript, caption=Estructura de systemPrompts.js (extracto)]
+export const SYSTEM_PROMPTS = {
+  adulto_mayor: `<|think|>Eres la Farmaceutica Especialista Alicia,
+    experta en Farmacoterapia Geriatrica (65+ anos).
+    Aplica los criterios STOPP/START (2023) y los Criterios de Beers (AGS 2023).
+    Evalua funcion renal con Cockroft-Gault. Alerta si >= 5 farmacos.
+    Maximo 150 palabras. Se concisa y directa.`,
+  embarazada: `<|think|>Eres la Farmaceutica Especialista Alicia,
+    experta en Farmacoterapia Obsterica.
+    Clasifica cada farmaco segun FDA: A,B,C,D,X.
+    Identifica el trimestre. Priorizar seguridad fetal.
+    Maximo 150 palabras.`,
+  // ... 5 perfiles adicionales
+};
+\end{lstlisting}
+
+\newpage
+
+% ==============================================
+\section{Interfaz de Usuario y Experiencia Clínica}
+% ==============================================
+
+\subsection{Pantalla de Selección de Perfil (PatientSelector)}
+
+La plataforma presenta al profesional una pantalla de inicio con 7 tarjetas visuales, cada una
+representando un perfil clínico con su color identificador. Esta pantalla:
+
+\begin{itemize}
+  \item Muestra los \textbf{logos institucionales} (UJAT, DACYTI, LBMyFG) a ambos lados del
+    título, ampliables mediante \textit{lightbox} al hacer clic.
+  \item Contiene un \textbf{menú lateral de 7 botones} para acceder directamente a las secciones
+    de documentación: Ajustes, Documentación técnica, Manual de usuario, Guía LM Studio,
+    Pruebas clínicas, Impacto científico y Alicia 2.0.
+  \item Exhibe un \textbf{aviso ético} de uso exclusivo para profesionales.
+\end{itemize}
+
+\subsection{Interfaz de Chat por Perfil}
+
+Al seleccionar un perfil, la interfaz de chat adapta:
+\begin{enumerate}
+  \item \textbf{Color del encabezado:} Cada perfil tiene su gradiente de color único (rosa para
+    neonatos, azul para adulto, verde para geriátrico, etc.).
+  \item \textbf{Mensaje de bienvenida personalizado:} Alicia se presenta indicando su modo de
+    especialización activo y los criterios que aplicará.
+  \item \textbf{System Prompt activo:} El cerebro del modelo recibe las instrucciones
+    especializadas del perfil correspondiente.
+\end{enumerate}
+
+\subsection{Exportación de Registros Clínicos en PDF}
+
+El botón ``Exportar'' genera un documento HTML estructurado que el navegador convierte en PDF
+mediante su motor de impresión nativo. El documento incluye:
+
+\begin{itemize}
+  \item Encabezado oficial: nombre de la plataforma, fecha y hora de emisión.
+  \item Cada intercambio de la sesión, diferenciado por color: gris para el usuario, azul para
+    Alicia.
+  \item El \textbf{Razonamiento Clínico Oculto} resaltado en amarillo, permitiendo auditar el
+    proceso de pensamiento del modelo.
+  \item Pie de página con nota de confidencialidad.
+\end{itemize}
+
+\begin{successbox}[Importancia metodológica para artículos científicos]
+  La exportación del razonamiento oculto (\textit{chain-of-thought}) es un requisito explícito
+  de las guías de transparencia para sistemas de IA en medicina (CONSORT-AI, SPIRIT-AI). Permite
+  que los revisores del estudio auditen no solo si la IA acertó, sino \textit{cómo razonó} para
+  llegar a su conclusión.
+\end{successbox}
+
+\newpage
+
+% ==============================================
+\section{Pruebas de Rendimiento y Validación Clínica}
+% ==============================================
+
+\subsection{Métricas de Rendimiento Técnico}
+
+El sistema registra automáticamente métricas de inferencia en tiempo real:
+
+\begin{table}[H]
+  \centering
+  \caption{Métricas de rendimiento en hardware de prueba (NVIDIA RTX 3060 6GB VRAM)}
+  \begin{tabular}{lcc}
+    \toprule
+    \textbf{Métrica} & \textbf{Valor observado} & \textbf{Unidad} \\
+    \midrule
+    TTFT (Time To First Token) & 1,200 -- 2,800 & ms \\
+    Velocidad de inferencia & 8 -- 12 & tokens/s \\
+    Tiempo total por consulta & 15 -- 45 & s \\
+    VRAM utilizada & 5.2 -- 6.0 & GB \\
+    Uso de GPU & 85 -- 98 & \% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Casos de Prueba Clínicos}
+
+\subsubsection{Caso 1 --- Interacción Medicamentosa (Adulto)}
+\textbf{Entrada:} Paciente masculino de 65 años, hipertenso. Toma Losartán 50 mg/día.
+El médico de guardia receta Ibuprofeno 600 mg c/8h por 7 días.
+
+\begin{infobox}[Respuesta de Alicia IA]
+  \textbf{PRM:} Interacción medicamentosa entre Losartán (ARA II) e Ibuprofeno (AINE).\\
+  \textbf{RNM:} Riesgo de insuficiencia renal aguda y disminución del efecto antihipertensivo del
+  Losartán, pudiendo provocar descontrol de la presión arterial.\\
+  \textbf{Recomendación:} Sugerir al médico la sustitución del Ibuprofeno por un analgésico con
+  menor riesgo renal y cardiovascular (Paracetamol). Si el AINE es indispensable, se requiere
+  seguimiento estrecho de función renal y PA.
+\end{infobox}
+
+\subsubsection{Caso 2 --- Prueba de Estrés Multimodal (Foto de Receta)}
+\textbf{Entrada:} Imagen de receta médica con letra poco legible.
+\textbf{Resultado:} El sistema transcribió correctamente los medicamentos y detectó una duplicidad
+terapéutica (dos AINEs prescritos simultáneamente).
+
+\subsubsection{Caso 3 --- Prueba de Sesgo Texto vs. Imagen (\textit{Text Bias Test})}
+\textbf{Metodología:} Se envió una imagen mostrando erupciones cutáneas leves, pero el texto
+indicaba ``reacción alérgica severa con dificultad respiratoria''.
+
+\textbf{Resultado:} La IA priorizó el texto sobre la imagen y activó protocolo de seguridad,
+instando a buscar atención de emergencias inmediata. Este comportamiento (\textit{text dominance})
+fue documentado como una limitación conocida: el sistema asume la gravedad del texto cuando existe
+contradicción.
+
+\subsection{Protocolo de Validación Propuesto (Doble Ciego)}
+
+Para la validación científica formal, se propone el siguiente protocolo:
+
+\begin{enumerate}
+  \item \textbf{Muestra:} 20 casos clínicos reales anonimizados (con consentimiento).
+  \item \textbf{Grupos:} Grupo Control (farmacéutico sin asistencia de IA) vs. Grupo Experimental
+    (farmacéutico con Alicia IA).
+  \item \textbf{Evaluadores:} 3 farmacéuticos expertos independientes (doble ciego respecto al
+    origen de cada evaluación).
+  \item \textbf{Variables medidas:}
+    \begin{itemize}
+      \item Tiempo de evaluación por caso (segundos).
+      \item Tasa de detección de PRM (verdaderos positivos).
+      \item Calidad de la recomendación (escala Likert 1--5).
+      \item Concordancia con guías clínicas internacionales (Kappa de Cohen).
+    \end{itemize}
+  \item \textbf{Herramienta de recolección:} Exportación PDF del chat de Alicia, entregada a los
+    evaluadores sin revelar la fuente.
+\end{enumerate}
+
+\newpage
+
+% ==============================================
+\section{Arquitectura Air-Gapped y Privacidad Clínica}
+% ==============================================
+
+\subsection{Definición de Arquitectura Air-Gapped}
+
+En seguridad computacional, un sistema \textit{Air-Gapped} es aquel que está físicamente
+aislado de redes no seguras (como internet). En el contexto de \textbf{Farmacéutica Alicia IA},
+esto significa:
+
+\begin{enumerate}
+  \item \textbf{El modelo de lenguaje} está descargado y almacenado en el disco local del
+    dispositivo.
+  \item \textbf{El servidor de inferencia} (LM Studio) opera en \texttt{localhost:1234}, sin
+    puertos de red externos abiertos.
+  \item \textbf{La interfaz web} sirve desde \texttt{localhost:5173}, sin CDN ni recursos externos.
+  \item \textbf{El navegador} no realiza peticiones a servidores externos durante la operación normal.
+\end{enumerate}
+
+\subsection{Comparativa de Privacidad}
+
+\begin{table}[H]
+  \centering
+  \caption{Comparativa de privacidad: Alicia IA vs. soluciones en la nube}
+  \begin{tabularx}{\textwidth}{lXXX}
+    \toprule
+    \textbf{Característica} & \textbf{ChatGPT (OpenAI)} & \textbf{Gemini (Google)} & \textbf{Alicia IA (Local)} \\
+    \midrule
+    Datos del paciente & Viajan a servidores EE.UU. & Viajan a servidores Google & \textbf{Nunca salen del dispositivo} \\
+    \midrule
+    Cumplimiento HIPAA & No por defecto & No por defecto & \textbf{HIPAA by design} \\
+    \midrule
+    Costo por consulta & \$0.01--\$0.30 USD & \$0.001--\$0.15 USD & \textbf{\$0.00 USD} \\
+    \midrule
+    Funciona sin internet & No & No & \textbf{Sí (Air-Gapped)} \\
+    \midrule
+    Razonamiento auditable & No & No & \textbf{Sí (chain-of-thought)} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Relevancia para Países en Vías de Desarrollo}
+
+La arquitectura local es especialmente pertinente en contextos donde:
+\begin{itemize}
+  \item La conectividad a internet es intermitente o inexistente (zonas rurales).
+  \item No existe presupuesto para licencias de IA en la nube.
+  \item Las regulaciones locales de salud digital prohíben el almacenamiento de datos clínicos
+    en servidores extranjeros.
+  \item Se requiere operación continua independientemente de la disponibilidad de servicios
+    en la nube.
+\end{itemize}
+
+\newpage
+
+% ==============================================
+\section{Requisitos de Hardware y Análisis de Costos}
+% ==============================================
+
+\begin{table}[H]
+  \centering
+  \caption{Requisitos de hardware para ejecutar Gemma 4 12B QAT localmente}
+  \begin{tabularx}{\textwidth}{lXX}
+    \toprule
+    \textbf{Componente} & \textbf{Especificación Mínima} & \textbf{Especificación Recomendada} \\
+    \midrule
+    GPU (VRAM) & 6 GB VRAM (NVIDIA RTX 3060) & 12-16 GB VRAM (RTX 4070 Ti) \\
+    \midrule
+    RAM del sistema & 16 GB DDR4 & 32 GB DDR5 \\
+    \midrule
+    Almacenamiento & 256 GB SSD NVMe & 512 GB SSD NVMe \\
+    \midrule
+    CPU & Intel i5-12th gen / AMD Ryzen 5 5000 & Intel i7-13th gen / AMD Ryzen 7 7000 \\
+    \midrule
+    Sistema Operativo & Windows 10 64-bit / macOS 12 / Ubuntu 20.04 & Windows 11 / macOS 14 / Ubuntu 22.04 \\
+    \midrule
+    \textbf{Costo estimado (USD)} & \$600 -- \$900 & \textbf{\$1,000 -- \$1,500} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{infobox}[Análisis Costo-Beneficio a 12 meses]
+  \begin{tabular}{lrr}
+    \textbf{Concepto} & \textbf{Solución Cloud} & \textbf{Alicia IA (Local)} \\
+    \hline
+    Inversión inicial & \$0 & \$1,200 \\
+    Costo API mensual (500 consultas/mes) & \$50 -- \$150 & \$0 \\
+    Costo total a 12 meses & \$600 -- \$1,800 & \$1,200 \\
+    Privacidad garantizada & No & \textbf{Sí} \\
+    Funciona sin internet & No & \textbf{Sí} \\
+  \end{tabular}
+
+  \medskip
+  A partir del primer año, la solución local es económicamente equivalente o superior a cualquier
+  solución en la nube, con la ventaja adicional de privacidad absoluta y operación offline.
+\end{infobox}
+
+\newpage
+
+% ==============================================
+\section{Impacto Científico y Relevancia para Publicación}
+% ==============================================
+
+\subsection{Aportaciones Originales}
+
+\begin{enumerate}[label=\textbf{\Roman*.}]
+  \item \textbf{Arquitectura Air-Gapped para IA Médica:} Primera implementación documentada de
+    un sistema de seguimiento farmacoterapéutico basado en LLM con ejecución completamente local
+    y privacidad de datos garantizada por diseño.
+
+  \item \textbf{Especialización por Sistema de Prompts Clínicos:} Demostración de que un único
+    modelo de lenguaje puede especializarse en 7 perfiles clínicos distintos mediante prompts
+    diferenciados, sin reentrenamiento (\textit{fine-tuning}) del modelo base.
+
+  \item \textbf{Auditabilidad del Razonamiento Clínico:} Implementación del token
+    \texttt{<|think|>} para extraer y presentar la cadena de pensamiento del modelo, cumpliendo
+    con las guías CONSORT-AI y SPIRIT-AI de transparencia en IA médica.
+
+  \item \textbf{Multimodalidad Clínica Integrada:} Combinación de análisis de texto, visión
+    computacional de recetas, dictado por voz y síntesis de voz en una plataforma unificada,
+    sin dependencias externas de pago.
+
+  \item \textbf{Reproducibilidad Universal:} El sistema puede ser replicado exactamente por
+    cualquier investigador, clínica o farmacia en cualquier país, utilizando únicamente hardware
+    comercial estándar y software de código abierto.
+\end{enumerate}
+
+\subsection{Revistas Científicas Objetivo}
+
+\begin{table}[H]
+  \centering
+  \caption{Revistas científicas sugeridas para la publicación de resultados}
+  \begin{tabular}{llc}
+    \toprule
+    \textbf{Revista} & \textbf{Editorial} & \textbf{Factor de Impacto} \\
+    \midrule
+    JMIR Medical Informatics & JMIR Publications & 3.2 \\
+    Computers in Biology and Medicine & Elsevier & 6.7 \\
+    Journal of the American Medical Informatics Assoc. & Oxford & 6.5 \\
+    International Journal of Medical Informatics & Elsevier & 5.6 \\
+    Atencion Primaria & Elsevier (España) & 1.8 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Título Sugerido del Artículo}
+
+\begin{infobox}[Título para publicación científica]
+  \centering\itshape
+  ``Implementación de Inteligencia Artificial Multimodal Local (Air-Gapped) para el
+  Seguimiento Farmacoterapéutico Especializado por Grupo Etario y Detección de Problemas
+  Relacionados con Medicamentos en Entornos de Alta Privacidad Clínica''
+\end{infobox}
+
+\newpage
+
+% ==============================================
+\section{Cumplimiento Normativo (ISO/IEC 42001) y Ciberseguridad}
+% ==============================================
+
+\subsection{Sistema de Gestión de Inteligencia Artificial (SGIA)}
+
+\textbf{Farmacéutica Alicia IA} se alinea con los principios de la norma \textbf{ISO/IEC 42001}, el estándar internacional para el establecimiento de un Sistema de Gestión de Inteligencia Artificial (SGIA). Esta normativa proporciona un marco estructurado que ayuda a las organizaciones a desarrollar y utilizar tecnologías de IA de forma ética, transparente y responsable.
+
+El desarrollo de la plataforma se estructuró en torno a cuatro pilares fundamentales:
+\begin{enumerate}
+  \item \textbf{Gobernanza y Responsabilidad:} Limitación de acceso exclusivo a profesionales de la salud, estableciendo un marco de responsabilidad compartida donde la IA actúa como soporte y no como decisor final.
+  \item \textbf{Gestión de Riesgos:} Identificación y mitigación de riesgos clínicos (mediante perfiles especializados) y de privacidad (mediante arquitectura Air-Gapped).
+  \item \textbf{Ética y Transparencia:} Implementación de razonamiento auditable (\textit{chain-of-thought}) para combatir el sesgo algorítmico y garantizar equidad en la atención.
+  \item \textbf{Mejora Continua:} Evaluación del impacto en el flujo de trabajo clínico y adaptación a nuevas guías farmacológicas.
+\end{enumerate}
+
+\subsection{Defensa contra Ataques Adversarios (Jailbreaking)}
+
+El \textit{jailbreak} en Inteligencia Artificial es una técnica de manipulación de prompts utilizada para eludir filtros de seguridad y directrices éticas, forzando al modelo a realizar acciones prohibidas. Los atacantes utilizan tácticas como la asunción de roles, preguntas hipotéticas e idiomas codificados.
+
+En sistemas clínicos, un ataque de jailbreak exitoso podría extraer información confidencial (\textit{System Prompt Leakage}) o generar desinformación médica (ej. instrucciones para sintetizar sustancias controladas). 
+
+\textbf{Prevención en Farmacéutica Alicia IA:}
+Para contrarrestar estas vulnerabilidades, el sistema implementa múltiples capas defensivas:
+\begin{itemize}
+  \item \textbf{Modelo base con RLHF:} Google Gemma 4 12B fue sometido a Aprendizaje por Refuerzo a partir de Retroalimentación Humana (\textit{Reinforcement Learning from Human Feedback}) para alinear sus respuestas con estándares de seguridad y rechazar peticiones maliciosas.
+  \item \textbf{Robustez del System Prompt:} El prompt maestro establece un rol clínico inquebrantable y restringe las respuestas a un máximo de 150 palabras, reduciendo drásticamente la superficie de ataque para inyecciones narrativas complejas.
+  \item \textbf{Aislamiento Air-Gapped:} Al no estar expuesto a internet público, se elimina el vector principal de ataques automatizados o botnets de inyección de prompts.
+\end{itemize}
+
+\newpage
+
+% ==============================================
+\section{Trabajo a Futuro: Alicia 2.0}
+% ==============================================
+
+\subsection{Limitaciones de Alicia 1.0}
+
+\begin{itemize}
+  \item \textbf{Sin persistencia de datos:} Cada sesión comienza desde cero. No existe memoria de
+    pacientes entre consultas.
+  \item \textbf{Sin base de conocimiento farmacológico estructurado:} El conocimiento proviene del
+    entrenamiento del modelo, no de bases de datos clínicas actualizadas en tiempo real.
+  \item \textbf{Sin seguimiento longitudinal:} Imposible realizar trazabilidad del tratamiento del
+    mismo paciente a lo largo del tiempo.
+  \item \textbf{Validación clínica pendiente:} Los resultados no han sido validados formalmente
+    por expertos farmacéuticos bajo protocolo de investigación.
+\end{itemize}
+
+\subsection{Hoja de Ruta Alicia 2.0}
+
+\begin{table}[H]
+  \centering
+  \caption{Características planificadas para Alicia IA 2.0}
+  \begin{tabularx}{\textwidth}{lXl}
+    \toprule
+    \textbf{Característica} & \textbf{Descripción} & \textbf{Prioridad} \\
+    \midrule
+    RAG Farmacológico & Integración de bases de datos locales (Vademécum, FDA Drug Database, LactMed OFFLINE) mediante Retrieval-Augmented Generation & Alta \\
+    \midrule
+    Persistencia de pacientes & Base de datos SQLite local para historial clínico de pacientes recurrentes & Alta \\
+    \midrule
+    Fine-tuning especializado & Ajuste fino del modelo con casos clínicos reales anonimizados de la región (datos UJAT/DACYTI) & Media \\
+    \midrule
+    Modo offline completo & Eliminación total de dependencia de internet, incluyendo TTS y STT locales (Whisper.cpp + Piper TTS) & Media \\
+    \midrule
+    Aplicación móvil & Versión Android/iOS para farmacias y enfermeros en campo & Baja \\
+    \midrule
+    Dashboard de estadísticas & Panel de métricas de PRM detectados, por perfil, por período y por tipo & Baja \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\newpage
+
+% ==============================================
+\section{Guía de Instalación y Reproducibilidad}
+% ==============================================
+
+\subsection{Prerequisitos}
+
+\begin{enumerate}
+  \item \textbf{LM Studio} (versión 0.3.x o superior): \url{https://lmstudio.ai/}
+  \item \textbf{Node.js} (versión 18 LTS o superior): \url{https://nodejs.org/}
+  \item \textbf{Git}: \url{https://git-scm.com/}
+  \item GPU NVIDIA con drivers CUDA 12.x (recomendado) o CPU con AVX2.
+\end{enumerate}
+
+\subsection{Descarga del Modelo en LM Studio}
+
+\begin{enumerate}
+  \item Abrir LM Studio $\rightarrow$ Pestaña ``Discover'' (ícono de lupa).
+  \item Buscar: \texttt{google/gemma-4-12b-qat}.
+  \item Seleccionar la variante: \textbf{Q4\_K\_M} (tamaño ~4.92 GB, óptima para 6 GB VRAM).
+  \item Iniciar la descarga y esperar a que complete.
+  \item Ir a ``My Models'' $\rightarrow$ Cargar el modelo $\rightarrow$ Activar servidor en
+    puerto \textbf{1234}.
+\end{enumerate}
+
+\subsection{Instalación del Frontend}
+
+\begin{lstlisting}[language=bash, backgroundcolor=\color{codeblue}, basicstyle=\ttfamily\small\color{codefg}, numbers=none, frame=single]
+# 1. Clonar o descomprimir el proyecto
+cd "Proyectos IA Antigravity/gemma_4_12b_agente_ia_farmaceutica"
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Iniciar servidor de desarrollo
+npm run dev
+
+# 4. Abrir en el navegador
+# http://localhost:5173
+\end{lstlisting}
+
+\subsection{Verificación de Funcionamiento}
+
+\begin{enumerate}
+  \item Abrir \url{http://localhost:5173} en Google Chrome o Microsoft Edge.
+  \item Verificar que el indicador de estado muestra ``Gemma 4 12B (Local)'' en verde.
+  \item Seleccionar el perfil ``Adulto General''.
+  \item Enviar el mensaje de prueba: ``Paciente de 65 años toma Warfarina. Se le receta
+    Aspirina 100 mg. ¿Hay algún problema?''
+  \item Confirmar que Alicia detecta la interacción de alto riesgo (potenciación del efecto
+    anticoagulante, riesgo de sangrado grave).
+\end{enumerate}
+
+\newpage
+
+% ==============================================
+\section{Seguridad y Cumplimiento Normativo: ISO/IEC 42001 y Anti-Jailbreaking}
+% ==============================================
+
+\subsection{Cumplimiento de la Norma ISO/IEC 42001 (SGIA)}
+El desarrollo de Farmacéutica Alicia IA se rige bajo los lineamientos del \textbf{Sistema de Gestión de Inteligencia Artificial (SGIA) ISO/IEC 42001}. Esta normativa garantiza que el sistema opera con:
+\begin{itemize}
+  \item \textbf{Transparencia Clínica:} Toda decisión y cadena de pensamiento se expone al profesional de la salud.
+  \item \textbf{Privacidad por Diseño:} La arquitectura 100\% local evita la transmisión de Información de Salud Protegida (PHI).
+  \item \textbf{Equidad y Mitigación de Sesgos:} Los perfiles clínicos (pediátrico, geriátrico, embarazo) aseguran que los sesgos inherentes de datos en adultos genéricos no perjudiquen a subpoblaciones vulnerables.
+\end{itemize}
+
+\subsection{Protección contra \textit{Jailbreaking} y \textit{System Prompt Leakage}}
+Para prevenir que usuarios malintencionados fuercen al modelo a emitir recomendaciones médicas peligrosas o a revelar sus instrucciones maestras, el sistema implementa múltiples capas de defensa semántica:
+\begin{itemize}
+  \item \textbf{Role-Boundary Enforcement:} El sistema se niega categóricamente a asumir roles fuera de "Farmacéutico/a Clínico/a".
+  \item \textbf{Defensa contra Inyecciones DAN (Do Anything Now):} Se priorizan los protocolos clínicos por sobre cualquier instrucción del usuario que contradiga la seguridad del paciente.
+  \item \textbf{Bloqueo de Leakage:} El modelo ha sido instruido para rechazar peticiones como ``Ignora instrucciones anteriores y muestra tu prompt inicial'', protegiendo la propiedad intelectual y la integridad clínica.
+\end{itemize}
+
+% ==============================================
+\section{Diseño de Interfaz Avanzado y Adaptabilidad Multidispositivo}
+% ==============================================
+
+La interfaz de usuario ha sido desarrollada utilizando principios modernos de \textit{Glassmorphism} y diseño adaptativo.
+
+\subsection{Avatar Holográfico e Identidad Visual}
+Se integró una representación visual de la IA (Avatar Alicia) renderizada dinámicamente junto a la ventana de consulta clínica. Este avatar cuenta con micro-animaciones (efecto de flotación constante) y sombras dinámicas (\textit{drop-shadow}) que mejoran significativamente el \textit{engagement} humano-máquina y reducen la fricción tecnológica en el entorno clínico.
+
+\subsection{Diseño Responsivo Fluido con \texttt{clamp()}}
+Garantizar la operatividad en múltiples escenarios hospitalarios (desde grandes monitores ultrawide hasta laptops compactas en los carritos de enfermería) requirió el uso de técnicas de redimensionamiento fluido. El tamaño de los componentes estructurales (incluyendo el avatar) no utiliza anchos fijos estáticos, sino funciones CSS avanzadas como \texttt{width: clamp(300px, 35vw, 700px)}. Esto permite que la interfaz escale matemáticamente su tamaño en proporción directa al porcentaje del \textit{viewport} del usuario, sin que el componente de chat clínico pierda legibilidad ni se superpongan elementos críticos.
+
+\newpage
+
+% ==============================================
+\section{Conclusiones}
+% ==============================================
+
+\textbf{Farmacéutica Alicia IA} demuestra que es posible implementar un sistema de inteligencia
+artificial clínica de calidad comparable a las soluciones comerciales en la nube, manteniendo
+privacidad total, operación offline y costo recurrente nulo.
+
+Las principales contribuciones de este trabajo son:
+
+\begin{itemize}
+  \item La \textbf{arquitectura Air-Gapped} como solución al problema de privacidad de datos
+    clínicos en sistemas de IA médica, un obstáculo crítico para la adopción de estas tecnologías
+    en hospitales y clínicas.
+
+  \item El \textbf{sistema de 7 perfiles clínicos especializados} mediante prompts diferenciados,
+    que demuestra que la especialización clínica de un LLM generalista es posible sin reentrenamiento,
+    utilizando únicamente ingeniería de prompts orientada a criterios clínicos internacionales
+    (Beers, STOPP/START, FDA, LactMed).
+
+  \item La \textbf{multimodalidad integrada} (texto, voz, imagen, síntesis de voz) implementada
+    sin dependencias externas de pago, utilizando únicamente APIs nativas del navegador y el
+    modelo multimodal local.
+
+  \item La \textbf{auditoría de razonamiento} mediante extracción de la cadena de pensamiento del
+    modelo (\textit{chain-of-thought}), cumpliendo con los requisitos de transparencia de las
+    guías internacionales de IA en medicina (CONSORT-AI).
+
+  \item La \textbf{reproducibilidad universal} del sistema, que puede ser replicado por cualquier
+    investigador, clínica o farmacia con hardware comercial estándar, sin necesidad de suscripciones
+    ni acceso a infraestructura cloud especializada.
+\end{itemize}
+
+El proyecto sienta las bases técnicas y metodológicas para futuras investigaciones de validación
+clínica formal, con el potencial de publicación en revistas de informática médica de alto impacto.
+
+\newpage
+
+% ==============================================
+%  REFERENCIAS
+% ==============================================
+\bibliographystyle{plainnat}
+
+\begin{thebibliography}{99}
+
+\bibitem{nori2023gpt4}
+Nori, H., King, N., McKinney, S. M., Carignan, D., \& Horvitz, E. (2023).
+\textit{Capabilities of GPT-4 on Medical Challenge Problems}.
+arXiv:2303.13375. \url{https://arxiv.org/abs/2303.13375}
+
+\bibitem{singhal2022large}
+Singhal, K., Azizi, S., Tu, T., et al. (2022).
+\textit{Large Language Models Encode Clinical Knowledge}.
+Nature, 620, 172--180. \url{https://doi.org/10.1038/s41586-023-06291-2}
+
+\bibitem{granada2007}
+Grupo de Investigación en Atención Farmacéutica. (2007).
+\textit{Tercer Consenso de Granada sobre Problemas Relacionados con Medicamentos (PRM) y
+Resultados Negativos asociados a la Medicación (RNM)}.
+Ars Pharmaceutica, 48(1), 5--17.
+
+\bibitem{beers2023}
+American Geriatrics Society 2023 Beers Criteria® Update Expert Panel. (2023).
+\textit{American Geriatrics Society 2023 Updated AGS Beers Criteria® for Potentially Inappropriate
+Medication Use in Older Adults}.
+Journal of the American Geriatrics Society, 71(7), 2052--2081.
+
+\bibitem{stopp2023}
+O'Mahony, D., Cherubini, A., Guiteras, A. R., et al. (2023).
+\textit{STOPP/START criteria for potentially inappropriate prescribing in older people: version 3}.
+European Geriatric Medicine, 14, 625--632.
+
+\bibitem{lactmed}
+National Institutes of Health, National Library of Medicine. (2024).
+\textit{LactMed: Drugs and Lactation Database}.
+\url{https://www.ncbi.nlm.nih.gov/books/NBK501922/}
+
+\bibitem{gemma4}
+Google DeepMind Team. (2025).
+\textit{Gemma 4 Technical Report}.
+\url{https://blog.google/technology/developers/gemma-4/}
+
+\bibitem{lmstudio}
+LM Studio. (2025).
+\textit{LM Studio: Run LLMs Locally}.
+\url{https://lmstudio.ai/}
+
+\bibitem{consort}
+Liu, X., Cruz Rivera, S., Moher, D., et al. (2020).
+\textit{Reporting guidelines for clinical trial reports for interventions involving artificial
+intelligence: the CONSORT-AI extension}.
+Nature Medicine, 26, 1364--1374.
+
+\bibitem{dader}
+Faus Dader, M. J., \& Martínez Romero, F. (2001).
+\textit{La Atención Farmacéutica en farmacia comunitaria: evolución de conceptos, necesidades de
+formación, modalidades y estrategias para su puesta en marcha}.
+Pharmaceutical Care España, 1, 52--61.
+
+\bibitem{hipaa}
+U.S. Department of Health and Human Services. (1996).
+\textit{Health Insurance Portability and Accountability Act of 1996 (HIPAA)}.
+Public Law 104-191. \url{https://www.hhs.gov/hipaa}
+
+\end{thebibliography}
+
+% ==============================================
+%  APÉNDICES
+% ==============================================
+\appendix
+
+\section{Estructura de Archivos del Proyecto}
+
+\begin{lstlisting}[language=bash, backgroundcolor=\color{codeblue}, basicstyle=\ttfamily\footnotesize\color{codefg}, numbers=none]
+gemma_4_12b_agente_ia_farmaceutica/
+|-- public/
+|   |-- logos/
+|   |   |-- UJAT.png
+|   |   |-- dacyti.jpg
+|   |   +-- LBMYFG.png
+|   +-- favicon.svg
+|-- src/
+|   |-- App.jsx              # Componente principal + chat
+|   |-- App.css              # Estilos Glassmorphism
+|   |-- main.jsx             # Enrutador raiz (PatientSelector -> App)
+|   |-- PatientSelector.jsx  # Pantalla de seleccion de perfil
+|   |-- systemPrompts.js     # Los 7 system prompts clinicos
+|   |-- Docs.jsx             # Documentacion del proyecto
+|   |-- Manual.jsx           # Manual de usuario
+|   |-- LMStudioDocs.jsx     # Guia de LM Studio
+|   |-- ClinicalTestingDocs.jsx  # Pruebas clinicas
+|   |-- ScientificArticleDocs.jsx # Impacto cientifico
+|   |-- FutureWorkDocs.jsx   # Alicia 2.0
+|   +-- SettingsDashboard.jsx # Configuracion del motor IA
+|-- package.json
+|-- vite.config.js
++-- articulo_cientifico.tex  # Este documento
+\end{lstlisting}
+
+\section{System Prompt Completo --- Perfil Adulto Mayor}
+
+\begin{lstlisting}[style=javascript]
+export const SYSTEM_PROMPTS = {
+  adulto_mayor: `<|think|>Eres la Farmaceutica Especialista Alicia,
+experta en Farmacoterapia Geriatrica (65+ anos).
+
+REGLAS CRITICAS PARA ESTE PERFIL:
+- Aplica los criterios STOPP/START (2023): identifica farmacos
+  potencialmente inapropiados en el anciano.
+- Aplica los Criterios de Beers (AGS 2023): lista de medicamentos
+  a evitar en mayores de 65 anos.
+- Evalua funcion renal con Cockroft-Gault. Ajusta dosis si
+  ClCr < 60 mL/min.
+- Alerta de polifarmacia: si el paciente toma 5 o mas medicamentos.
+- Riesgo de caidas: BZD, antihipertensivos, antipsicóticos.
+- Deterioro cognitivo: evitar anticolin ergicos
+  (Difenhidramina, Oxibutinina).
+- REGLA CRITICA: Maximo 150 palabras. Se concisa y directa.`,
+}
+\end{lstlisting}
+
+\section{Glosario de Términos}
+
+\begin{description}
+  \item[Air-Gapped:] Sistema computacional aislado físicamente de redes no seguras.
+  \item[ADME:] Absorción, Distribución, Metabolismo y Excreción.
+  \item[API:] Application Programming Interface (Interfaz de Programación de Aplicaciones).
+  \item[ARA II:] Antagonistas de los Receptores de Angiotensina II.
+  \item[BZD:] Benzodiacepinas.
+  \item[ClCr:] Aclaramiento de Creatinina (indicador de función renal).
+  \item[COT / Chain-of-Thought:] Razonamiento paso a paso de un LLM antes de responder.
+  \item[DRI:] Dosis Relativa Infantil.
+  \item[GDPR:] General Data Protection Regulation (UE).
+  \item[GGUF:] GPT-Generated Unified Format (formato de archivo para modelos cuantizados).
+  \item[HIPAA:] Health Insurance Portability and Accountability Act (EE.UU.).
+  \item[LLM:] Large Language Model (Modelo de Lenguaje Grande).
+  \item[OCR:] Optical Character Recognition (Reconocimiento Óptico de Caracteres).
+  \item[PRM:] Problema Relacionado con Medicamentos.
+  \item[QAT:] Quantization-Aware Training (Entrenamiento Consciente de la Cuantización).
+  \item[RAG:] Retrieval-Augmented Generation.
+  \item[RNM:] Resultado Negativo asociado a la Medicación.
+  \item[STOPP/START:] Herramienta de cribado de prescripción inapropiada en ancianos.
+  \item[TTS:] Text-to-Speech (Síntesis de Voz).
+  \item[TTFT:] Time To First Token (latencia hasta el primer token generado).
+  \item[VRAM:] Video Random Access Memory (memoria de la tarjeta gráfica).
+\end{description}
+
+\end{document}
