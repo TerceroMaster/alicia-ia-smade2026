@@ -1,16 +1,38 @@
-# React + Vite
+# Farmacéutica Alicia IA 👩‍⚕️💊
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**A Privacy-First, Air-Gapped Multimodal Clinical Pharmacist Agent Powered by Google Gemma 4 12B QAT on Commodity Hardware**
 
-Currently, two official plugins are available:
+![Architecture](fig1_architecture.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Overview
+This repository contains the source code, prompts, and clinical validation dataset for **Alicia IA**, an air-gapped clinical decision-support agent designed for pharmacovigilance. 
 
-## React Compiler
+Built to address the three major barriers of cloud-based LLMs in healthcare (connectivity, recurring costs, and PHI privacy), Alicia IA runs entirely locally on commodity hardware using **Google Gemma 4 12B QAT** interfaced through a React+Vite frontend and LM Studio.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The system utilizes a **Seven-Profile Pharmacological Specialization Engine** that steers the model into distinct clinical modes (Neonatal, Pediatric, Adolescent, General Adult, Geriatric, Obstetric, Lactation) using evidence-based criteria (Beers 2023, STOPP/START, LactMed, etc.).
 
-## Expanding the ESLint configuration
+## Authors
+- **Mtro. Luis Ramón Tercero Martínez González**
+- **Dra. María Teresa Flores Dorantes**
+*Laboratorio de Biología Molecular y Farmacogenética (LBMyFG) - UJAT, México.*
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Data Availability
+To support reproducibility and transparent academic review (CONSORT-AI), this repository includes:
+1. **`dataset_56_casos_clinicos.md`**: The complete dataset of 56 structured clinical scenarios (8 per pharmacological profile) used for the preliminary validation.
+2. **`systemPrompts.js`**: The exact system prompts and rulesets used to enforce the clinical behaviors and safety guardrails (ISO/IEC 42001).
+
+## System Requirements
+- **Hardware**: Intel Core i7 / Ryzen 7, 16 GB RAM, NVIDIA RTX 3060 (12 GB VRAM) or equivalent.
+- **Backend**: [LM Studio](https://lmstudio.ai/) running `google/gemma-4-12b-qat` on port 1234.
+- **Frontend**: Node.js v18+.
+
+## Quick Start
+1. Clone the repository: `git clone https://github.com/TerceroMaster/alicia-ia-smade2026.git`
+2. Install dependencies: `npm install`
+3. Start the UI: `npm run dev`
+4. Ensure LM Studio server is running locally before submitting queries.
+
+## License
+Open-source academic license. 
+
+*Presented at SMaDE 2026 — Symposium on Mathematics applied to Data Engineering.*
