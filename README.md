@@ -1,6 +1,6 @@
 # Farmacéutica Alicia IA 👩‍⚕️💊
 
-**A Privacy-First, Air-Gapped Multimodal Clinical Pharmacist Agent Powered by Google Gemma 4 12B QAT on Commodity Hardware**
+**A Privacy-First, Air-Gapped Multimodal Clinical Pharmacist Agent with Seven-Profile Specialization on Commodity Hardware**
 
 ![Architecture](fig1_architecture.png)
 
