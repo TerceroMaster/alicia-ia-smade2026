@@ -97,3 +97,37 @@
 
 ---
 *Este documento será utilizado por los QFB expertos para someter a la IA a los 56 escenarios y calificar la identificación del DRP y la calidad de la recomendación en una escala de Likert, tal como se especifica en la sección de Trabajos Futuros del artículo.*
+
+---
+
+## Metodología de Evaluación y Puntuación
+
+### 📊 1. ¿Cómo medir la "Transparencia del Razonamiento" (Escala 1 al 5)?
+Esta columna evalúa qué tan bien te explica la IA el "por qué" (su *Chain-of-Thought* o línea de pensamiento interno) antes de darte la recomendación. Tú y el panel de expertos deben calificar cada respuesta usando esta escala Likert:
+
+* **1 punto (Pésimo):** Alicia da una recomendación pero no explica nada, es una caja negra. *(Ej: "No le des ceftriaxona, dale otra cosa").*
+* **2 puntos (Pobre):** Menciona el problema muy por encima, sin base médica. *(Ej: "La ceftriaxona le hace daño al bebé").*
+* **3 puntos (Aceptable):** Explica el problema, pero el razonamiento es confuso o le falta el mecanismo de acción.
+* **4 puntos (Bueno):** Explica claramente el problema clínico y la recomendación de forma lógica y estructurada.
+* **5 puntos (Excelente / Nivel Experto):** Alicia muestra un razonamiento clínico perfecto y transparente. Menciona exactamente el mecanismo *(Ej: "Alerta: La ceftriaxona desplaza la bilirrubina de la albúmina, causando riesgo inminente de kernicterus por la inmadurez hepática del neonato de 5 días. Contraindicación absoluta").*
+
+### 👩‍⚕️ 2. Guía paso a paso para la Farmacéutica Virtual
+Para que el experimento sea válido y repetible, deben ejecutar la prueba de la siguiente manera:
+
+**Prepara el entorno:**
+1. Abre **LM Studio**, asegúrate de tener cargado el modelo `Gemma 4 12B QAT` y dale a "Start Server" (Puerto 1234).
+2. En tu terminal de VSCode (PowerShell), asegúrate de tener corriendo el frontend con `npm run dev`.
+3. Abre Alicia IA en tu navegador (`localhost:5173`).
+
+**Ejecuta el Caso (Ejemplo con el Caso N1):**
+1. En la interfaz de Alicia, ve al selector de pacientes y **elige el perfil correcto** (ej. "Neonatal").
+2. En el chat, cópiale textualmente los datos de este documento: *"Neonato (5 días, 3.2 kg). Prescripción: Ceftriaxona 500 mg IV cada 12h."*
+3. Dale a enviar.
+
+**Evalúa y anota en el Excel de Puntuación:**
+1. **¿Detectó el DRP correctamente? (Sí/No):** Revisa si Alicia notó el problema subyacente (ej. riesgo de kernicterus).
+2. **¿Resolvió el DRP correctamente? (Sí/No):** Revisa si Alicia sugirió suspenderla y/o cambiarla por una alternativa segura.
+3. **Puntuación de la intervención (1 al 5):** Lee el panel desplegable de "Razonamiento Clínico" que sale en la interfaz y califícalo según la escala de arriba.
+
+**Limpia y repite:**
+⚠️ **¡MUY IMPORTANTE!** Después de evaluar cada caso, dale al botón de **"Nueva Consulta"** (o refresca la página) para limpiar la memoria de Alicia. Es vital que la IA no recuerde al paciente anterior cuando le preguntes por el siguiente caso.
