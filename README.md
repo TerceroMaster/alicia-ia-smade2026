@@ -32,6 +32,12 @@ To support reproducibility and transparent academic review (CONSORT-AI), this re
 3. Start the UI: `npm run dev`
 4. Ensure LM Studio server is running locally before submitting queries.
 
+## Core Architectural Concepts
+- **Single-Agent with Prompt-Driven Routing**: Unlike Multi-Agent Systems where multiple AI models converse with each other, Alicia IA uses a single LLM backend. The React frontend dynamically swaps the active *system prompt* based on the selected demographic profile, effectively changing the AI's "persona" and medical ruleset on the fly.
+- **Privacy-First**: Designed to never transmit Protected Health Information (PHI) over the internet, addressing major HIPAA and NOM-024-SSA3-2010 compliance roadblocks present in cloud-based LLMs like ChatGPT.
+- **Air-Gapped**: The system operates entirely offline without an active network connection, allowing deployment in remote clinics or high-security hospital networks.
+- **Commodity Hardware**: Proves that frontier-level quantized AI models (12B parameters) can run efficiently on standard consumer-grade GPUs (e.g., NVIDIA RTX 3060 12GB), eliminating the need for expensive cloud infrastructure or enterprise data centers.
+
 ## License
 Open-source academic license. 
 
