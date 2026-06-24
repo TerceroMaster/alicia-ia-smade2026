@@ -589,49 +589,46 @@ each profile. Representative examples include:
 
 \subsection{Results}
 
-Table~\ref{tab:results} and Figure~\ref{fig:results} present quantitative evaluation results across all
-seven profiles.
+Preliminary testing focused on the \textbf{General Adult (18-64 years)} profile using 8 distinct clinical scenarios involving polypharmacy, CYP450 interactions, and prescribing cascades. The AI successfully identified the hidden Drug-Related Problems (DRP) in 100\% of the cases and adhered strictly to its \textit{Chain-of-Thought} constraints.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=\columnwidth]{fig2_results.png}
-  \caption{Evaluation results by clinical profile ($n=8$ scenarios/profile, evaluated by two licensed pharmacists). Demonstrates consistent DRP identification ($\geq$87.5\%) across all demographic groups.}
+  \caption{Preliminary Evaluation Results: General Adult Profile ($n=8$). 
+Demonstrates 100\% DRP identification and safe clinical recommendations.}
   \label{fig:results}
 \end{figure}
 
-\begin{table}[H]
-  \centering
-  \caption{Evaluation Results by Clinical Profile ($n=8$ scenarios/profile).\newline
-  \footnotesize DRP: DRP identification rate. Rec.: Clinically acceptable recommendation.
-  CoT: Chain-of-thought quality (Likert 1--5). Lat.: Mean inference latency (seconds).}
-  \label{tab:results}
-  \renewcommand{\arraystretch}{1.2}
-  \begin{threeparttable}
-  \begin{tabular}{@{}lcccc@{}}
-    \toprule
-    \textbf{Profile} & \textbf{DRP\,(\%)} & \textbf{Rec.\,(\%)} &
-    \textbf{CoT} & \textbf{Lat.\,(s)} \\
-    \midrule
-    Neonatal      & 100.0 & 87.5  & 4.6 & 5.1 \\
-    Pediatric     & 87.5  & 87.5  & 4.3 & 4.0 \\
-    Adolescent    & 87.5  & 87.5  & 4.1 & 3.9 \\
-    General Adult & 100.0 & 100.0 & 4.8 & 3.7 \\
-    Geriatric     & 100.0 & 87.5  & 4.7 & 4.5 \\
-    Obstetric     & 87.5  & 75.0  & 4.2 & 6.2 \\
-    Lactation     & 87.5  & 87.5  & 4.4 & 4.8 \\
-    \midrule
-    \textbf{Overall} & \textbf{91.7} & \textbf{87.5} & \textbf{4.4} & \textbf{4.6} \\
-    \bottomrule
-  \end{tabular}
-  \end{threeparttable}
-\end{table}
+The qualitative analysis of the AI's performance reveals advanced clinical reasoning across four critical domains:
 
-Inter-rater agreement on DRP identification was measured using Cohen's
-$\kappa = 0.84$, indicating near-perfect agreement. The two profiles with
-lower recommendation rates (Obstetric: 75.0\%) reflect genuine complexity
-in trimester-stratified teratogenicity assessment, where the model provided
-correct risk identification but incomplete dosing alternatives—a limitation
-discussed in Section~\ref{sec:discussion}.
+\begin{enumerate}
+    \item \textbf{High-Risk Interactions (CYP450 and QT):} In Case G1, the system successfully identified the severe CYP3A4 inhibition caused by clarithromycin, which dangerously elevates atorvastatin levels and risks rhabdomyolysis. In Case G7, it correctly warned of \textit{Torsades de Pointes} when combining Amiodarone and Levofloxacin.
+    \item \textbf{Prescribing Cascade Detection:} In Case G3, the system deduced that the patient's cough was a secondary effect of the ACE inhibitor (Enalapril), advising a switch to an ARB rather than treating the symptom with dextromethorphan.
+    \item \textbf{Renal Adjustment and NSAID Duplication:} The model demonstrated mathematical reasoning by correlating a reduced Glomerular Filtration Rate (GFR 35 mL/min) with metformin accumulation (Case G5), warning of Lactic Acidosis. Furthermore, it identified toxic therapeutic duplication of NSAIDs and accurately calculated paracetamol overdose limits (Cases G2 and G4).
+    \item \textbf{Clinically Safe Recommendations:} The system consistently provided actionable mitigations, such as separating levothyroxine from calcium/iron administration by 4 hours (Case G6) and enforcing strict alcohol abstinence during and after metronidazole therapy (Case G8).
+\end{enumerate}
+
+
+\begin{table*}[t]
+\centering
+\caption{Clinical Validation Matrix (General Adult Profile, $n=8$). Comparison of Expert Gold Standard vs. AI Inferences.}
+\label{tab:correlation_matrix}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}p{0.05\linewidth}p{0.25\linewidth}p{0.3\linewidth}p{0.3\linewidth}c@{}}
+\toprule
+\textbf{Case} & \textbf{Prescription} & \textbf{Expected DRP (Expert Panel)} & \textbf{AI Detected PRM (Chain-of-Thought)} & \textbf{Match} \\
+\midrule
+\textbf{G1} & Omeprazole + Clarithromycin + Atorvastatin & Severe CYP3A4 inhibition by clarithromycin; elevates atorvastatin levels, risk of rhabdomyolysis. & Drug-Drug Interaction. Clarithromycin inhibits CYP3A4. Severe muscular toxicity risk. & 100\% \\
+\textbf{G2} & Paracetamol 1g q6h + Tramadol/Parac. (37.5/325 mg) q8h & Therapeutic duplication and exceeding max daily paracetamol dose ($> 4$g/day). & Inadequate Dose. Consumption of 4.975 g/day. Severe Hepatotoxicity risk. & 100\% \\
+\textbf{G3} & Enalapril + Cough Syrup (Dextromethorphan) & Prescribing cascade. Cough is an ACE inhibitor side effect. & Adverse Effect (Cascade). Enalapril causes dry cough. Dextromethorphan masks symptom. Switch to ARB. & 100\% \\
+\textbf{G4} & Naproxen 500 mg q12h + Diclofenac IM & NSAID duplication; severe increase in GI bleeding and nephrotoxicity risk. & Therapeutic Duplication. Simultaneous use of two NSAIDs. Severe GI and renal toxicity increase. & 100\% \\
+\textbf{G5} & Metformin 850 mg q8h (GFR 35 mL/min) & Dose too high for reduced GFR; lactic acidosis risk. & Inadequate dose due to renal failure. Accumulation at GFR 35 mL/min. Lactic Acidosis risk. & 100\% \\
+\textbf{G6} & Levothyroxine + Calcium and Iron & Severe inhibition of levothyroxine absorption. Separate by 4 hours. & Drug Interaction. Calcium/Iron reduce absorption. Separate doses by at least 4 hours. & 100\% \\
+\textbf{G7} & Amiodarone + Levofloxacin & Risk of QT interval prolongation and \textit{Torsades de Pointes}. & Drug Interaction. Both prolong QT interval. Arrhythmia risk. & 100\% \\
+\textbf{G8} & Metronidazole + Alcohol & Antabuse (disulfiram-like) effect risk with alcohol. & Drug-Substance Interaction. Disulfiram-like reaction risk. Avoid alcohol. & 100\% \\
+\bottomrule
+\end{tabular}
+\end{table*}
 
 \subsection{Hardware Performance}
 

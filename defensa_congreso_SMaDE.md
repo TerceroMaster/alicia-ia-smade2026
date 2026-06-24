@@ -40,3 +40,18 @@ Esta metodología está respaldada por dos grandes estándares de Inteligencia A
 2. **Escalas Likert en PNL Clínico:** Evaluar el *"Chain-of-Thought"* (la Transparencia del Razonamiento) con una escala Likert del 1 al 5 es el estándar de oro actual en los *papers* de IEEE y Nature Medicine para calificar a los Large Language Models.
 
 Con esto le demuestras a la Dra. y al jurado que el Excel no es un "invento", sino un protocolo experimental estructurado, alineado a normas internacionales (CONSORT-AI) para garantizar la seguridad del paciente.
+
+---
+
+### 6. Limitaciones de Hardware y Tiempos de Respuesta (Pregunta Crítica)
+**Si el jurado te pregunta: "¿Por qué la IA tarda entre 1 y 2 minutos (75-100 segundos) en contestar?"**
+
+Debes ser completamente transparente y usar esto como una fortaleza de la investigación:
+* *"El modelo de IA que usamos (Gemma-4-12b) tiene 12 mil millones de parámetros y recomienda un mínimo de 16 GB de VRAM para correr a máxima velocidad. Nuestro experimento se realizó bajo condiciones extremas de **Hardware de Consumo Limitado**, utilizando una tarjeta de apenas **6 GB de VRAM** y 16 GB de RAM de sistema."*
+* *"Debido a esto, el sistema hace un 'offloading' parcial (mueve parte del peso del cerebro de la IA a la RAM normal, que es más lenta). Esto resulta en un tiempo de razonamiento de 75 a 100 segundos y una velocidad de ~7.5 tokens por segundo."*
+* **La conclusión clave:** *"A pesar de la severa restricción de hardware, el agente logró cargar el modelo y procesar un razonamiento clínico complejo de manera exitosa. Esto demuestra que la arquitectura es resiliente y puede funcionar en clínicas rurales con presupuestos muy bajos, sacrificando velocidad por viabilidad económica y privacidad."*
+
+### 7. Resultados Preliminares y Trabajo Futuro
+Para esta primera etapa del artículo, la validación se concentró como prueba de concepto en el **Perfil Adulto General (18-64 años)** utilizando 8 escenarios específicos (enfocados en polifarmacia e interacciones como CYP450).
+* **Resultados Preliminares:** Como se observa en los logs del servidor local, Alicia IA logró apegarse estrictamente a su "Chain-of-Thought", razonando primero el mecanismo de acción de la interacción antes de arrojar una recomendación, logrando detectar correctamente los PRM ocultos en los casos.
+* **Trabajo Futuro:** La siguiente fase de la investigación someterá al sistema al set de datos completo de 56 casos para evaluar su capacidad de cambiar de contexto farmacológico (ej. de criterios geriátricos STOPP/START a riesgos teratogénicos obstétricos).
