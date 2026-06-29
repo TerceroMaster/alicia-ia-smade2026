@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Data
-metrics = ['Tasa de Identificación de DRP', 'Adherencia al Chain-of-Thought', 'Aceptabilidad Clínica (Preliminar)']
+metrics = ['DRP Identification Rate', 'Chain-of-Thought Adherence', 'Clinical Acceptability (Preliminary)']
 percentages = [100.0, 100.0, 100.0]
 
 # Style configuration

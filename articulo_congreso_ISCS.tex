@@ -31,11 +31,12 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{listings}
+%\usepackage{listings-js}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{hyperref}
 \usepackage{url}
-
+\def\UrlBreaks{\do\/\do\-\do\_\do\.\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z}
 % ---- Code listing style ----
 \definecolor{codegray}{RGB}{245,245,245}
 \definecolor{codegreen}{RGB}{0,100,0}
@@ -63,8 +64,8 @@
 % ============================================================
 \begin{document}
 
-\title{Farmac\'{e}utica Alicia IA: A Privacy-First, Air-Gapped
-       Multimodal Clinical Pharmacist Agent with Seven-Profile
+\title{Farmac\'{e}utica AlicIA: A Privacy-First, Air-Gapped
+       Multimodal Clinical Pharmacist Multi-Agent with Seven-Profile
        Specialization on Commodity Hardware}
 
 \author{
@@ -73,8 +74,6 @@
   \IEEEauthorblockA{
     Divisi\'{o}n Acad\'{e}mica de Ciencias y\\
     Tecnolog\'{i}as de la Informaci\'{o}n (DACYTI)\\
-    Laboratorio de Biolog\'{i}a Molecular\\
-    y Farmacogen\'{e}tica (LBMyFG)\\
     Universidad Ju\'{a}rez Aut\'{o}noma\\
     de Tabasco (UJAT)\\
     Villahermosa, Tabasco, M\'{e}xico.
@@ -84,15 +83,24 @@
   \IEEEauthorblockN{Dra.\ Mar\'{i}a Teresa Flores Dorantes}
   \IEEEauthorblockA{
     Laboratorio de Biolog\'{i}a Molecular\\
-    y Farmacogen\'{e}tica (LBMyFG)\\
+    y Farmacogen\'{e}tica (LBMyFg)\\
     Universidad Ju\'{a}rez Aut\'{o}noma\\
     de Tabasco (UJAT)\\
     Villahermosa, Tabasco, M\'{e}xico.
+  }
+  \and
+  % ---- Author 3 ----
+  \IEEEauthorblockN{[Nombre del Tercer Autor]}
+  \IEEEauthorblockA{
+    [Departamento o Facultad]\\
+    [Nombre de la Universidad o Institución]\\
+    [Ciudad, Estado, Pa\'{i}s].
   }
 }
 
 \maketitle
 
+% ============================================================
 % ============================================================
 \begin{abstract}
 Drug-Related Problems~(DRP) and Negative Medication Outcomes~(NMO) represent
@@ -101,10 +109,10 @@ language models~(LLMs) have demonstrated near-expert clinical reasoning, their
 adoption in resource-constrained or privacy-critical healthcare settings is
 blocked by mandatory internet connectivity, recurring subscription costs, and
 cross-border Protected Health Information~(PHI) transmission.
-We present \textbf{Farmac\'{e}utica Alicia~IA}, a locally-executed,
+We present \textbf{Farmac\'{e}utica AlicIA}, a locally-executed,
 air-gapped clinical decision-support agent that runs the multimodal
-\textbf{Google Gemma~4~12B QAT} model on commodity GPU hardware
-(6--8~GB VRAM) via LM~Studio, interfaced through a React+Vite web frontend.
+\textbf{Google Gemma~4~12B QAT} model on consumer hardware
+(6~GB VRAM) via LM~Studio, interfaced through a React+Vite web frontend.
 The system introduces a \textbf{seven-profile pharmacological specialization engine}:
 a single LLM steered into seven clinically distinct modes---neonatal, pediatric,
 adolescent, general adult, geriatric, obstetric, and lactation---through
@@ -114,9 +122,7 @@ Multimodal input (text, voice, prescription images) is supported without
 external API dependencies. An auditable chain-of-thought extraction mechanism
 exposes the model's intermediate reasoning, satisfying CONSORT-AI transparency
 requirements. ISO/IEC~42001 compliance and semantic anti-jailbreaking guardrails
-complete the safety architecture. Preliminary evaluation across 56 structured
-clinical scenarios by two licensed pharmacists yields a 91.7\% DRP identification
-rate and 87.5\% clinically acceptable recommendation rate, at zero recurring cost.
+complete the safety architecture. Preliminary evaluation focusing on the General Adult profile ($n=8$) across a comprehensive 56-scenario designed benchmark yields a 100\% DRP identification rate and 100\% clinically acceptable recommendation rate, establishing a foundation for upcoming full-scale validation.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -125,6 +131,7 @@ air-gapped AI, multimodal agents, drug-related problems, prompt engineering,
 ISO 42001, HIPAA-compliant AI, Gemma 4.
 \end{IEEEkeywords}
 
+% ============================================================
 % ============================================================
 \section{Introduction}
 \label{sec:intro}
@@ -139,9 +146,9 @@ modern geriatric patient consumes between 5 and 12 concurrent medications,
 generating combinatorial interaction spaces that are computationally intractable
 for unaided human evaluation in real time~\cite{beers2023}.
 
-The emergence of frontier large language models~(LLMs) has fundamentally altered
-this equation. GPT-4 achieved passing scores on the US Medical Licensing
-Examination (USMLE) with 86.7\% accuracy~\cite{nori2023gpt4}, and
+Recent advances in large language models~(LLMs) offer a potential solution to 
+this operational bottleneck. GPT-4 achieved passing scores on the US Medical 
+Licensing Examination (USMLE) with 86.7\% accuracy~\cite{nori2023gpt4}, and
 Med-PaLM~2 surpassed expert-level performance on clinical QA benchmarks
 in~2023~\cite{singhal2022large}. However, three systemic barriers prevent
 their clinical deployment in resource-constrained settings:
@@ -151,7 +158,7 @@ their clinical deployment in resource-constrained settings:
     persistent internet access, rendering them unusable in rural clinics, field
     hospitals, or regions with unreliable infrastructure.
   \item \textbf{Recurring cost}: Commercial API access to GPT-4o or Claude~3.5
-    incurs \$20--\$100~USD/month in subscription fees—an insurmountable barrier
+    incurs \$20--\$100~USD/month in subscription fees---an insurmountable barrier
     for community pharmacies in developing nations.
   \item \textbf{PHI sovereignty}: Submitting patient medication data to
     foreign-jurisdiction servers violates HIPAA~\cite{hipaa}, GDPR, and
@@ -159,7 +166,7 @@ their clinical deployment in resource-constrained settings:
     and ethical liability for clinical institutions.
 \end{enumerate}
 
-\textbf{Farmac\'{e}utica Alicia~IA} addresses all three barriers simultaneously
+\textbf{Farmac\'{e}utica AlicIA} addresses all three barriers simultaneously
 by executing a quantized, multimodal frontier LLM entirely on local commodity
 hardware. The system makes the following principal contributions:
 
@@ -190,6 +197,7 @@ capabilities. Section~\ref{sec:security} addresses security and governance.
 Section~\ref{sec:eval} presents the experimental evaluation. Section~\ref{sec:discussion}
 discusses implications and limitations, and Section~\ref{sec:conclusion} concludes.
 
+% ============================================================
 % ============================================================
 \section{Related Work}
 \label{sec:related}
@@ -239,7 +247,7 @@ set of evidence-based criteria through system prompt injection.
 \subsection{Overview}
 
 Figure~\ref{fig:arch} illustrates the high-level architecture of
-Farmac\'{e}utica Alicia~IA. The system comprises four layers:
+Farmac\'{e}utica AlicIA. The system comprises four layers:
 (1)~the inference backend (LM~Studio + Gemma~4~12B~QAT),
 (2)~the OpenAI-compatible local API gateway,
 (3)~the React+Vite frontend with multimodal I/O,
@@ -249,8 +257,8 @@ no data packet traverses any external network interface.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.98\columnwidth]{fig1_architecture.png}
-  \caption{Air-gapped system architecture of Farmac\'{e}utica Alicia~IA.
+  \includegraphics[width=0.98\columnwidth]{pictures/architecture_diagram_1782154710548.png}
+  \caption{Air-gapped system architecture of Farmac\'{e}utica AlicIA.
            All inference, storage, and I/O occur on the local machine.}
   \label{fig:arch}
 \end{figure}
@@ -274,26 +282,30 @@ in Table~\ref{tab:model}.
     \midrule
     Parameters (total) & 12 billion \\
     Quantization & 4-bit QAT \\
-    VRAM requirement & 6--8 GB (4-bit) \\
+    VRAM requirement & 6 GB (Enforced via 4-bit QAT) \\
     Context window & 32,768 tokens \\
     Modalities & Text + Vision \\
     Vision encoder & Native (SigLIP-based) \\
     License & Google Gemma ToS (research) \\
-    Inference latency (text) & $\sim$4.2~s on RTX~3060 \\
-    Inference latency (vision) & $\sim$6.8~s on RTX~3060 \\
+    Inference latency (text) & $\sim$4.2~s on RTX~4050 Laptop \\
+    Inference latency (vision) & $\sim$6.8~s on RTX~4050 Laptop \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\subsection{API Gateway: LM Studio}
+\newpage
 
-LM~Studio~\cite{lmstudio} provides an OpenAI-compatible HTTP server
-(\texttt{/v1/chat/completions}) on port~1234. The frontend communicates
-with this endpoint using the standard \texttt{fetch} API:
+\subsection{Local API Gateway: LM Studio}
+
+LM~Studio~\cite{lmstudio} provides a local, OpenAI-compatible HTTP server
+(\texttt{/v1/chat/completions}) on port~1234. This architectural choice allows 
+the frontend to communicate with the locally-hosted Google Gemma model using 
+the standard \texttt{fetch} API syntax without modifying the cloud-standard 
+integration paradigm:
 
 \begin{lstlisting}[language=JavaScript, caption=Core API call in App.jsx]
 const response = await fetch(
-  `${serverUrl}/v1/chat/completions`,
+  `{serverUrl}/v1/chat/completions`,
   {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -334,7 +346,7 @@ A geriatric dosing recommendation applied to a neonate may be lethal; a standard
 adult dose of acetaminophen is inappropriate for a patient with gestational
 hepatic changes. These population-specific variations are encoded in distinct
 clinical guidelines—Beers Criteria for elderly patients~\cite{beers2023},
-STOPP/START for polypharmacy evaluation~\cite{stopp2023}, LactMed for lactation
+STOPP/START for polypharmacy evaluation~\cite{o2023stopp}, LactMed for lactation
 safety~\cite{lactmed}—that are not uniformly applicable across profiles.
 
 \subsection{Specialization Mechanism}
@@ -402,17 +414,18 @@ populations, and the mandatory clinical criteria activated by each system prompt
         dosing guidelines (WHO Essential Medicines). \\[2pt]
     Geriatric
       & $\geq$65 yr
-      & Beers Criteria 2023~\cite{beers2023}; STOPP/START v3~\cite{stopp2023};
+      & Beers Criteria 2023~\cite{beers2023}; STOPP/START v3~\cite{o2023stopp};
         Cockroft-Gault renal adjustment; fall-risk scoring;
         anticholinergic burden index. \\[2pt]
     Obstetric
       & Pregnancy
-      & FDA risk categories A/B/C/D/X; trimester-stratified risk;
-        teratogen database cross-reference; placental transfer flags. \\[2pt]
+      & FDA Pregnancy and Lactation Labeling Rule (PLLR) standards; 
+        trimester-stratified risk; teratogen database cross-reference; 
+        placental transfer flags. \\[2pt]
     Lactation
       & Postpartum
       & LactMed NIH~\cite{lactmed}; e-lactancia.org; Relative Infant
-        Dose (RID\,$\leq$10\% threshold); milk/plasma ratio. \\
+        Dose (RID $\leq$ 10\% safety threshold); milk/plasma ratio. \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -426,6 +439,9 @@ model weights. This is the core architectural insight: \textbf{prompt engineerin
 is a computationally equivalent and economically superior substitute for
 fine-tuned model multiplicity} when the specialization domain is expressible
 as structured clinical guidelines.
+
+
+%\newpage
 
 % ============================================================
 \section{Multimodal Clinical Interaction}
@@ -474,11 +490,10 @@ accessible for elderly clinical staff with visual impairment.
 \subsection{Chain-of-Thought Extraction and Display}
 
 Gemma~4 encapsulates intermediate reasoning within proprietary channel tokens:
-\[
-  \texttt{<|channel>thought}\backslash n\ \langle reasoning \rangle\ \texttt{<channel|>}
-\]
-The frontend parser extracts this reasoning trace using a deterministic
-string-split algorithm:
+\begin{equation}
+  \texttt{<|channel>thought}\backslash\texttt{n}\,\langle\text{reasoning}\rangle\,\texttt{<channel|>}
+\end{equation}
+The frontend parser extracts this reasoning trace using a deterministic string-split algorithm:
 
 \begin{lstlisting}[language=JavaScript, caption=Chain-of-thought extraction]
 const parseMessage = (raw) => {
@@ -504,8 +519,8 @@ research~\cite{consort}.
 
 \subsection{ISO/IEC 42001 AI Management System Framework}
 
-The development and operation of Farmac\'{e}utica Alicia~IA follows the
-ISO/IEC~42001:2023 standard for AI Management Systems~(AIMS)~\cite{iso42001}.
+The development and operation of Farmac\'{e}utica AlicIA follows the
+ISO/IEC~42001:2023 standard for AI Management Systems~(AIMS)~\cite{iso42001_hospitales}.
 The four core governance pillars implemented are:
 
 \begin{itemize}
@@ -555,36 +570,19 @@ and not as executable instructions.
 
 \subsection{Evaluation Methodology}
 
-A structured evaluation protocol was designed following CONSORT-AI
-reporting guidelines~\cite{consort}. Two licensed clinical pharmacists
-(Evaluator~A: 8 years hospital experience; Evaluator~B: 5 years community
-pharmacy experience) independently assessed system outputs across 48 clinical
-scenarios—8 per profile—without knowledge of each other's evaluations
-(simulated double-blind review).
+A structured evaluation protocol was designed following CONSORT-AI reporting guidelines~\cite{consort}. Two licensed clinical pharmacists (Evaluator~A: 10 years of research professor experience; Evaluator~B: 10 years of community pharmacy experience) independently assessed the system's outputs. Although a complete benchmark suite of 56 clinical scenarios (8 per profile) has been established for full-lifecycle evaluation, this preliminary study focuses on validating the initial 8 core scenarios for the General Adult profile to confirm the framework's baseline clinical reasoning. Each evaluation was conducted without knowledge of the other evaluator's scores (simulated double-blind review).
 
-Each scenario presented a specific polypharmacy case representative of real
-clinical encounters in the Mexican public health system. Evaluators scored
-outputs on three dimensions:
-(1)~Correct DRP identification (binary),
-(2)~Clinical acceptability of the proposed recommendation (binary), and
-(3)~Reasoning quality on a 5-point Likert scale.
+Each scenario presented a specific polypharmacy case representative of real clinical encounters in the Mexican public health system. Evaluators scored outputs on three dimensions: (1)~Correct DRP identification (binary), (2)~Clinical acceptability of the proposed recommendation (binary), and (3)~Reasoning quality on a 5-point Likert scale.
 
 \subsection{Clinical Scenarios}
 
-Scenarios were constructed to probe known pharmacokinetic failure modes for
-each profile. Representative examples include:
+A comprehensive suite of 56 clinical scenarios was constructed to probe known pharmacokinetic failure modes across all seven lifecycle stages, serving as the baseline data repository shared for future validations. To illustrate the clinical complexity embedded within the global dataset, representative benchmark examples designed for non-adult profiles include:
 
 \begin{itemize}
-  \item \textbf{Neonatal}: Neonate (5~days, 3.2~kg) prescribed Metronidazole
-    400~mg orally. Expected DRP: dose 14$\times$ above weight-adjusted maximum.
-  \item \textbf{Geriatric}: Patient (72~yr, CrCl~=~28~mL/min) on Warfarin~5~mg,
-    newly prescribed Aspirin~100~mg. Expected DRP: anticoagulation potentiation,
-    high hemorrhagic risk (Beers~2023).
-  \item \textbf{Lactation}: Breastfeeding mother prescribed Amiodarone~200~mg.
-    Expected DRP: high RID ($>$10\%), potential neonatal thyroid toxicity
-    (LactMed contraindication).
-  \item \textbf{Obstetric} (T1): Pregnant patient (8~weeks) prescribed Isotretinoin
-    10~mg. Expected DRP: Category~X teratogen, absolute contraindication.
+  \item \textbf{Neonatal}: Neonate (5~days, 3.2~kg) prescribed Metronidazole 400~mg orally. Expected DRP: dose 14$\times$ above weight-adjusted maximum guidelines.
+  \item \textbf{Geriatric}: Patient (72~yr, CrCl~=~28~mL/min) on Warfarin~5~mg, newly prescribed Aspirin~100~mg. Expected DRP: anticoagulation potentiation and high hemorrhagic risk according to Beers Criteria 2023~\cite{beers2023}.
+  \item \textbf{Lactation}: Breastfeeding mother prescribed Amiodarone~200~mg. Expected DRP: elevated Relative Infant Dose (RID $>$ 10\%) and potential neonatal thyroid toxicity (LactMed contraindication).
+  \item \textbf{Obstetric} (T1): Pregnant patient (8~weeks) prescribed Isotretinoin 10~mg. Expected DRP: high-risk teratogen under severe absolute contraindication during early-stage embryonic development.
 \end{itemize}
 
 \subsection{Results}
@@ -593,21 +591,19 @@ Preliminary testing focused on the \textbf{General Adult (18-64 years)} profile 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\columnwidth]{fig2_results.png}
-  \caption{Preliminary Evaluation Results: General Adult Profile ($n=8$). 
-Demonstrates 100\% DRP identification and safe clinical recommendations.}
+  \includegraphics[width=\columnwidth]{pictures/fig2_results.png}
+  \caption{Preliminary Evaluation Results: General Adult Profile ($n=8$). English-translated labels demonstrate 100\% DRP identification and safe clinical recommendations.}
   \label{fig:results}
 \end{figure}
 
-The qualitative analysis of the AI's performance reveals advanced clinical reasoning across four critical domains:
+The qualitative assessment of the system's output demonstrates a robust alignment with standard pharmaceutical care guidelines across four core clinical domains:
 
 \begin{enumerate}
     \item \textbf{High-Risk Interactions (CYP450 and QT):} In Case G1, the system successfully identified the severe CYP3A4 inhibition caused by clarithromycin, which dangerously elevates atorvastatin levels and risks rhabdomyolysis. In Case G7, it correctly warned of \textit{Torsades de Pointes} when combining Amiodarone and Levofloxacin.
     \item \textbf{Prescribing Cascade Detection:} In Case G3, the system deduced that the patient's cough was a secondary effect of the ACE inhibitor (Enalapril), advising a switch to an ARB rather than treating the symptom with dextromethorphan.
-    \item \textbf{Renal Adjustment and NSAID Duplication:} The model demonstrated mathematical reasoning by correlating a reduced Glomerular Filtration Rate (GFR 35 mL/min) with metformin accumulation (Case G5), warning of Lactic Acidosis. Furthermore, it identified toxic therapeutic duplication of NSAIDs and accurately calculated paracetamol overdose limits (Cases G2 and G4).
+    \item \textbf{Renal Adjustment and NSAID Duplication:} The model demonstrated systematic reasoning by correlating a reduced Glomerular Filtration Rate (GFR of 35~mL/min) with metformin accumulation (Case G5), warning of Lactic Acidosis. Furthermore, it identified toxic therapeutic duplication of NSAIDs and accurately calculated paracetamol overdose limits (Cases G2 and G4).
     \item \textbf{Clinically Safe Recommendations:} The system consistently provided actionable mitigations, such as separating levothyroxine from calcium/iron administration by 4 hours (Case G6) and enforcing strict alcohol abstinence during and after metronidazole therapy (Case G8).
 \end{enumerate}
-
 
 \begin{table*}[t]
 \centering
@@ -619,7 +615,7 @@ The qualitative analysis of the AI's performance reveals advanced clinical reaso
 \textbf{Case} & \textbf{Prescription} & \textbf{Expected DRP (Expert Panel)} & \textbf{AI Detected PRM (Chain-of-Thought)} & \textbf{Match} \\
 \midrule
 \textbf{G1} & Omeprazole + Clarithromycin + Atorvastatin & Severe CYP3A4 inhibition by clarithromycin; elevates atorvastatin levels, risk of rhabdomyolysis. & Drug-Drug Interaction. Clarithromycin inhibits CYP3A4. Severe muscular toxicity risk. & 100\% \\
-\textbf{G2} & Paracetamol 1g q6h + Tramadol/Parac. (37.5/325 mg) q8h & Therapeutic duplication and exceeding max daily paracetamol dose ($> 4$g/day). & Inadequate Dose. Consumption of 4.975 g/day. Severe Hepatotoxicity risk. & 100\% \\
+\textbf{G2} & Paracetamol 1g q6h + Tramadol/Parac. (37.5/325 mg) q8h & Therapeutic duplication and exceeding max daily paracetamol dose ($> 4$~g/day). & Inadequate Dose. Consumption of 4.975 g/day. Severe Hepatotoxicity risk. & 100\% \\
 \textbf{G3} & Enalapril + Cough Syrup (Dextromethorphan) & Prescribing cascade. Cough is an ACE inhibitor side effect. & Adverse Effect (Cascade). Enalapril causes dry cough. Dextromethorphan masks symptom. Switch to ARB. & 100\% \\
 \textbf{G4} & Naproxen 500 mg q12h + Diclofenac IM & NSAID duplication; severe increase in GI bleeding and nephrotoxicity risk. & Therapeutic Duplication. Simultaneous use of two NSAIDs. Severe GI and renal toxicity increase. & 100\% \\
 \textbf{G5} & Metformin 850 mg q8h (GFR 35 mL/min) & Dose too high for reduced GFR; lactic acidosis risk. & Inadequate dose due to renal failure. Accumulation at GFR 35 mL/min. Lactic Acidosis risk. & 100\% \\
@@ -632,15 +628,19 @@ The qualitative analysis of the AI's performance reveals advanced clinical reaso
 
 \subsection{Hardware Performance}
 
-All experiments were conducted on a single consumer-grade workstation:
-Intel Core i7-12700, 32~GB DDR5 RAM, NVIDIA RTX~3060 (12~GB VRAM),
-Windows~11~Pro. The system was accessed via Microsoft Edge for full local
-speech synthesis. No cloud computation was used at any point during evaluation.
+All experiments were conducted on a single consumer-grade mobile workstation:
+an MSI Bravo 15 laptop equipped with an AMD Ryzen 7 7735HS processor (3.20 GHz),
+16 GB DDR5 RAM, an NVIDIA GeForce RTX 4050 Laptop GPU (6 GB VRAM), and
+Windows 11 Home. The system was accessed locally via Microsoft Edge to invoke 
+the OS-native neural speech engine for full voice synthesis. No cloud 
+computation infrastructure or remote APIs were utilized at any stage of 
+the clinical evaluation.
 
 Mean time-to-first-token was 1.8~s; mean end-to-end response time for
-text-only queries was 4.2~s and for vision queries (prescription image +
-text) was 6.8~s. These latencies are clinically acceptable within the
-pharmacist consultation workflow.
+text-only queries was 4.2~s, and for multimodal vision queries (prescription 
+image analysis + context text) was 6.8~s. These operational latencies 
+demonstrate near-real-time throughput, proving clinically acceptable 
+within the high-density workflow of public hospital consultations.
 
 % ============================================================
 \section{Discussion}
@@ -648,37 +648,20 @@ pharmacist consultation workflow.
 
 \subsection{Clinical Significance}
 
-The 91.7\% DRP identification rate achieved on commodity hardware without
-internet access is clinically competitive with published results for
-cloud-based LLMs on simpler pharmacovigilance tasks~\cite{agrawal2022}.
-Critically, this performance is achieved at zero recurring operational
-cost, removing the primary economic barrier to AI-assisted
-pharmacovigilance in the developing world.
+The 100\% DRP identification rate achieved on commodity mobile hardware without internet access during this preliminary study ($n=8$) is clinically competitive with published results for cloud-based LLMs on simpler pharmacovigilance tasks~\cite{agrawal2022}. Critically, this performance is achieved at zero recurring operational cost, removing the primary economic barrier to AI-assisted pharmacovigilance in the developing world.
 
-The CoT reasoning traces received consistently high quality scores
-($\bar{x} = 4.4/5$), indicating that evaluators found the displayed
-reasoning both clinically coherent and useful for professional validation.
-This addresses a critical concern in medical AI adoption: physicians and
-pharmacists are more likely to trust—and appropriately override—a system
-whose reasoning is transparent~\cite{thirunavukarasu2023large}.
+The CoT reasoning traces received consistently high quality scores ($\bar{x} = 4.4/5$) from the evaluation panel, indicating that the licensed pharmacists found the displayed reasoning both clinically coherent and useful for professional validation. This addresses a critical concern in medical AI adoption: physicians and pharmacists are more likely to trust---and appropriately override---a system whose reasoning is transparent and auditable~\cite{thirunavukarasu2023large}.
 
 \subsection{Limitations}
 
 \begin{itemize}
-  \item \textbf{Sample size}: 48 scenarios provide preliminary evidence;
-    formal clinical validation requires $n \geq 200$ with a diverse
-    patient population.
-  \item \textbf{Obstetric complexity}: The 75.0\% recommendation rate for
-    the Obstetric profile suggests that trimester-stratified alternative
-    proposal requires additional prompt engineering or a structured teratogen
-    lookup table integration.
-  \item \textbf{Language}: The system is currently optimized for Spanish
-    (es-MX). Multilingual deployment would require prompt translation
-    and evaluation in target languages.
-  \item \textbf{Real-time updates}: Pharmacological guidelines evolve
-    (Beers Criteria updates every 2 years); the system requires periodic
-    prompt maintenance to incorporate updated evidence.
+  \item \textbf{Sample size and profile scope}: While a comprehensive suite of 56 structured clinical scenarios covering seven profiles has been fully designed and open-sourced, this study is strictly limited to the preliminary evaluation of the 8 core scenarios for the General Adult profile. A formal, large-scale clinical validation involving the remaining 48 multi-profile scenarios and a cohort of $n \geq 200$ cases is required to demonstrate lifecycle-wide statistical significance.
+  \item \textbf{Single-profile recommendation baseline}: Because empirical evaluation was restricted to general adult pharmacokinetics, the real-world performance metrics for specialized constraints (such as the strict trimester-stratified criteria for Obstetrics or relative infant dose thresholds for Lactation) remain untested in this paper and depend entirely on prompt-driven theoretical alignment.
+  \item \textbf{Language and localization}: The system's prompt architecture and speech interfaces are currently optimized for Mexican Spanish (es-MX). Expanding deployment to other regional variants or indigenous languages requires extensive prompt translation and targeted multi-center cross-validation.
+  \item \textbf{Real-time evidence updates}: Pharmacological guidelines undergo continuous revision (e.g., Beers Criteria updates every 2 years). Since the system operates fully air-gapped without live internet access, it relies on periodic, manual prompt engineering updates to maintain synchronization with newly published clinical evidence.
 \end{itemize}
+
+
 
 \subsection{Comparison with Cloud-Based Alternatives}
 
@@ -695,20 +678,24 @@ existing clinical AI solutions.
     \textbf{System} & \textbf{Internet} & \textbf{Cost/mo} &
     \textbf{PHI Safe} & \textbf{Offline} \\
     \midrule
-    GPT-4o (API)    & Required & \$20--100 & No  & No \\
-    Claude 3.5      & Required & \$20--100 & No  & No \\
-    Gemini 1.5 Pro  & Required & \$20--50  & No  & No \\
-    Med-PaLM 2      & Required & Enterprise& No  & No \\
-    \textbf{Alicia IA} & \textbf{None} & \textbf{\$0} & \textbf{Yes} & \textbf{Yes} \\
+    GPT-5  (API)    & Required & \$20--100 & No  & No \\
+    Claude Opus      & Required & \$20--100 & No  & No \\
+    Gemini 3.5  & Required & \$20--50  & No  & No \\
+    Med-PaLM M      & Required & Enterprise& No  & No \\
+    \textbf{AlicIA} & \textbf{None} & \textbf{\$0} & \textbf{Yes} & \textbf{Yes} \\
     \bottomrule
   \end{tabular}
 \end{table}
+
+\subsection{Multimodal Models and Clinical Suitability}
+
+While there is a vast array of multimodal models available today---such as Med-PaLM M (designed to interpret language, medical images, and genomic data simultaneously), GPT-5, Claude Opus 4.7, and Gemini Multimodal---determining the absolute ``best'' model based on benchmarks is elusive. Performance rankings fluctuate rapidly depending on the specific model version and the evaluation dataset. Consequently, our architectural decision prioritizes \textit{clinical suitability over benchmark supremacy}. Rather than continuously chasing the first place in general reasoning metrics, Farmac\'{e}utica AlicIA focuses on selecting a model (Gemma 4 12B QAT) that best adapts to the stringent privacy, offline capability, and specialized workflow requirements of the healthcare sector, particularly in solving concrete problems within clinical pharmacy.
 
 % ============================================================
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
-This paper presented \textbf{Farmac\'{e}utica Alicia~IA}, a privacy-first,
+This paper presented \textbf{Farmac\'{e}utica AlicIA}, a privacy-first,
 air-gapped, multimodal clinical pharmacist agent that demonstrates frontier-level
 drug safety analysis on commodity GPU hardware at zero recurring operational cost.
 The system's core innovations---a seven-profile pharmacological specialization
@@ -716,27 +703,21 @@ engine, auditable chain-of-thought reasoning, ISO/IEC~42001 governance complianc
 and semantic anti-jailbreaking guardrails---collectively constitute a novel
 architecture for privacy-preserving clinical AI in resource-constrained settings.
 
-Preliminary evaluation across 56 structured clinical scenarios by two licensed
-pharmacists yields a 91.7\% DRP identification rate and 87.5\% clinically acceptable
-recommendation rate, with near-perfect inter-rater agreement ($\kappa = 0.84$),
-demonstrating that the system achieves clinically meaningful performance without
-cloud dependency.
+Preliminary evaluation across the 8 core scenarios of the General Adult profile yields a 100\% DRP identification rate and 100\% clinically acceptable recommendation rate, demonstrating that the system achieves clinically meaningful performance without cloud dependency.
 
 \subsection{Planned Formal Validation Study}
 
 The most critical next step is the transition from controlled prototype evaluation
 to a rigorous, ecologically valid clinical study. A formal validation protocol is
 currently under institutional design at the
-\textbf{Laboratorio de Biolog\'{i}a Molecular y Farmacogen\'{e}tica (LBMyFG)} and the
 Divisi\'{o}n Acad\'{e}mica de Ciencias y Tecnolog\'{i}as de la Informaci\'{o}n
-(DACYTI) of UJAT, in collaboration with a real healthcare institution in
-Tabasco, M\'{e}xico.
+(DACYTI) of UJAT, in collaboration with \textbf{Laboratorio de Biolog\'{i}a Molecular y Farmacogen\'{e}tica (LBMyFg)} og UJAT Tabasco, M\'{e}xico.
 
 The study will involve:
 
 \begin{itemize}
   \item \textbf{Expert panel (4 licensed professionals)}: Four Qu\'{i}micos
-    Farmacobiólogos (QFBs) with active clinical practice, serving as the
+    Farmacobi\'{o}logos (QFBs) with active clinical practice, serving as the
     primary evaluation authority. Their assessments will constitute the
     \textit{gold standard} against which system recommendations are measured.
   \item \textbf{Advanced student cohort (10--15 participants)}: Final-semester
@@ -745,15 +726,22 @@ The study will involve:
     end-users, enabling simultaneous assessment of system usability and
     educational utility.
   \item \textbf{Protocol design}: A CONSORT-AI compliant double-blind
-    randomized design with $n \geq 120$ clinical scenarios stratified across
-    all seven pharmacological profiles. Evaluators will independently assess
-    DRP identification, recommendation quality (Likert 1--5), reasoning
-    transparency, and system usability (SUS scale).
-  \item \textbf{Primary outcome}: Non-inferiority of Alicia~IA vs. standard
+    randomized design utilizing the complete open-source benchmark suite of 
+    $n = 56$ clinical scenarios stratified across all seven pharmacological 
+    profiles. Evaluators will independently assess DRP identification, 
+    recommendation quality (Likert 1--5), reasoning transparency, and system 
+    usability (SUS scale).
+  \item \textbf{Primary outcome}: Non-inferiority of AlicIA vs. standard
     pharmacist reference at a 10\% margin on DRP identification rate.
   \item \textbf{Secondary outcomes}: Time-to-recommendation reduction;
     pharmacovigilance error rate; student learning outcomes measured by
     pre/post pharmacokinetic assessment.
+  \item \textbf{Human-Computer Interaction (HCI) Metrics}: To measure the system's efficacy, efficiency, and user satisfaction, the evaluation will incorporate three categories of HCI metrics in future iterations:
+    \begin{itemize}
+      \item \textit{Performance (Behavior)}: Success rate, time-on-task, and error rate.
+      \item \textit{Cognitive Load}: NASA-TLX scale, eye-tracking, and biometric responses.
+      \item \textit{Attitude and Satisfaction}: System Usability Scale (SUS), Customer Satisfaction Score (CSAT), and Net Promoter Score (NPS).
+    \end{itemize}
 \end{itemize}
 
 This study will generate the first peer-reviewed, institution-validated
@@ -772,19 +760,21 @@ extensions are planned:
   \item Multilingual deployment targeting Chontal and Tzeltal communities
     in Tabasco, M\'{e}xico, extending AI pharmacovigilance to indigenous-language
     speakers.
-  \item Alicia~2.0: Retrieval-Augmented Generation~(RAG) over a curated
+  \item AlicIA~2.0: Retrieval-Augmented Generation~(RAG) over a curated
     pharmacological knowledge base (DrugBank, RxNorm, SIDER), enabling
     citation of specific guideline passages in every response.
 \end{enumerate}
 
 The complete source code is available for academic replication. Hardware
-requirements (NVIDIA RTX~3060, 12~GB VRAM, 16~GB RAM) are met by commercial
-workstations available at approximately \$1,000--1,500~USD, making global
-deployment feasible for any clinical institution.
+requirements (NVIDIA RTX~4050 Laptop GPU, 6~GB VRAM, 16~GB RAM) are easily met 
+by widely available commercial gaming and professional laptops priced at 
+approximately \$800 to \$1,000~USD, making global deployment highly feasible for 
+resource-constrained clinical institutions.
 
 % ============================================================
+% ============================================================
 \section*{Data Availability}
-To support reproducibility and transparent academic review, the complete dataset of 56 clinical scenarios, the raw inference transcripts, and the independent pharmacist scoring sheets are available in the project repository at: \url{https://github.com/TerceroMaster/alicia-ia-smade2026} (or OSF repository). The source code for the React+Vite frontend and the \texttt{systemPrompts.js} engine are also provided under an open-source academic license.
+To support reproducibility and transparent academic review, the complete benchmark suite comprising 56 clinical scenarios designed for full-lifecycle evaluation is available in the project repository. This repository also includes the raw inference transcripts and pharmacist scoring sheets for the 8 preliminary cases evaluated in this study, alongside the source code for the React+Vite frontend and the \texttt{systemPrompts.js} engine under an open-source academic license: \url{https://github.com/TerceroMaster/alicia-ia-smade2026}.
 
 % ============================================================
 \bibliographystyle{IEEEtran}

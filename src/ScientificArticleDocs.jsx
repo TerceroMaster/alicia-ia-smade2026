@@ -56,6 +56,13 @@ export default function ScientificArticleDocs({ onBack }) {
                   La comunidad médica rechaza los sistemas IA que operan como "cajas negras". La integración de métricas de procesamiento (TTFT, t/s), la visualización del razonamiento oculto de la IA y el panel de auditoría de Pruebas Clínicas representan el estándar de oro en transparencia y el lenguaje riguroso que demandan los comités éticos y revisores científicos.
                 </p>
               </div>
+
+              <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '12px', border: '1px solid var(--glass-border)', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+                <h4 style={{ margin: '0 0 10px 0', color: 'var(--primary-dark)', fontSize: '1.1rem' }}>4. Prioridad en la Idoneidad, No Solo en Benchmarks</h4>
+                <p style={{ margin: 0, color: 'var(--text-dark)', fontSize: '0.95rem' }}>
+                  Aunque existen cientos de modelos multimodales competitivos (Med-PaLM M, GPT-5, Claude Opus 4.7, Gemini), el "mejor" modelo no es simplemente el que lidera un benchmark temporal, sino el que mejor se ajusta a las necesidades del sector salud. AlicIA elige la arquitectura local porque soluciona el desafío de infraestructura y confidencialidad clínica, priorizando la eficacia en el área farmacéutica por encima de ganar puntos en evaluaciones generalistas.
+                </p>
+              </div>
             </div>
           </section>
 

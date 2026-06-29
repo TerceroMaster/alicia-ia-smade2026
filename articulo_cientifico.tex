@@ -375,6 +375,10 @@ de parámetros. Su capacidad de razonamiento clínico ha sido validada en múlti
     violación potencial de privacidad en contextos clínicos.
 \end{itemize}
 
+Existe una gran variedad de modelos multimodales contemporáneos. Por ejemplo, Med-PaLM M (versión multimodal diseñada para interpretar simultáneamente lenguaje, imágenes médicas como rayos X y mamografías, y datos genómicos), GPT-5, Claude Opus 4.7 y Gemini Multimodal. La \textit{multimodalidad} se refiere a la capacidad de los modelos para entender, procesar y razonar de forma simultánea con diferentes tipos de información: texto, imágenes, video, audio y código. En lugar de traducir todo a texto primero, estos modelos analizan estas modalidades de forma nativa. 
+
+Al preguntarse cuál de todos los cientos de modelos multimodales es el "mejor", la respuesta es que la supremacía en los \textit{benchmarks} es efímera; dependiendo de la versión, un modelo distinto sube al primer lugar. Por lo tanto, nunca habrá un único modelo de IA multimodal absoluta y permanentemente superior. Lo fundamental, y el enfoque de este trabajo, es determinar \textbf{cuál se ajusta más al sector salud y soluciona eficazmente los problemas del área farmacéutica} considerando restricciones de privacidad y viabilidad de hardware.
+
 \subsection{Cuantización QAT (\textit{Quantization-Aware Training})}
 
 La \textit{cuantización} es una técnica de compresión de modelos que reduce la precisión aritmética
@@ -780,7 +784,7 @@ El sistema registra automáticamente métricas de inferencia en tiempo real:
 
 \begin{table}[H]
   \centering
-  \caption{Métricas de rendimiento en hardware de prueba (NVIDIA RTX 3060 6GB VRAM)}
+  \caption{Métricas de rendimiento en hardware de prueba (MSI Bravo 15, AMD Ryzen 7 7735HS, NVIDIA RTX 4050 6GB VRAM)}
   \begin{tabular}{lcc}
     \toprule
     \textbf{Métrica} & \textbf{Valor observado} & \textbf{Unidad} \\
@@ -842,6 +846,12 @@ Para la validación científica formal, se propone el siguiente protocolo:
     \end{itemize}
   \item \textbf{Herramienta de recolección:} Exportación PDF del chat de Alicia, entregada a los
     evaluadores sin revelar la fuente.
+  \item \textbf{Métricas de Interacción Humano-Computadora (HCI):} En futuras actualizaciones, para medir la eficacia, eficiencia y satisfacción del usuario, se evaluarán tres categorías:
+    \begin{itemize}
+      \item \textit{Métricas de Comportamiento (Performance):} Tasa de éxito/finalización (porcentaje de tareas completadas correctamente sin errores), tiempo en la tarea (duración total), tasa de errores (cantidad de errores o pasos en falso), y curva de aprendizaje (tiempo o intentos para ejecutar una tarea de forma experta).
+      \item \textit{Métricas de Carga Cognitiva y Fisiológicas:} Escala NASA-TLX (cuestionario estandarizado de carga subjetiva), seguimiento ocular (Eye-Tracking), y respuestas biométricas (tasa cardíaca, dilatación de la pupila, conductancia de la piel).
+      \item \textit{Métricas de Actitud y Satisfacción (Subjetivas):} SUS (System Usability Scale), CSAT (Customer Satisfaction Score) y NPS (Net Promoter Score).
+    \end{itemize}
 \end{enumerate}
 
 \newpage
@@ -910,19 +920,21 @@ La arquitectura local es especialmente pertinente en contextos donde:
   \caption{Requisitos de hardware para ejecutar Gemma 4 12B QAT localmente}
   \begin{tabularx}{\textwidth}{lXX}
     \toprule
-    \textbf{Componente} & \textbf{Especificación Mínima} & \textbf{Especificación Recomendada} \\
+    \textbf{Componente} & \textbf{Hardware Utilizado en Pruebas (Sistema Real)} & \textbf{Especificación Recomendada} \\
     \midrule
-    GPU (VRAM) & 6 GB VRAM (NVIDIA RTX 3060) & 12-16 GB VRAM (RTX 4070 Ti) \\
+    Equipo & Laptop MSI Bravo 15 & Workstation de Escritorio \\
     \midrule
-    RAM del sistema & 16 GB DDR4 & 32 GB DDR5 \\
+    GPU (VRAM) & 6 GB VRAM (NVIDIA RTX 4050 Laptop) & 12-16 GB VRAM (RTX 4070 Ti) \\
     \midrule
-    Almacenamiento & 256 GB SSD NVMe & 512 GB SSD NVMe \\
+    RAM del sistema & 16 GB DDR5 & 32 GB DDR5 \\
     \midrule
-    CPU & Intel i5-12th gen / AMD Ryzen 5 5000 & Intel i7-13th gen / AMD Ryzen 7 7000 \\
+    Almacenamiento & 512 GB SSD NVMe & 1 TB SSD NVMe \\
     \midrule
-    Sistema Operativo & Windows 10 64-bit / macOS 12 / Ubuntu 20.04 & Windows 11 / macOS 14 / Ubuntu 22.04 \\
+    CPU & AMD Ryzen 7 7735HS (3.20 GHz) & Intel i7-13th gen / AMD Ryzen 7 7000 \\
     \midrule
-    \textbf{Costo estimado (USD)} & \$600 -- \$900 & \textbf{\$1,000 -- \$1,500} \\
+    Sistema Operativo & Windows 11 Home & Windows 11 / Ubuntu 22.04 \\
+    \midrule
+    \textbf{Costo estimado (USD)} & \textbf{\$800 -- \$1,000} & \textbf{\$1,500 -- \$2,500} \\
     \bottomrule
   \end{tabularx}
 \end{table}

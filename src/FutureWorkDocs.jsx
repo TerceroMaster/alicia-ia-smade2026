@@ -82,6 +82,20 @@ export default function FutureWorkDocs({ onBack }) {
             </div>
           </section>
 
+          <section style={{ marginBottom: '30px' }}>
+            <h2 style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--primary)' }}><Stethoscope size={24} /> 5. Validación mediante Métricas HCI</h2>
+            <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '12px', border: '1px solid var(--glass-border)', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+              <p style={{ margin: 0, fontSize: '0.95rem', color: 'var(--text-dark)' }}>
+                Para la validación del sistema en la práctica, integraremos un marco de evaluación basado en métricas de <b>Interacción Humano-Computadora (HCI)</b>:
+              </p>
+              <ul style={{ margin: '15px 0 0 0', paddingLeft: '20px', fontSize: '0.95rem', color: 'var(--text-dark)', lineHeight: '1.5' }}>
+                <li><b>Comportamiento (Performance):</b> Tasa de éxito, tiempo en la tarea, y reducción en la tasa de errores de prescripción.</li>
+                <li><b>Carga Cognitiva:</b> Evaluación del esfuerzo mental mediante herramientas como NASA-TLX.</li>
+                <li><b>Actitud y Satisfacción:</b> Medición subjetiva de los profesionales con escalas como SUS (System Usability Scale) y NPS.</li>
+              </ul>
+            </div>
+          </section>
+
         </div>
       </div>
     </div>
