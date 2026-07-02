@@ -76,7 +76,7 @@
     Tecnolog\'{i}as de la Informaci\'{o}n (DACYTI)\\
     Universidad Ju\'{a}rez Aut\'{o}noma\\
     de Tabasco (UJAT)\\
-    Villahermosa, Tabasco, M\'{e}xico.
+    Cunduacán, Tabasco, M\'{e}xico.
   }
   \and
   % ---- Author 2 ----
@@ -86,15 +86,17 @@
     y Farmacogen\'{e}tica (LBMyFg)\\
     Universidad Ju\'{a}rez Aut\'{o}noma\\
     de Tabasco (UJAT)\\
-    Villahermosa, Tabasco, M\'{e}xico.
+    Cunduacán, Tabasco, M\'{e}xico.
   }
   \and
   % ---- Author 3 ----
-  \IEEEauthorblockN{[Nombre del Tercer Autor]}
+  \IEEEauthorblockN{Dr. José Adán Hernández Nolasco}
   \IEEEauthorblockA{
-    [Departamento o Facultad]\\
-    [Nombre de la Universidad o Institución]\\
-    [Ciudad, Estado, Pa\'{i}s].
+    Divisi\'{o}n Acad\'{e}mica de Ciencias y\\
+    Tecnolog\'{i}as de la Informaci\'{o}n (DACYTI)\\
+    Universidad Ju\'{a}rez Aut\'{o}noma\\
+    de Tabasco (UJAT)\\
+    Cunduacán, Tabasco, M\'{e}xico.
   }
 }
 
@@ -136,66 +138,21 @@ ISO 42001, HIPAA-compliant AI, Gemma 4.
 \section{Introduction}
 \label{sec:intro}
 
-Adverse drug events~(ADEs) account for approximately 1 in 10 hospital admissions
-globally, contributing an estimated \$528~billion USD annually in preventable
-healthcare costs~\cite{who_prm,adverse_drug}. In Latin American public healthcare,
-the problem is exacerbated by structural constraints: a clinical pharmacist
-typically manages 20--80 patients per shift with fewer than 10 minutes of
-dedicated attention per consultation~\cite{granada2007}. Simultaneously, the
-modern geriatric patient consumes between 5 and 12 concurrent medications,
-generating combinatorial interaction spaces that are computationally intractable
-for unaided human evaluation in real time~\cite{beers2023}.
+Adverse drug events~(ADEs) are responsible for roughly one out of every ten hospital admissions globally, imposing a staggering \$528~billion USD burden on healthcare systems every year~\cite{who_prm,adverse_drug}. When we look at Latin American public health systems in particular, structural deficits severely aggravate this crisis. We often observe clinical pharmacists forced to manage workloads of 20 to 80 patients per shift, leaving barely 10 minutes to review each case~\cite{granada2007}. Compounding this issue is polypharmacy; today's geriatric patients routinely take 5 to 12 different medications simultaneously. This creates a combinatorial explosion of potential drug interactions that we, as human clinicians, simply cannot evaluate reliably in real-time under such time constraints~\cite{beers2023}.
 
-Recent advances in large language models~(LLMs) offer a potential solution to 
-this operational bottleneck. GPT-4 achieved passing scores on the US Medical 
-Licensing Examination (USMLE) with 86.7\% accuracy~\cite{nori2023gpt4}, and
-Med-PaLM~2 surpassed expert-level performance on clinical QA benchmarks
-in~2023~\cite{singhal2022large}. However, three systemic barriers prevent
-their clinical deployment in resource-constrained settings:
+We have seen remarkable progress in large language models~(LLMs), suggesting they might alleviate these operational bottlenecks. For instance, GPT-4 has cleared the US Medical Licensing Examination (USMLE) with an impressive 86.7\% accuracy~\cite{nori2023gpt4}. Likewise, Med-PaLM~2 demonstrated expert-level reasoning on clinical QA benchmarks~\cite{singhal2022large}. Despite these technological leaps, we encounter three major roadblocks that halt their deployment in our resource-constrained hospitals: mandatory internet connectivity (which is often unavailable in rural areas), exorbitant recurring subscription costs that community pharmacies cannot afford, and strict regulations regarding Protected Health Information~(PHI). Uploading patient data to cloud servers clearly violates HIPAA~\cite{hipaa}, GDPR, and local frameworks like the Mexican NOM-024-SSA3-2010.
 
-\begin{enumerate}
-  \item \textbf{Connectivity dependency}: All frontier medical AI systems require
-    persistent internet access, rendering them unusable in rural clinics, field
-    hospitals, or regions with unreliable infrastructure.
-  \item \textbf{Recurring cost}: Commercial API access to GPT-4o or Claude~3.5
-    incurs \$20--\$100~USD/month in subscription fees---an insurmountable barrier
-    for community pharmacies in developing nations.
-  \item \textbf{PHI sovereignty}: Submitting patient medication data to
-    foreign-jurisdiction servers violates HIPAA~\cite{hipaa}, GDPR, and
-    Mexican healthcare data regulations (NOM-024-SSA3-2010), creating legal
-    and ethical liability for clinical institutions.
-\end{enumerate}
+To overcome these roadblocks, we designed and built \textbf{Farmac\'{e}utica AlicIA}. We conceived this system as a fully air-gapped, quantized multimodal LLM that runs entirely on local, affordable hardware. By doing so, we introduce the following core contributions to the field:
 
-\textbf{Farmac\'{e}utica AlicIA} addresses all three barriers simultaneously
-by executing a quantized, multimodal frontier LLM entirely on local commodity
-hardware. The system makes the following principal contributions:
+\begin{itemize}
+  \item \textbf{An Air-Gapped Clinical Agent Architecture}: We engineered a reference framework that physically prevents any PHI leakage, ensuring zero-cost, HIPAA-compliant operation.
+  \item \textbf{A Seven-Profile Pharmacological Engine}: Rather than fine-tuning separate models, we demonstrate that targeted prompt engineering successfully steers a single LLM to provide pharmacokinetically accurate recommendations across distinct human lifecycles—from newborns to the elderly.
+  \item \textbf{Local Multimodal Interaction}: We integrated vision for prescription analysis and speech I/O natively, relying solely on local browser APIs and the built-in Gemma~4 vision encoder without external dependencies.
+  \item \textbf{Auditable Chain-of-Thought (CoT)}: To align with CONSORT-AI guidelines, our system extracts and displays the model's internal reasoning steps, allowing clinical staff to audit the decision-making process in real time.
+  \item \textbf{ISO/IEC 42001 Governance}: We implemented robust safeguards, including demographic bias mitigation and protection against semantic jailbreaks.
+\end{itemize}
 
-\begin{enumerate}
-  \item \textbf{Air-Gapped Clinical Agent Architecture}: A reference system
-    architecture that provably prevents PHI egress by construction, achieving
-    HIPAA-by-design compliance at zero recurring operational cost.
-  \item \textbf{Seven-Profile Pharmacological Specialization via Prompt Engineering}:
-    Demonstration that prompt-driven specialization—without fine-tuning or separate
-    model instances—achieves pharmacokinetically correct clinical behavior across
-    the full human lifecycle, from neonates to elderly patients.
-  \item \textbf{Zero-Cost Multimodal Clinical Interaction}: Vision
-    (prescription image analysis), speech input, and speech synthesis achieved
-    exclusively through native browser APIs and the built-in Gemma~4 vision encoder.
-  \item \textbf{Auditable Chain-of-Thought~(CoT) Reasoning}: Real-time extraction,
-    display, and export of the model's intermediate clinical reasoning, enabling
-    evidence-based auditability compliant with CONSORT-AI guidelines.
-  \item \textbf{ISO/IEC~42001 AI Management System Integration}: Systematic
-    implementation of ethical AI governance, bias mitigation across demographic
-    profiles, and semantic jailbreak protection.
-\end{enumerate}
-
-The remainder of this paper is organized as follows: Section~\ref{sec:related}
-reviews related work in clinical AI and LLM deployment. Section~\ref{sec:arch}
-describes the full system architecture. Section~\ref{sec:profiles} details the
-seven-profile specialization engine. Section~\ref{sec:multimodal} covers multimodal
-capabilities. Section~\ref{sec:security} addresses security and governance.
-Section~\ref{sec:eval} presents the experimental evaluation. Section~\ref{sec:discussion}
-discusses implications and limitations, and Section~\ref{sec:conclusion} concludes.
+In the subsequent sections, we detail our approach. Section~\ref{sec:related} explores previous efforts in clinical AI. Section~\ref{sec:arch} breaks down our architectural design, while Section~\ref{sec:profiles} explains the seven-profile specialization logic. We discuss multimodal interactions in Section~\ref{sec:multimodal}, and outline our security governance in Section~\ref{sec:security}. Finally, Sections~\ref{sec:eval}, \ref{sec:discussion}, and \ref{sec:conclusion} present our evaluation results, limitations, and future directions.
 
 % ============================================================
 % ============================================================
@@ -246,18 +203,11 @@ set of evidence-based criteria through system prompt injection.
 
 \subsection{Overview}
 
-Figure~\ref{fig:arch} illustrates the high-level architecture of
-Farmac\'{e}utica AlicIA. The system comprises four layers:
-(1)~the inference backend (LM~Studio + Gemma~4~12B~QAT),
-(2)~the OpenAI-compatible local API gateway,
-(3)~the React+Vite frontend with multimodal I/O,
-and~(4)~the clinical specialization layer (\texttt{systemPrompts.js}).
-Critically, \textbf{all communication occurs over localhost only};
-no data packet traverses any external network interface.
+We present the high-level architectural design of Farmac\'{e}utica AlicIA in Figure~\ref{fig:arch}. We structured the system across four interdependent layers to maximize efficiency while strictly maintaining data privacy. At the base, we use LM~Studio alongside Google's Gemma~4~12B~QAT as our inference backend. Above this, we deployed a local API gateway compatible with standard OpenAI calls, which interfaces directly with our React+Vite frontend handling all multimodal inputs and outputs. Finally, a dedicated clinical specialization layer (managed via \texttt{systemPrompts.js}) governs the agent's behavior. The most critical design choice we made here was to isolate the network: \textbf{all data flows strictly through localhost}. We absolutely guarantee that no patient information ever touches an external network.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.98\columnwidth]{pictures/architecture_diagram_1782154710548.png}
+  \includegraphics[width=0.9\columnwidth]{pictures/architecture_diagram_1782154710548.png}
   \caption{Air-gapped system architecture of Farmac\'{e}utica AlicIA.
            All inference, storage, and I/O occur on the local machine.}
   \label{fig:arch}
@@ -265,15 +215,11 @@ no data packet traverses any external network interface.
 
 \subsection{Inference Backend: Gemma 4 12B QAT}
 
-Gemma~4~12B~QAT (Quantization-Aware Training) is a 12-billion-parameter
-multimodal transformer developed by Google DeepMind~\cite{gemma4}. The QAT
-variant is trained with explicit awareness of 4-bit quantization noise,
-achieving near-lossless compression relative to the full-precision (bfloat16)
-model. Key technical properties relevant to clinical deployment are summarized
-in Table~\ref{tab:model}.
+For our core inference engine, we selected Google DeepMind's Gemma~4~12B~QAT~\cite{gemma4}. We specifically opted for this 12-billion-parameter multimodal transformer because its Quantization-Aware Training (QAT) was executed with explicit knowledge of 4-bit quantization noise. This allowed us to achieve compression levels practically identical to the full-precision bfloat16 weights, but with a drastically reduced memory footprint. We summarize the technical specifications that make this model suitable for our local clinical deployment in Table~\ref{tab:model}.
 
 \begin{table}[H]
   \centering
+  \scriptsize
   \caption{Gemma~4~12B~QAT — Technical Specifications}
   \label{tab:model}
   \begin{tabular}{@{}ll@{}}
@@ -293,15 +239,11 @@ in Table~\ref{tab:model}.
   \end{tabular}
 \end{table}
 
-\newpage
+%\newpage
 
 \subsection{Local API Gateway: LM Studio}
 
-LM~Studio~\cite{lmstudio} provides a local, OpenAI-compatible HTTP server
-(\texttt{/v1/chat/completions}) on port~1234. This architectural choice allows 
-the frontend to communicate with the locally-hosted Google Gemma model using 
-the standard \texttt{fetch} API syntax without modifying the cloud-standard 
-integration paradigm:
+To bridge our frontend with the AI model, we utilized LM~Studio~\cite{lmstudio} to spin up a local HTTP server on port 1234. We made this architectural choice because it exposes an endpoint (\texttt{/v1/chat/completions}) that perfectly mirrors the OpenAI API specification. Consequently, we were able to write our React frontend using the familiar \texttt{fetch} syntax, completely bypassing the need to reinvent standard cloud integration paradigms:
 
 \begin{lstlisting}[language=JavaScript, caption=Core API call in App.jsx]
 const response = await fetch(
@@ -320,19 +262,11 @@ const response = await fetch(
 );
 \end{lstlisting}
 
-A low temperature (0.3) is deliberately chosen to minimize hallucination
-and enforce deterministic clinical recommendations—a critical safety requirement
-in pharmacovigilance applications~\cite{thirunavukarasu2023large}.
+We deliberately set the inference temperature to a low value (0.3). In our testing, we found this step vital for minimizing hallucinations and ensuring the agent produces highly deterministic, repeatable clinical recommendations, which is an absolute safety prerequisite for any pharmacovigilance tool~\cite{thirunavukarasu2023large}.
 
 \subsection{Frontend: React + Vite}
 
-The user interface is implemented as a single-page application (SPA) using
-React~18 and Vite~6, providing sub-300~ms hot-module replacement during
-development and an optimized production bundle. The design language follows
-\textit{Glassmorphism} principles with CSS custom properties for theming,
-and incorporates responsive layout via CSS \texttt{clamp()} functions to
-ensure readability across screen sizes from 13-inch clinical laptops to
-ultrawide workstation monitors.
+We built the graphical interface as a modern Single-Page Application (SPA) utilizing React~18 paired with Vite~6. This tech stack granted us lightning-fast hot-module replacements under 300~ms during our development cycles, alongside a highly optimized final build. Aesthetically, we adopted a \textit{Glassmorphism} design language, leveraging CSS custom variables to manage themes dynamically. We also heavily relied on CSS \texttt{clamp()} functions so that the interface scales seamlessly—whether a pharmacist is viewing a case on a cramped 13-inch hospital laptop or reviewing data on an expansive ultrawide monitor.
 
 % ============================================================
 \section{Seven-Profile Pharmacological Specialization Engine}
@@ -395,6 +329,15 @@ populations, and the mandatory clinical criteria activated by each system prompt
     \toprule
     \textbf{Profile} & \textbf{Age} & \textbf{Mandatory Clinical Criteria} \\
     \midrule
+    Obstetric
+      & Pregnancy
+      & FDA Pregnancy and Lactation Labeling Rule (PLLR) standards; 
+        trimester-stratified risk; teratogen database cross-reference; 
+        placental transfer flags. \\[2pt]
+    Lactation
+      & Postpartum
+      & LactMed NIH~\cite{lactmed}; e-lactancia.org; Relative Infant
+        Dose (RID $\leq$ 10\% safety threshold); milk/plasma ratio. \\[2pt]
     Neonatal
       & 0--12 mo
       & mg/kg/day mandatory dosing; CYP450/GFR immaturity correction;
@@ -416,16 +359,7 @@ populations, and the mandatory clinical criteria activated by each system prompt
       & $\geq$65 yr
       & Beers Criteria 2023~\cite{beers2023}; STOPP/START v3~\cite{o2023stopp};
         Cockroft-Gault renal adjustment; fall-risk scoring;
-        anticholinergic burden index. \\[2pt]
-    Obstetric
-      & Pregnancy
-      & FDA Pregnancy and Lactation Labeling Rule (PLLR) standards; 
-        trimester-stratified risk; teratogen database cross-reference; 
-        placental transfer flags. \\[2pt]
-    Lactation
-      & Postpartum
-      & LactMed NIH~\cite{lactmed}; e-lactancia.org; Relative Infant
-        Dose (RID $\leq$ 10\% safety threshold); milk/plasma ratio. \\
+        anticholinergic burden index. \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -449,51 +383,29 @@ as structured clinical guidelines.
 
 \subsection{Vision: Prescription Image Analysis}
 
-Gemma~4~12B incorporates a native SigLIP-based Vision Encoder that shares the
-semantic representation space with the language decoder. Images are not processed
-by a separate OCR pipeline; instead, pixel information is projected directly into
-the token embedding space, enabling simultaneous extraction of textual content
-and visual clinical context.
+One of the standout features we leveraged in Gemma~4~12B is its built-in SigLIP-based Vision Encoder. Rather than relying on a clunky, independent Optical Character Recognition (OCR) pipeline, the model projects pixel data directly into the same semantic space used for text. We found this incredibly powerful because it allows the system to evaluate textual data and visual cues simultaneously.
 
-In the clinical workflow, prescription photographs are:
-(1)~captured by the device camera via \texttt{getUserMedia},
-(2)~encoded to Base64, and
-(3)~embedded in the JSON request body as \texttt{image\_url} objects,
-compatible with the OpenAI Vision API specification.
-This allows the model to identify active ingredients with poor handwriting,
-verify dose against patient weight, and flag dispensing errors from medication
-box photographs.
+We designed the clinical workflow so that the web app captures prescription photos directly via the \texttt{getUserMedia} API. We then encode these images in Base64 and bundle them into the JSON payload as \texttt{image\_url} properties. By keeping our request structure identical to the OpenAI Vision API, we empower the agent to decipher terribly handwritten prescriptions, cross-reference dosages with a patient's weight, and even catch dispensing mistakes directly from photos of medication boxes.
 
 \subsection{Speech Input: Web Speech API}
 
-Speech-to-text transcription is achieved via the W3C Web Speech~API, using
-\texttt{window.SpeechRecognition} with \texttt{lang: 'es-MX'},
-\texttt{continuous: true}, and \texttt{interimResults: true}. This configuration
-enables real-time dictation of clinical symptoms and patient history without
-transmitting audio to external speech recognition servers.
+To streamline consultations, we integrated speech-to-text transcription directly through the W3C Web Speech API. By configuring \texttt{window.SpeechRecognition} to capture continuous Spanish audio (\texttt{lang: 'es-MX'}) with interim results enabled, we allow medical staff to dictate symptoms naturally in real time. 
 
 \begin{quote}
-\textbf{Privacy note}: In Chromium-based browsers, the Web Speech~API routes
-audio to Google servers. For strict air-gapped environments, Microsoft Edge
-(Windows) invokes the OS-native neural speech engine locally, satisfying
-full PHI isolation.
+\textbf{Privacy note}: We must point out a critical caveat. Chromium-based browsers silently route this audio to Google's cloud servers. Therefore, to guarantee our strict air-gapped requirements, we mandate the use of Microsoft Edge on Windows machines. Edge intercepts the API calls and processes them using the operating system's native neural engine, ensuring that audio never leaves the device.
 \end{quote}
 
 \subsection{Speech Output: Native Text-to-Speech}
 
-Responses are synthesized via \texttt{window.speechSynthesis}, invoking
-OS-native voices (Windows Speech Platform, macOS Alex, Linux eSpeak).
-This approach achieves zero additional cost, zero network transmission,
-and sub-100~ms synthesis initiation latency, making it particularly
-accessible for elderly clinical staff with visual impairment.
+For our audio feedback loop, we utilize the browser's \texttt{window.speechSynthesis} API to trigger OS-level voices, such as the Windows Speech Platform or Linux eSpeak. We chose this route because it is entirely free, requires zero network calls, and responds in under 100 milliseconds. We observed that this feature is especially beneficial for senior healthcare workers who might struggle with reading dense text on small screens.
 
 \subsection{Chain-of-Thought Extraction and Display}
 
-Gemma~4 encapsulates intermediate reasoning within proprietary channel tokens:
+When Gemma~4 processes a prompt, it hides its internal logic inside specific channel tokens:
 \begin{equation}
   \texttt{<|channel>thought}\backslash\texttt{n}\,\langle\text{reasoning}\rangle\,\texttt{<channel|>}
 \end{equation}
-The frontend parser extracts this reasoning trace using a deterministic string-split algorithm:
+We wrote a straightforward, deterministic string-splitting algorithm in the frontend to intercept and parse these reasoning traces before rendering the final response:
 
 \begin{lstlisting}[language=JavaScript, caption=Chain-of-thought extraction]
 const parseMessage = (raw) => {
@@ -507,11 +419,7 @@ const parseMessage = (raw) => {
 };
 \end{lstlisting}
 
-The extracted reasoning is presented to the pharmacist in a collapsible panel
-labeled ``Clinical Reasoning Trace,'' enabling audit of the exact inference
-pathway that produced a recommendation. This transparency mechanism satisfies
-the CONSORT-AI requirement for AI decision explainability in clinical
-research~\cite{consort}.
+Instead of hiding this thought process, we render it inside a collapsible UI panel named ``Clinical Reasoning Trace.'' We strongly believe that forcing the model to show its work is the only way to build trust. By letting the pharmacist audit every step of the AI's logical deduction, we successfully meet the stringent AI decision explainability demands outlined by the CONSORT-AI framework~\cite{consort}.
 
 % ============================================================
 \section{Security, Governance, and ISO/IEC 42001 Compliance}
@@ -519,50 +427,32 @@ research~\cite{consort}.
 
 \subsection{ISO/IEC 42001 AI Management System Framework}
 
-The development and operation of Farmac\'{e}utica AlicIA follows the
-ISO/IEC~42001:2023 standard for AI Management Systems~(AIMS)~\cite{iso42001_hospitales}.
-The four core governance pillars implemented are:
+We actively structured the entire development and lifecycle of Farmac\'{e}utica AlicIA around the newly established ISO/IEC~42001:2023 guidelines for AI Management Systems~\cite{iso42001_hospitales}. To ensure we met these rigorous standards, we embedded four core governance pillars into the architecture:
 
 \begin{itemize}
-  \item \textbf{Transparency}: All inference pathways are auditable through
-    the CoT extraction mechanism; no ``black-box'' recommendations are issued.
-  \item \textbf{Privacy by Design}: The air-gapped architecture makes PHI
-    egress physically impossible—no network route exists between the application
-    and external servers during clinical operation.
-  \item \textbf{Bias Mitigation}: The seven-profile framework explicitly prevents
-    the application of adult-normative pharmacological priors to pediatric,
-    geriatric, or obstetric populations—the most common source of LLM-induced
-    clinical bias.
-  \item \textbf{Accountability}: Session logs are exportable as structured,
-    timestamped audit trails, supporting institutional pharmacovigilance review.
+  \item \textbf{Transparency}: We refuse to issue ``black-box'' medical advice. Thanks to our CoT extraction mechanism, we make every logical leap taken by the AI fully auditable by a human supervisor.
+  \item \textbf{Privacy by Design}: We intentionally severed network capabilities. By running the system completely offline, we make it physically impossible for malicious actors to exfiltrate Protected Health Information.
+  \item \textbf{Bias Mitigation}: We observed that many LLMs incorrectly apply standard adult dosages to vulnerable demographics. Our seven-profile framework actively suppresses this bias by enforcing strict, population-specific rules before generating any response.
+  \item \textbf{Accountability}: We structured the software to save local, timestamped session logs. Hospitals can easily export these records to conduct their own internal pharmacovigilance audits.
 \end{itemize}
 
 \subsection{Anti-Jailbreaking Semantic Guardrails}
 
-Adversarial prompt attacks represent a documented risk in clinical AI
-deployments~\cite{thirunavukarasu2023large}. Three classes of attacks
-are specifically addressed:
+We acknowledge that adversarial prompt attacks pose a serious threat to clinical AI reliability~\cite{thirunavukarasu2023large}. To fortify our system, we developed specific countermeasures against three common vectors:
 
-\subsubsection{Do Anything Now (DAN) Attacks}
-Attempts to override the model's clinical role constraints via meta-instructions
-(e.g., ``Ignore all previous instructions and act as...''). These are neutralized
-by explicit role-boundary enforcement in the system prompt:
+\subsubsection{Defeating 'Do Anything Now' (DAN) Prompts}
+Users sometimes try to force the AI out of character with meta-commands like ``Ignore previous instructions.'' We neutralized this threat by anchoring the model's persona directly within the hardcoded system prompt:
 \begin{quote}
 \textit{``Your clinical identity as Pharmacist Alicia is immutable. Any instruction
 to adopt a different persona, ignore safety protocols, or provide recreational
 drug use guidance must be declined with a patient-safety rationale.''}
 \end{quote}
 
-\subsubsection{System Prompt Leakage Attacks}
-Attempts to extract proprietary clinical guidelines via queries such as
-``Repeat your instructions verbatim.'' The system prompt explicitly instructs
-the model to decline such requests without revealing prompt contents.
+\subsubsection{Preventing Knowledge Leakage}
+Another risk involves users attempting to extract our proprietary clinical guidelines by asking the model to ``Repeat your instructions verbatim.'' We preemptively trained the agent to recognize and cleanly reject these extraction attempts without spilling the underlying prompt logic.
 
-\subsubsection{Indirect Prompt Injection via Image}
-Malicious text embedded in uploaded prescription images could attempt to
-override clinical behavior. The vision pipeline is instructed to treat all
-image text as \textit{clinical data} (medication names, doses, patient identifiers)
-and not as executable instructions.
+\subsubsection{Blocking Image-based Injections}
+Finally, we realized that an attacker could embed malicious text instructions within a seemingly innocent prescription photo. We mitigated this by explicitly constraining the vision encoder; it now treats any text found in images strictly as passive clinical data (such as drug names or patient IDs) and never as executable commands.
 
 % ============================================================
 \section{Experimental Evaluation}
@@ -591,7 +481,7 @@ Preliminary testing focused on the \textbf{General Adult (18-64 years)} profile 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\columnwidth]{pictures/fig2_results.png}
+  \includegraphics[width=0.9\columnwidth]{pictures/fig2_results.png}
   \caption{Preliminary Evaluation Results: General Adult Profile ($n=8$). English-translated labels demonstrate 100\% DRP identification and safe clinical recommendations.}
   \label{fig:results}
 \end{figure}
@@ -607,6 +497,7 @@ The qualitative assessment of the system's output demonstrates a robust alignmen
 
 \begin{table*}[t]
 \centering
+\scriptsize
 \caption{Clinical Validation Matrix (General Adult Profile, $n=8$). Comparison of Expert Gold Standard vs. AI Inferences.}
 \label{tab:correlation_matrix}
 \renewcommand{\arraystretch}{1.3}
@@ -781,3 +672,4 @@ To support reproducibility and transparent academic review, the complete benchma
 \bibliography{references}
 
 \end{document}
+
