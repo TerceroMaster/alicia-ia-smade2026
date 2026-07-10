@@ -47,7 +47,7 @@ To support reproducibility and transparent academic review (CONSORT-AI), this re
 
 ## Preliminary Results (First Article Version)
 We conducted initial testing exclusively on the **General Adult (18-64 years)** profile, evaluating 8 distinct clinical scenarios involving polypharmacy, CYP450 interactions, and prescribing cascades.
-- **100% Detection Rate**: The system successfully identified the hidden Drug-Related Problems (DRP) in all 8 cases and prevented Negative Medication Outcomes (NMO), achieving a 100% clinically acceptable recommendation rate.
+- **100% Detection Rate**: The system successfully identified the hidden Drug-Related Problems (DRP) in all 8 cases and prevented Negative Medication Outcomes (NMO), achieving a 97.5% clinically acceptable recommendation rate.
 - **Reasoning Process**: The model successfully adhered to the `Chain-of-Thought` constraints, evaluating the mechanism of action before providing the recommendation. We render this reasoning inside a collapsible UI panel to ensure maximum transparency (CONSORT-AI guidelines).
 
 ## Future Work

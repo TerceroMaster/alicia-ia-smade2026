@@ -17,8 +17,8 @@ bars = ax.barh(y_pos, percentages, height=0.5, color=['#2ca02c', '#1f77b4', '#ff
 ax.set_xlim(0, 110)
 ax.set_yticks(y_pos)
 ax.set_yticklabels(metrics, fontsize=11, fontweight='bold')
-ax.set_xlabel('Porcentaje de Éxito (%)', fontsize=12, fontweight='bold')
-ax.set_title('Resultados Preliminares: Perfil Adulto General (n=8)', fontsize=14, fontweight='bold', pad=15)
+ax.set_xlabel('Success Rate (%)', fontsize=12, fontweight='bold')
+ax.set_title('Preliminary Results: General Adult Profile (n=8)', fontsize=14, fontweight='bold', pad=15)
 
 # Add text labels on bars
 for bar in bars:

@@ -104,7 +104,7 @@ Multimodal input (text, voice, prescription images) is supported without
 external API dependencies. An auditable chain-of-thought extraction mechanism
 exposes the model's intermediate reasoning, satisfying CONSORT-AI transparency
 requirements. ISO/IEC~42001 compliance and semantic anti-jailbreaking guardrails
-complete the safety architecture. Preliminary evaluation focusing on the General Adult profile ($n=8$) across a comprehensive 56-scenario designed benchmark yields a 100\% DRP identification rate and 100\% clinically acceptable recommendation rate, establishing a foundation for upcoming full-scale validation.
+complete the safety architecture. Preliminary evaluation by an expert clinical pharmacist researcher focusing on the General Adult profile ($n=8$) across a comprehensive 56-scenario designed benchmark yields a 100\% DRP identification rate and 97.5\% clinically acceptable recommendation rate, establishing a foundation for upcoming full-scale validation.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -187,7 +187,7 @@ We present the high-level architectural design of Farmac\'{e}utica AlicIA in Fig
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.9\columnwidth]{pictures/architecture_diagram_1782154710548.png}
+  \includegraphics[width=0.9\columnwidth]{fig1_architecture.png}
   \caption{Air-gapped system architecture of Farmac\'{e}utica AlicIA.
            All inference, storage, and I/O occur on the local machine.}
   \label{fig:arch}
@@ -255,7 +255,7 @@ We built the graphical interface as a modern Single-Page Application (SPA) utili
 \begin{figure}[htbp]
     \centering
     % Asegúrate de subir tu imagen a Overleaf y llamarla "fig3_interface.png" (o cambia el nombre aquí)
-    \includegraphics[width=0.9\linewidth]{pictures/fig3_interface.png}
+    \includegraphics[width=0.9\linewidth]{fig3_interface.png}
     \caption{User interface of Farmacéutica AlicIA. The web application provides a responsive, privacy-first workspace featuring demographic profile selection, multimodal input options (text, speech, and prescription image capture), and a collapsible Chain-of-Thought reasoning panel to ensure clinical transparency.}
     \label{fig:ui_interface}
 \end{figure}
@@ -476,7 +476,7 @@ Preliminary testing focused on the \textbf{General Adult (18-64 years)} profile 
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.9\columnwidth]{pictures/fig2_results.png}
+  \includegraphics[width=0.9\columnwidth]{fig2_results.png}
   \caption{Preliminary Evaluation Results: General Adult Profile ($n=8$). English-translated labels demonstrate 100\% DRP identification and safe clinical recommendations.}
   \label{fig:results}
 \end{figure}
@@ -589,7 +589,7 @@ engine, auditable chain-of-thought reasoning, ISO/IEC~42001 governance complianc
 and semantic anti-jailbreaking guardrails---collectively constitute a novel
 architecture for privacy-preserving clinical AI in resource-constrained settings.
 
-Preliminary evaluation across the 8 core scenarios of the General Adult profile yields a 100\% DRP identification rate and 100\% clinically acceptable recommendation rate, demonstrating that the system achieves clinically meaningful performance without cloud dependency.
+Preliminary evaluation across the 8 core scenarios of the General Adult profile yields a 100\% DRP identification rate and 97.5\% clinically acceptable recommendation rate, demonstrating that the system achieves clinically meaningful performance without cloud dependency.
 
 \subsection{Planned Formal Validation Study}
 
@@ -597,7 +597,7 @@ The most critical next step is the transition from controlled prototype evaluati
 to a rigorous, ecologically valid clinical study. A formal validation protocol is
 currently under institutional design at the
 Divisi\'{o}n Acad\'{e}mica de Ciencias y Tecnolog\'{i}as de la Informaci\'{o}n
-(DACYTI) of UJAT, in collaboration with \textbf{Laboratorio de Biolog\'{i}a Molecular y Farmacogen\'{e}tica (LBMyFg)} og UJAT Tabasco, M\'{e}xico.
+(DACYTI) of UJAT, in collaboration with \textbf{Laboratorio de Biolog\'{i}a Molecular y Farmacogen\'{e}tica (LBMyFg)} of UJAT Tabasco, M\'{e}xico.
 
 The study will involve:
 
