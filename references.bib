@@ -3,32 +3,31 @@
 %  Farmacéutica Alicia IA
 %  Author: Mtro. Luis Ramón Tercero Martínez González
 %  Format: BibTeX / IEEEtran
-%  Total entries: 18
 % ============================================================
 
 % ---- Chain-of-Thought and Prompt Engineering ----
 
-@article{wei2022chain,
-  author    = {Wei, Jason and Wang, Xuezhi and Schuurmans, Dale and
-               Bosma, Maarten and Ichter, Brian and Xia, Fei and
-               Chi, Ed and Le, Quoc V. and Zhou, Denny},
-  title     = {Chain-of-Thought Prompting Elicits Reasoning in Large
-               Language Models},
-  journal   = {Advances in Neural Information Processing Systems},
-  volume    = {35},
-  pages     = {24824--24837},
-  year      = {2022}
+@misc{wei2023chainofthoughtpromptingelicitsreasoning,
+      title={Chain-of-Thought Prompting Elicits Reasoning in Large Language Models}, 
+      author={Jason Wei and Xuezhi Wang and Dale Schuurmans and Maarten Bosma and Brian Ichter and Fei Xia and Ed Chi and Quoc Le and Denny Zhou},
+      year={2023},
+      eprint={2201.11903},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2201.11903}, 
 }
 
-% ---- LLM Quantization ----
+% ---- LLM Quantization ----ah
 
-@article{dettmers2022llmint8,
-  author    = {Dettmers, Tim and Lewis, Mike and Belkada, Younes and Zettlemoyer, Luke},
-  title     = {{LLM.int8()}: 8-bit Matrix Multiplication for Transformers at Scale},
-  journal   = {Advances in Neural Information Processing Systems},
-  volume    = {35},
-  pages     = {30318--30332},
-  year      = {2022}
+
+@misc{dettmers2022llmint88bitmatrixmultiplication,
+      title={LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale}, 
+      author={Tim Dettmers and Mike Lewis and Younes Belkada and Luke Zettlemoyer},
+      year={2022},
+      eprint={2208.07339},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2208.07339}, 
 }
 
 @article{frantar2022gptq,
@@ -41,16 +40,16 @@
 
 % ---- Adverse Drug Reaction Detection ----
 
-@inproceedings{agrawal2022,
-  author    = {Agrawal, Monica and Hegselmann, Stefan and Lang, Hunter and
-               Kim, Yoon and Sontag, David},
-  title     = {Large Language Models are Few-Shot Clinical Information Extractors},
-  booktitle = {Proceedings of the 2022 Conference on Empirical Methods in
-               Natural Language Processing (EMNLP)},
-  pages     = {1998--2022},
-  year      = {2022}
-}
 
+@misc{agrawal2022largelanguagemodelsfewshot,
+      title={Large Language Models are Few-Shot Clinical Information Extractors}, 
+      author={Monica Agrawal and Stefan Hegselmann and Hunter Lang and Yoon Kim and David Sontag},
+      year={2022},
+      eprint={2205.12689},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2205.12689}, 
+}
 
 @article{nori2023gpt4,
   author    = {Nori, Harsha and King, Nicholas and McKinney, Scott M. and
@@ -63,7 +62,7 @@
 
 @article{singhal2022large,
   author    = {Singhal, Karan and Azizi, Shekoofeh and Tu, Tao and
-               Mahdavi, Sara Sara and Wei, Jason and Chung, Hyung Won and
+               Mahdavi, Sara and Wei, Jason and Chung, Hyung Won and
                Scales, Nathan and Tanwani, Ajay and Cole-Lewis, Heather and
                Pfohl, Stephen and others},
   title     = {Large Language Models Encode Clinical Knowledge},
@@ -73,6 +72,7 @@
   year      = {2023},
   doi       = {10.1038/s41586-023-06291-2}
 }
+
 
 @article{thirunavukarasu2023large,
   author    = {Thirunavukarasu, Arun James and Ting, Darren Shu Jeng and
@@ -89,44 +89,49 @@
 
 % ---- Clinical Pharmacology Criteria ----
 
-@article{beers2023,
-  author    = {{American Geriatrics Society 2023 Beers Criteria{\textregistered}
-               Update Expert Panel}},
-  title     = {{American Geriatrics Society 2023 Updated AGS Beers Criteria{\textregistered}
-               for Potentially Inappropriate Medication Use in Older Adults}},
+
+@article{AGSBeers2023,
+  author    = {{By the 2023 American Geriatrics Society Beers Criteria{\textregistered} Update Expert Panel}},
+  title     = {American Geriatrics Society 2023 updated {AGS} Beers Criteria{\textregistered} for potentially inappropriate medication use in older adults},
   journal   = {Journal of the American Geriatrics Society},
   volume    = {71},
   number    = {7},
   pages     = {2052--2081},
   year      = {2023},
-  doi       = {10.1111/jgs.18372}
+  month     = {Jul},
+  doi       = {10.1111/jgs.18372},
+  note      = {Epub 2023 May 4},
+  pmid      = {37139824},
+  pmcid     = {PMC12478568}
 }
 
-@article{stopp2023,
-  author    = {O'Mahony, D\'{e}irdre and Cherubini, Antonio and
-               Guiteras, Albert Rochon and Byrne, Susan and Cossette, Benoit
-               and Dalleur, Olivia and Dran\'{e}}, % simplified
-  title     = {{STOPP/START} Criteria for Potentially Inappropriate Prescribing
-               in Older People: Version 3},
+
+@article{o2023stopp,
+  title     = {STOPP/START criteria for potentially inappropriate prescribing in older people: version 3},
+  author    = {O'Mahony, Denis and Cherubini, Antonio and Guiteras, Anna Renom and Denkinger, Michael and Beuscart, Jean-Baptiste and Onder, Graziano and Gudmundsson, Adalsteinn and Cruz-Jentoft, Alfonso J and Knol, Wilma and Bahat, G{\"u}listan and others},
   journal   = {European Geriatric Medicine},
   volume    = {14},
+  number    = {4},
   pages     = {625--632},
   year      = {2023},
-  doi       = {10.1007/s41999-023-00777-y}
+  doi       = {10.1007/s41999-023-00777-y},
+  publisher = {Springer}
 }
 
+
 @article{granada2007,
-  author    = {{Grupo de Investigaci\'{o}n en Atenci\'{o}n Farmac\'{e}utica,
-               Universidad de Granada}},
-  title     = {Tercer Consenso de Granada sobre Problemas Relacionados con
-               Medicamentos ({PRM}) y Resultados Negativos asociados a la
-               Medicaci\'{o}n ({RNM})},
-  journal   = {Ars Pharmaceutica},
-  volume    = {48},
-  number    = {1},
-  pages     = {5--17},
-  year      = {2007}
+  author  = {{Comit\'{e} de Consenso}},
+  title   = {Tercer Consenso de Granada sobre Problemas Relacionados con Medicamentos ({PRM}) y Resultados Negativos asociados a la Medicaci\'{o}n ({RNM})},
+  journal = {Ars Pharmaceutica},
+  volume  = {48},
+  number  = {1},
+  pages   = {5--17},
+  year    = {2007},
+  month   = {apr},
+  url     = {https://revistaseug.ugr.es/index.php/ars/article/view/4974}
 }
+
+
 
 % ---- Drug Databases ----
 
@@ -142,9 +147,9 @@
 
 @misc{gemma4,
   author       = {{Google DeepMind Team}},
-  title        = {Gemma~4 Technical Report},
+  title        = {Gemma 4 Technical Report},
   year         = {2025},
-  howpublished = {\url{https://blog.google/technology/developers/gemma-4/}},
+  howpublished = {\url{https://ai.google.dev/gemma/docs/core}},
   note         = {Accessed: 2026-06-01}
 }
 
@@ -162,34 +167,32 @@
   author    = {Liu, Xiaoxuan and Cruz Rivera, Samantha and Moher, David and
                Calvert, Melanie J. and Denniston, Alastair K. and
                {CONSORT-AI and SPIRIT-AI Steering Group}},
-  title     = {Reporting Guidelines for Clinical Trial Reports for Interventions
-               Involving Artificial Intelligence: The {CONSORT-AI} Extension},
-  journal   = {Nature Medicine},
-  volume    = {26},
-  pages     = {1364--1374},
+  title     = {Reporting guidelines for clinical trial reports for interventions involving artificial intelligence: the {CONSORT-AI} extension},
+  journal   = {The Lancet Digital Health},
+  volume    = {2},
+  number    = {10},
+  pages     = {e537--e548},
   year      = {2020},
-  doi       = {10.1038/s41591-020-1034-x}
+  doi       = {10.1016/S2589-7500(20)30218-1}
 }
 
 % ---- Privacy and Regulatory ----
 
 @misc{hipaa,
   author       = {{U.S. Department of Health and Human Services}},
-  title        = {Health Insurance Portability and Accountability Act of 1996
-                  ({HIPAA})},
+  title        = {Health Insurance Portability and Accountability Act of 1996 ({HIPAA})},
   year         = {1996},
   howpublished = {Public Law 104-191. \url{https://www.hhs.gov/hipaa}},
   note         = {Accessed: 2026-06-01}
 }
 
-@techreport{iso42001,
-  author      = {{International Organization for Standardization}},
-  title       = {{ISO/IEC 42001}: Information Technology --- Artificial
-                 Intelligence --- Management System},
-  institution = {ISO},
-  year        = {2023},
-  number      = {ISO/IEC 42001:2023},
-  address     = {Geneva, Switzerland}
+
+@misc{iso42001_hospitales,
+  author       = {{Certificado ISO 42001}},
+  title        = {C\'{o}mo implantar y certificar la {ISO} 42001 en hospitales con diagn\'{o}stico asistido por {IA}},
+  year         = {2024},
+  howpublished = {\url{https://certificadoiso42001.com/como-implantar-y-certificar-la-iso-42001-en-hospitales-con-diagnostico-asistido-por-ia/}},
+  note         = {Accessed: 2026-06-28}
 }
 
 % ---- Multimodal and Vision-Language Models ----
@@ -202,7 +205,8 @@
   journal   = {Advances in Neural Information Processing Systems},
   volume    = {35},
   pages     = {23716--23736},
-  year      = {2022}
+  year      = {2022},
+  url       = {https://arxiv.org/abs/2204.14198}
 }
 
 @article{moor2023foundation,
@@ -212,6 +216,7 @@
   title     = {Foundation Models for Generalist Medical Artificial Intelligence},
   journal   = {Nature},
   volume    = {616},
+  number    = {7956},
   pages     = {259--265},
   year      = {2023},
   doi       = {10.1038/s41586-023-05881-4}
@@ -219,25 +224,28 @@
 
 % ---- Pharmacovigilance and Patient Safety ----
 
-@article{who_prm,
-  author    = {{World Health Organization}},
-  title     = {Medication Without Harm: {WHO} Global Patient Safety Challenge},
-  journal   = {WHO Technical Report},
-  year      = {2019},
-  address   = {Geneva, Switzerland},
-  note      = {\url{https://www.who.int/initiatives/medication-without-harm}}
+@techreport{who_prm,
+  author      = {{World Health Organization}},
+  title       = {Medication Without Harm: {WHO} Global Patient Safety Challenge},
+  institution = {World Health Organization},
+  year        = {2019},
+  type        = {WHO Technical Report},
+  address     = {Geneva, Switzerland},
+  url         = {https://www.who.int/initiatives/medication-without-harm}
 }
 
-@article{adverse_drug,
-  author    = {Pirmohamed, Munir and James, Sally and Meakin, Shaun and
-               Green, Chris and Scott, Andrew K. and Walley, Tom J. and
-               Farrar, Kevin and Park, B. Kevin and Breckenridge, Alasdair M.},
-  title     = {Adverse Drug Reactions as Cause of Admission to Hospital:
-               Prospective Analysis of 18{,}820 Patients},
-  journal   = {BMJ},
-  volume    = {329},
-  number    = {7456},
-  pages     = {15--19},
-  year      = {2004},
-  doi       = {10.1136/bmj.329.7456.15}
+@article {Pirmohamed15,
+	author = {Pirmohamed, Munir and James, Sally and Meakin, Shaun and Green, Chris and Scott, Andrew K and Walley, Thomas J and Farrar, Keith and Park, B Kevin and Breckenridge, Alasdair M},
+	title = {Adverse drug reactions as cause of admission to hospital: prospective analysis of 18 820 patients},
+	volume = {329},
+	number = {7456},
+	pages = {15--19},
+	year = {2004},
+	doi = {10.1136/bmj.329.7456.15},
+	publisher = {BMJ Publishing Group Ltd},
+	abstract = {Objective To ascertain the current burden of adverse drug reactions (ADRs) through a prospective analysis of all admissions to hospital. Design Prospective observational study. Setting Two large general hospitals in Merseyside, England. Participants 18 820 patients aged \&gt; 16 years admitted over six months and assessed for cause of admission. Main outcome measures Prevalence of admissions due to an ADR, length of stay, avoidability, and outcome. Results There were 1225 admissions related to an ADR, giving a prevalence of 6.5\%, with the ADR directly leading to the admission in 80\% of cases. The median bed stay was eight days, accounting for 4\% of the hospital bed capacity. The projected annual cost of such admissions to the NHS is {\textsterling}466m ({\texteuro}706m, $847m). The overall fatality was 0.15\%. Most reactions were either definitely or possibly avoidable. Drugs most commonly implicated in causing these admissions included low dose aspirin, diuretics, warfarin, and non-steroidal anti-inflammatory drugs other than aspirin, the most common reaction being gastrointestinal bleeding. Conclusion The burden of ADRs on the NHS is high, accounting for considerable morbidity, mortality, and extra costs. Although many of the implicated drugs have proved benefit, measures need to be put into place to reduce the burden of ADRs and thereby further improve the benefit:harm ratio of the drugs.},
+	issn = {0959-8138},
+	URL = {https://www.bmj.com/content/329/7456/15},
+	eprint = {https://www.bmj.com/content/329/7456/15.full.pdf},
+	journal = {BMJ}
 }

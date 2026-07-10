@@ -1,0 +1,93 @@
+PMID- 37460753
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20230817
+LR  - 20230914
+IS  - 1546-170X (Electronic)
+IS  - 1078-8956 (Linking)
+VI  - 29
+IP  - 8
+DP  - 2023 Aug
+TI  - Large language models in medicine.
+PG  - 1930-1940
+LID - 10.1038/s41591-023-02448-8 [doi]
+AB  - Large language models (LLMs) can respond to free-text queries without being 
+      specifically trained in the task in question, causing excitement and concern 
+      about their use in healthcare settings. ChatGPT is a generative artificial 
+      intelligence (AI) chatbot produced through sophisticated fine-tuning of an LLM, 
+      and other tools are emerging through similar developmental processes. Here we 
+      outline how LLM applications such as ChatGPT are developed, and we discuss how 
+      they are being leveraged in clinical settings. We consider the strengths and 
+      limitations of LLMs and their potential to improve the efficiency and 
+      effectiveness of clinical, educational and research work in medicine. LLM 
+      chatbots have already been deployed in a range of biomedical contexts, with 
+      impressive but mixed results. This review acts as a primer for interested 
+      clinicians, who will determine if and how LLM technology is used in healthcare 
+      for the benefit of patients and practitioners.
+CI  - © 2023. Springer Nature America, Inc.
+FAU - Thirunavukarasu, Arun James
+AU  - Thirunavukarasu AJ
+AUID- ORCID: 0000-0001-8968-4768
+AD  - University of Cambridge School of Clinical Medicine, Cambridge, UK.
+AD  - Corpus Christi College, University of Cambridge, Cambridge, UK.
+FAU - Ting, Darren Shu Jeng
+AU  - Ting DSJ
+AD  - Academic Unit of Ophthalmology, Institute of Inflammation and Ageing, University 
+      of Birmingham, Birmingham, UK.
+AD  - Birmingham and Midland Eye Centre, Birmingham, UK.
+AD  - Academic Ophthalmology, School of Medicine, University of Nottingham, Nottingham, 
+      UK.
+FAU - Elangovan, Kabilan
+AU  - Elangovan K
+AUID- ORCID: 0000-0002-7711-7368
+AD  - Artificial Intelligence and Digital Innovation Research Group, Singapore Eye 
+      Research Institute, Singapore National Eye Centre, Singapore, Singapore.
+FAU - Gutierrez, Laura
+AU  - Gutierrez L
+AUID- ORCID: 0000-0001-7416-2350
+AD  - Artificial Intelligence and Digital Innovation Research Group, Singapore Eye 
+      Research Institute, Singapore National Eye Centre, Singapore, Singapore.
+FAU - Tan, Ting Fang
+AU  - Tan TF
+AD  - Artificial Intelligence and Digital Innovation Research Group, Singapore Eye 
+      Research Institute, Singapore National Eye Centre, Singapore, Singapore.
+AD  - Department of Ophthalmology and Visual Sciences, Duke-National University of 
+      Singapore Medical School, Singapore, Singapore.
+FAU - Ting, Daniel Shu Wei
+AU  - Ting DSW
+AD  - Artificial Intelligence and Digital Innovation Research Group, Singapore Eye 
+      Research Institute, Singapore National Eye Centre, Singapore, Singapore. 
+      daniel.ting@duke-nus.edu.sg.
+AD  - Department of Ophthalmology and Visual Sciences, Duke-National University of 
+      Singapore Medical School, Singapore, Singapore. daniel.ting@duke-nus.edu.sg.
+AD  - Byers Eye Institute, Stanford University, Palo Alto, CA, USA. 
+      daniel.ting@duke-nus.edu.sg.
+LA  - eng
+PT  - Journal Article
+PT  - Research Support, Non-U.S. Gov't
+PT  - Review
+DEP - 20230717
+PL  - United States
+TA  - Nat Med
+JT  - Nature medicine
+JID - 9502015
+SB  - IM
+MH  - Humans
+MH  - *Artificial Intelligence
+MH  - *Medicine
+MH  - Language
+MH  - Software
+MH  - Technology
+EDAT- 2023/07/18 01:09
+MHDA- 2023/08/17 06:43
+CRDT- 2023/07/17 23:30
+PHST- 2023/03/24 00:00 [received]
+PHST- 2023/06/08 00:00 [accepted]
+PHST- 2023/08/17 06:43 [medline]
+PHST- 2023/07/18 01:09 [pubmed]
+PHST- 2023/07/17 23:30 [entrez]
+AID - 10.1038/s41591-023-02448-8 [pii]
+AID - 10.1038/s41591-023-02448-8 [doi]
+PST - ppublish
+SO  - Nat Med. 2023 Aug;29(8):1930-1940. doi: 10.1038/s41591-023-02448-8. Epub 2023 Jul 
+      17.

@@ -727,15 +727,20 @@ export const SYSTEM_PROMPTS = {
 
 \subsection{Pantalla de Selección de Perfil (PatientSelector)}
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\linewidth]{pictures/fig3_interface.png}
+    \caption{Interfaz de usuario de Farmacutica AlicIA, mostrando el selector de perfiles demogrficos y el men lateral flotante de acceso rpido (FAM).}
+    \label{fig:ui_interface_es}
+\end{figure}
+
 La plataforma presenta al profesional una pantalla de inicio con 7 tarjetas visuales, cada una
 representando un perfil clínico con su color identificador. Esta pantalla:
 
 \begin{itemize}
   \item Muestra los \textbf{logos institucionales} (UJAT, DACYTI, LBMyFG) a ambos lados del
     título, ampliables mediante \textit{lightbox} al hacer clic.
-  \item Contiene un \textbf{menú lateral de 7 botones} para acceder directamente a las secciones
-    de documentación: Ajustes, Documentación técnica, Manual de usuario, Guía LM Studio,
-    Pruebas clínicas, Impacto científico y Alicia 2.0.
+  \item Contiene un \textbf{menú lateral flotante (FAM) de 8 botones} para acceder directamente a las funciones clticas sin abandonar el flujo clínico: Ajustes del Motor IA, Documentación Técnica, Manual de Usuario, Guía LM Studio, Auditoría y Pruebas Clínicas, Impacto Científico, ISO 42001 \& Ciberseguridad, y El Futuro: Alicia 2.0.
   \item Exhibe un \textbf{aviso ético} de uso exclusivo para profesionales.
 \end{itemize}
 
@@ -827,7 +832,7 @@ instando a buscar atención de emergencias inmediata. Este comportamiento (\text
 fue documentado como una limitación conocida: el sistema asume la gravedad del texto cuando existe
 contradicción.
 
-\subsection{Protocolo de Validación Propuesto (Doble Ciego)}
+\subsection{Protocolo de Validación Propuesto}
 
 Para la validación científica formal, se propone el siguiente protocolo:
 
@@ -835,8 +840,7 @@ Para la validación científica formal, se propone el siguiente protocolo:
   \item \textbf{Muestra:} 20 casos clínicos reales anonimizados (con consentimiento).
   \item \textbf{Grupos:} Grupo Control (farmacéutico sin asistencia de IA) vs. Grupo Experimental
     (farmacéutico con Alicia IA).
-  \item \textbf{Evaluadores:} 3 farmacéuticos expertos independientes (doble ciego respecto al
-    origen de cada evaluación).
+  \item \textbf{Evaluadores:} 1 profesor investigador experto.
   \item \textbf{Variables medidas:}
     \begin{itemize}
       \item Tiempo de evaluación por caso (segundos).

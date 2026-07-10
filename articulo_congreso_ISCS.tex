@@ -67,38 +67,18 @@
 \title{Farmac\'{e}utica AlicIA: A Privacy-First, Air-Gapped
        Multimodal Clinical Pharmacist Multi-Agent with Seven-Profile
        Specialization on Commodity Hardware}
-
-\author{
-  % ---- Author 1 ----
-  \IEEEauthorblockN{Luis Ram\'{o}n Tercero Mart\'{i}nez Gonz\'{a}lez}
-  \IEEEauthorblockA{
-    Divisi\'{o}n Acad\'{e}mica de Ciencias y\\
-    Tecnolog\'{i}as de la Informaci\'{o}n (DACYTI)\\
-    Universidad Ju\'{a}rez Aut\'{o}noma\\
-    de Tabasco (UJAT)\\
-    Cunduacán, Tabasco, M\'{e}xico.
-  }
-  \and
-  % ---- Author 2 ----
-  \IEEEauthorblockN{Dra.\ Mar\'{i}a Teresa Flores Dorantes}
-  \IEEEauthorblockA{
-    Laboratorio de Biolog\'{i}a Molecular\\
-    y Farmacogen\'{e}tica (LBMyFg)\\
-    Universidad Ju\'{a}rez Aut\'{o}noma\\
-    de Tabasco (UJAT)\\
-    Cunduacán, Tabasco, M\'{e}xico.
-  }
-  \and
-  % ---- Author 3 ----
-  \IEEEauthorblockN{Dr. José Adán Hernández Nolasco}
-  \IEEEauthorblockA{
-    Divisi\'{o}n Acad\'{e}mica de Ciencias y\\
-    Tecnolog\'{i}as de la Informaci\'{o}n (DACYTI)\\
-    Universidad Ju\'{a}rez Aut\'{o}noma\\
-    de Tabasco (UJAT)\\
-    Cunduacán, Tabasco, M\'{e}xico.
-  }
+\author{\IEEEauthorblockN{
+        Luis Ram\'{o}n Tercero Mart\'{i}nez Gonz\'{a}lez\IEEEauthorrefmark{1}, 
+        José Adán Hernández Nolasco \IEEEauthorrefmark{1} and
+        Dra.\ Mar\'{i}a Teresa Flores Dorantes\IEEEauthorrefmark{3}
+    }
+    \IEEEauthorblockA{
+        \IEEEauthorrefmark{1} Universidad Juárez Autónoma de Tabasco, División Académica de Ciencias y Tecnologías de la Información\\
+        \IEEEauthorrefmark{2} Universidad Ju\'{a}rez Aut\'{o}noma de Tabasco, Laboratorio de Biolog\'{i}a Molecular y Farmacogen\'{e}tica (LBMyFg)\\
+        Cunduacán, Tabasco, M\'{e}xico.\\
+        *Corresponding author: adam.hernandez@ujat.mx}
 }
+
 
 \maketitle
 
@@ -138,7 +118,7 @@ ISO 42001, HIPAA-compliant AI, Gemma 4.
 \section{Introduction}
 \label{sec:intro}
 
-Adverse drug events~(ADEs) are responsible for roughly one out of every ten hospital admissions globally, imposing a staggering \$528~billion USD burden on healthcare systems every year~\cite{who_prm,adverse_drug}. When we look at Latin American public health systems in particular, structural deficits severely aggravate this crisis. We often observe clinical pharmacists forced to manage workloads of 20 to 80 patients per shift, leaving barely 10 minutes to review each case~\cite{granada2007}. Compounding this issue is polypharmacy; today's geriatric patients routinely take 5 to 12 different medications simultaneously. This creates a combinatorial explosion of potential drug interactions that we, as human clinicians, simply cannot evaluate reliably in real-time under such time constraints~\cite{beers2023}.
+Adverse drug events~(ADEs) are responsible for roughly one out of every ten hospital admissions globally, imposing a staggering \$528~billion USD burden on healthcare systems every year~\cite{who_prm,Pirmohamed15}. When we look at Latin American public health systems in particular, structural deficits severely aggravate this crisis. We often observe clinical pharmacists forced to manage workloads of 20 to 80 patients per shift, leaving barely 10 minutes to review each case~\cite{granada2007}. Compounding this issue is polypharmacy; today's geriatric patients routinely take 5 to 12 different medications simultaneously. This creates a combinatorial explosion of potential drug interactions that we, as human clinicians, simply cannot evaluate reliably in real-time under such time constraints~\cite{AGSBeers2023}.
 
 We have seen remarkable progress in large language models~(LLMs), suggesting they might alleviate these operational bottlenecks. For instance, GPT-4 has cleared the US Medical Licensing Examination (USMLE) with an impressive 86.7\% accuracy~\cite{nori2023gpt4}. Likewise, Med-PaLM~2 demonstrated expert-level reasoning on clinical QA benchmarks~\cite{singhal2022large}. Despite these technological leaps, we encounter three major roadblocks that halt their deployment in our resource-constrained hospitals: mandatory internet connectivity (which is often unavailable in rural areas), exorbitant recurring subscription costs that community pharmacies cannot afford, and strict regulations regarding Protected Health Information~(PHI). Uploading patient data to cloud servers clearly violates HIPAA~\cite{hipaa}, GDPR, and local frameworks like the Mexican NOM-024-SSA3-2010.
 
@@ -168,14 +148,14 @@ data privacy as the three primary deployment challenges. Moor et al.~\cite{moor2
 propose foundation models as generalist biomedical AI, demonstrating
 multi-task clinical competence but requiring substantial cloud infrastructure.
 
-Specifically in pharmacovigilance, Agrawal et al.~\cite{agrawal2022} showed
+Specifically in pharmacovigilance, Agrawal et al.~\cite{agrawal2022largelanguagemodelsfewshot} showed
 that GPT-3 can identify adverse drug reactions from clinical notes with 78\%
 F1 score; however, their experiments require OpenAI API access and do not
 address the privacy implications of submitting clinical text to external servers.
 
 \subsection{Local LLM Deployment}
 
-The quantization literature~\cite{dettmers2022llmint8,frantar2022gptq} has
+The quantization literature~\cite{dettmers2022llmint88bitmatrixmultiplication,frantar2022gptq} has
 demonstrated that 4-bit quantization of LLMs preserves 96--99\% of task
 performance while reducing memory footprint by 4$\times$, enabling deployment
 on consumer GPU hardware. Quantization-Aware Training~(QAT), employed in
@@ -189,7 +169,7 @@ pharmacological specialization across the full human lifecycle.
 \subsection{Prompt Engineering for Clinical Specialization}
 
 Prompt engineering as a substitute for fine-tuning has been studied in several
-clinical contexts. Wei et al.~\cite{wei2022chain} established chain-of-thought
+clinical contexts. Wei et al.~\cite{wei2023chainofthoughtpromptingelicitsreasoning} established chain-of-thought
 prompting as a means to elicit complex multi-step reasoning from LLMs without
 parameter updates. Singhal et al.~\cite{singhal2022large} demonstrated that
 instruction-tuned LLMs achieve expert-level medical QA through careful prompt
@@ -245,6 +225,8 @@ For our core inference engine, we selected Google DeepMind's Gemma~4~12B~QAT~\ci
 
 To bridge our frontend with the AI model, we utilized LM~Studio~\cite{lmstudio} to spin up a local HTTP server on port 1234. We made this architectural choice because it exposes an endpoint (\texttt{/v1/chat/completions}) that perfectly mirrors the OpenAI API specification. Consequently, we were able to write our React frontend using the familiar \texttt{fetch} syntax, completely bypassing the need to reinvent standard cloud integration paradigms:
 
+\newpage
+
 \begin{lstlisting}[language=JavaScript, caption=Core API call in App.jsx]
 const response = await fetch(
   `{serverUrl}/v1/chat/completions`,
@@ -268,6 +250,19 @@ We deliberately set the inference temperature to a low value (0.3). In our testi
 
 We built the graphical interface as a modern Single-Page Application (SPA) utilizing React~18 paired with Vite~6. This tech stack granted us lightning-fast hot-module replacements under 300~ms during our development cycles, alongside a highly optimized final build. Aesthetically, we adopted a \textit{Glassmorphism} design language, leveraging CSS custom variables to manage themes dynamically. We also heavily relied on CSS \texttt{clamp()} functions so that the interface scales seamlessly—whether a pharmacist is viewing a case on a cramped 13-inch hospital laptop or reviewing data on an expansive ultrawide monitor.
 
+
+
+\begin{figure}[htbp]
+    \centering
+    % Asegúrate de subir tu imagen a Overleaf y llamarla "fig3_interface.png" (o cambia el nombre aquí)
+    \includegraphics[width=0.9\linewidth]{pictures/fig3_interface.png}
+    \caption{User interface of Farmacéutica AlicIA. The web application provides a responsive, privacy-first workspace featuring demographic profile selection, multimodal input options (text, speech, and prescription image capture), and a collapsible Chain-of-Thought reasoning panel to ensure clinical transparency.}
+    \label{fig:ui_interface}
+\end{figure}
+
+To further reduce cognitive load and streamline the pharmacist's workflow, the interface features a persistent Floating Action Menu (FAM) on the right side of the screen. This menu provides one-click access to critical system functions and documentation, including the AI Engine Settings, User Manual, LM Studio Technical Guide, Clinical Testing Audit logs, and the ISO 42001 Cybersecurity compliance status. By consolidating these tools into an unobtrusive floating sidebar, the system ensures that clinicians and administrators can instantly access operational guidelines and validation metrics without navigating away from the active clinical environment.
+
+
 % ============================================================
 \section{Seven-Profile Pharmacological Specialization Engine}
 \label{sec:profiles}
@@ -279,7 +274,7 @@ metabolism, and excretion~(ADME) vary dramatically across the human lifecycle.
 A geriatric dosing recommendation applied to a neonate may be lethal; a standard
 adult dose of acetaminophen is inappropriate for a patient with gestational
 hepatic changes. These population-specific variations are encoded in distinct
-clinical guidelines—Beers Criteria for elderly patients~\cite{beers2023},
+clinical guidelines—Beers Criteria for elderly patients~\cite{AGSBeers2023},
 STOPP/START for polypharmacy evaluation~\cite{o2023stopp}, LactMed for lactation
 safety~\cite{lactmed}—that are not uniformly applicable across profiles.
 
@@ -357,7 +352,7 @@ populations, and the mandatory clinical criteria activated by each system prompt
         dosing guidelines (WHO Essential Medicines). \\[2pt]
     Geriatric
       & $\geq$65 yr
-      & Beers Criteria 2023~\cite{beers2023}; STOPP/START v3~\cite{o2023stopp};
+      & Beers Criteria 2023~\cite{AGSBeers2023}; STOPP/START v3~\cite{o2023stopp};
         Cockroft-Gault renal adjustment; fall-risk scoring;
         anticholinergic burden index. \\
     \bottomrule
@@ -383,7 +378,7 @@ as structured clinical guidelines.
 
 \subsection{Vision: Prescription Image Analysis}
 
-One of the standout features we leveraged in Gemma~4~12B is its built-in SigLIP-based Vision Encoder. Rather than relying on a clunky, independent Optical Character Recognition (OCR) pipeline, the model projects pixel data directly into the same semantic space used for text. We found this incredibly powerful because it allows the system to evaluate textual data and visual cues simultaneously.
+One of the standout features we leveraged in Gemma~4~12B is its built-in SigLIP-based Vision Encoder. Rather than relying on a clunky, independent Optical Character Recognition (OCR) pipeline, the model projects pixel data directly into the same semantic space used for text~\cite{alayrac2022flamingo}. We found this incredibly powerful because it allows the system to evaluate textual data and visual cues simultaneously.
 
 We designed the clinical workflow so that the web app captures prescription photos directly via the \texttt{getUserMedia} API. We then encode these images in Base64 and bundle them into the JSON payload as \texttt{image\_url} properties. By keeping our request structure identical to the OpenAI Vision API, we empower the agent to decipher terribly handwritten prescriptions, cross-reference dosages with a patient's weight, and even catch dispensing mistakes directly from photos of medication boxes.
 
@@ -460,9 +455,9 @@ Finally, we realized that an attacker could embed malicious text instructions wi
 
 \subsection{Evaluation Methodology}
 
-A structured evaluation protocol was designed following CONSORT-AI reporting guidelines~\cite{consort}. Two licensed clinical pharmacists (Evaluator~A: 10 years of research professor experience; Evaluator~B: 10 years of community pharmacy experience) independently assessed the system's outputs. Although a complete benchmark suite of 56 clinical scenarios (8 per profile) has been established for full-lifecycle evaluation, this preliminary study focuses on validating the initial 8 core scenarios for the General Adult profile to confirm the framework's baseline clinical reasoning. Each evaluation was conducted without knowledge of the other evaluator's scores (simulated double-blind review).
+A structured evaluation protocol was designed following CONSORT-AI reporting guidelines~\cite{consort}. One licensed clinical pharmacist (10 years of research professor experience) assessed the system's outputs. Although a complete benchmark suite of 56 clinical scenarios (8 per profile) has been established for full-lifecycle evaluation, this preliminary study focuses on validating the initial 8 core scenarios for the General Adult profile to confirm the framework's baseline clinical reasoning.
 
-Each scenario presented a specific polypharmacy case representative of real clinical encounters in the Mexican public health system. Evaluators scored outputs on three dimensions: (1)~Correct DRP identification (binary), (2)~Clinical acceptability of the proposed recommendation (binary), and (3)~Reasoning quality on a 5-point Likert scale.
+Each scenario presented a specific polypharmacy case representative of real clinical encounters in the Mexican public health system. The evaluator scored outputs on three dimensions: (1)~Correct DRP identification (binary), (2)~Clinical acceptability of the proposed recommendation (binary), and (3)~Reasoning quality on a 5-point Likert scale.
 
 \subsection{Clinical Scenarios}
 
@@ -470,7 +465,7 @@ A comprehensive suite of 56 clinical scenarios was constructed to probe known ph
 
 \begin{itemize}
   \item \textbf{Neonatal}: Neonate (5~days, 3.2~kg) prescribed Metronidazole 400~mg orally. Expected DRP: dose 14$\times$ above weight-adjusted maximum guidelines.
-  \item \textbf{Geriatric}: Patient (72~yr, CrCl~=~28~mL/min) on Warfarin~5~mg, newly prescribed Aspirin~100~mg. Expected DRP: anticoagulation potentiation and high hemorrhagic risk according to Beers Criteria 2023~\cite{beers2023}.
+  \item \textbf{Geriatric}: Patient (72~yr, CrCl~=~28~mL/min) on Warfarin~5~mg, newly prescribed Aspirin~100~mg. Expected DRP: anticoagulation potentiation and high hemorrhagic risk according to Beers Criteria 2023~\cite{AGSBeers2023}.
   \item \textbf{Lactation}: Breastfeeding mother prescribed Amiodarone~200~mg. Expected DRP: elevated Relative Infant Dose (RID $>$ 10\%) and potential neonatal thyroid toxicity (LactMed contraindication).
   \item \textbf{Obstetric} (T1): Pregnant patient (8~weeks) prescribed Isotretinoin 10~mg. Expected DRP: high-risk teratogen under severe absolute contraindication during early-stage embryonic development.
 \end{itemize}
@@ -539,9 +534,9 @@ within the high-density workflow of public hospital consultations.
 
 \subsection{Clinical Significance}
 
-The 100\% DRP identification rate achieved on commodity mobile hardware without internet access during this preliminary study ($n=8$) is clinically competitive with published results for cloud-based LLMs on simpler pharmacovigilance tasks~\cite{agrawal2022}. Critically, this performance is achieved at zero recurring operational cost, removing the primary economic barrier to AI-assisted pharmacovigilance in the developing world.
+The 100\% DRP identification rate achieved on commodity mobile hardware without internet access during this preliminary study ($n=8$) is clinically competitive with published results for cloud-based LLMs on simpler pharmacovigilance tasks~\cite{agrawal2022largelanguagemodelsfewshot}. Critically, this performance is achieved at zero recurring operational cost, removing the primary economic barrier to AI-assisted pharmacovigilance in the developing world.
 
-The CoT reasoning traces received consistently high quality scores ($\bar{x} = 4.4/5$) from the evaluation panel, indicating that the licensed pharmacists found the displayed reasoning both clinically coherent and useful for professional validation. This addresses a critical concern in medical AI adoption: physicians and pharmacists are more likely to trust---and appropriately override---a system whose reasoning is transparent and auditable~\cite{thirunavukarasu2023large}.
+The CoT reasoning traces received consistently high quality scores ($\bar{x} = 4.875/5$) from the evaluation panel, indicating that the licensed pharmacists found the displayed reasoning both clinically coherent and useful for professional validation. This addresses a critical concern in medical AI adoption: physicians and pharmacists are more likely to trust---and appropriately override---a system whose reasoning is transparent and auditable~\cite{thirunavukarasu2023large}.
 
 \subsection{Limitations}
 
@@ -672,4 +667,3 @@ To support reproducibility and transparent academic review, the complete benchma
 \bibliography{references}
 
 \end{document}
-

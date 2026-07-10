@@ -1,0 +1,95 @@
+PMID- 37045921
+OWN - NLM
+STAT- MEDLINE
+DCOM- 20230414
+LR  - 20231125
+IS  - 1476-4687 (Electronic)
+IS  - 0028-0836 (Linking)
+VI  - 616
+IP  - 7956
+DP  - 2023 Apr
+TI  - Foundation models for generalist medical artificial intelligence.
+PG  - 259-265
+LID - 10.1038/s41586-023-05881-4 [doi]
+AB  - The exceptionally rapid development of highly flexible, reusable artificial 
+      intelligence (AI) models is likely to usher in newfound capabilities in medicine. 
+      We propose a new paradigm for medical AI, which we refer to as generalist medical 
+      AI (GMAI). GMAI models will be capable of carrying out a diverse set of tasks 
+      using very little or no task-specific labelled data. Built through 
+      self-supervision on large, diverse datasets, GMAI will flexibly interpret 
+      different combinations of medical modalities, including data from imaging, 
+      electronic health records, laboratory results, genomics, graphs or medical text. 
+      Models will in turn produce expressive outputs such as free-text explanations, 
+      spoken recommendations or image annotations that demonstrate advanced medical 
+      reasoning abilities. Here we identify a set of high-impact potential applications 
+      for GMAI and lay out specific technical capabilities and training datasets 
+      necessary to enable them. We expect that GMAI-enabled applications will challenge 
+      current strategies for regulating and validating AI devices for medicine and will 
+      shift practices associated with the collection of large medical datasets.
+CI  - © 2023. Springer Nature Limited.
+FAU - Moor, Michael
+AU  - Moor M
+AUID- ORCID: 0000-0002-3401-2937
+AD  - Department of Computer Science, Stanford University, Stanford, CA, USA.
+FAU - Banerjee, Oishi
+AU  - Banerjee O
+AD  - Department of Biomedical Informatics, Harvard University, Cambridge, MA, USA.
+FAU - Abad, Zahra Shakeri Hossein
+AU  - Abad ZSH
+AD  - Institute of Health Policy, Management and Evaluation, Dalla Lana School of 
+      Public Health, University of Toronto, Toronto, Ontario, Canada.
+FAU - Krumholz, Harlan M
+AU  - Krumholz HM
+AUID- ORCID: 0000-0003-2046-127X
+AD  - Yale University School of Medicine, Center for Outcomes Research and Evaluation, 
+      Yale New Haven Hospital, New Haven, CT, USA.
+FAU - Leskovec, Jure
+AU  - Leskovec J
+AUID- ORCID: 0000-0002-5411-923X
+AD  - Department of Computer Science, Stanford University, Stanford, CA, USA.
+FAU - Topol, Eric J
+AU  - Topol EJ
+AUID- ORCID: 0000-0002-1478-4729
+AD  - Scripps Research Translational Institute, La Jolla, CA, USA. etopol@scripps.edu.
+FAU - Rajpurkar, Pranav
+AU  - Rajpurkar P
+AUID- ORCID: 0000-0002-8030-3727
+AD  - Department of Biomedical Informatics, Harvard University, Cambridge, MA, USA. 
+      pranav_rajpurkar@hms.harvard.edu.
+LA  - eng
+GR  - UL1TR001114/TR/NCATS NIH HHS/United States
+GR  - R61 NS11865/NS/NINDS NIH HHS/United States
+GR  - 3U54HG010426-04S1/HG/NHGRI NIH HHS/United States
+PT  - Journal Article
+PT  - Research Support, N.I.H., Extramural
+PT  - Research Support, Non-U.S. Gov't
+PT  - Research Support, U.S. Gov't, Non-P.H.S.
+PT  - Research Support, U.S. Gov't, P.H.S.
+PT  - Review
+DEP - 20230412
+PL  - England
+TA  - Nature
+JT  - Nature
+JID - 0410462
+SB  - IM
+MH  - *Artificial Intelligence
+MH  - Diagnostic Imaging
+MH  - Electronic Health Records
+MH  - Genomics
+MH  - *Medicine
+MH  - Datasets as Topic
+MH  - Unsupervised Machine Learning
+MH  - Humans
+EDAT- 2023/04/13 06:00
+MHDA- 2023/04/14 06:41
+CRDT- 2023/04/12 23:21
+PHST- 2022/11/03 00:00 [received]
+PHST- 2023/02/22 00:00 [accepted]
+PHST- 2023/04/14 06:41 [medline]
+PHST- 2023/04/12 23:21 [entrez]
+PHST- 2023/04/13 06:00 [pubmed]
+AID - 10.1038/s41586-023-05881-4 [pii]
+AID - 10.1038/s41586-023-05881-4 [doi]
+PST - ppublish
+SO  - Nature. 2023 Apr;616(7956):259-265. doi: 10.1038/s41586-023-05881-4. Epub 2023 
+      Apr 12.

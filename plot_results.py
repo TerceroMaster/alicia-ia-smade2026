@@ -3,7 +3,7 @@ import numpy as np
 
 # Data
 metrics = ['DRP Identification Rate', 'Chain-of-Thought Adherence', 'Clinical Acceptability (Preliminary)']
-percentages = [100.0, 100.0, 100.0]
+percentages = [100.0, 100.0, 97.5]
 
 # Style configuration
 plt.style.use('seaborn-v0_8-whitegrid')

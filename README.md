@@ -21,6 +21,8 @@ To support reproducibility and transparent academic review (CONSORT-AI), this re
 1. **`dataset_8_casos_adulto_general.md`**: The structured clinical dataset of 8 scenarios focusing on the General Adult profile, used for the preliminary validation.
 2. **`dataset_56_casos_clinicos.md`**: The complete theoretical dataset of 56 scenarios across 7 profiles, slated for Future Work.
 3. **`systemPrompts.js`**: The exact system prompts and rulesets used to enforce the clinical behaviors and safety guardrails (ISO/IEC 42001).
+4. **`resultados/Hoja de Puntuación Gemma 4 12B Local.xlsx`**: The raw evaluation scores provided by the expert clinical pharmacist, documenting the assessment of DRP identification, clinical acceptability, and reasoning quality.
+5. **`plot_results.py`** & **`fig2_results.png`**: The Python script used to process the raw Excel data and programmatically generate the final visualization charts for the article, ensuring complete reproducibility from raw data to published figures.
 
 ## System Requirements & Hardware Limitations
 - **Recommended Hardware**: 16 GB VRAM minimum for optimal generation speed.
@@ -41,6 +43,7 @@ To support reproducibility and transparent academic review (CONSORT-AI), this re
 - **Air-Gapped**: The system operates entirely offline without an active network connection, allowing deployment in remote clinics or high-security hospital networks.
 - **Commodity Hardware**: Proves that frontier-level quantized AI models (12B parameters) can run efficiently on standard consumer-grade GPUs, eliminating the need for expensive cloud infrastructure.
 - **ISO/IEC 42001 Governance & Anti-Jailbreaking**: We actively structured the entire development lifecycle around the ISO/IEC 42001:2023 guidelines. The system incorporates hardcoded semantic guardrails to defeat "Do Anything Now" (DAN) prompts, prevent knowledge leakage, and block image-based prompt injections.
+- **Clinical UI & Floating Action Menu (FAM)**: The React frontend uses a Glassmorphism design system built to reduce cognitive load. A persistent Floating Action Menu provides clinicians with one-click access to critical documentation, audit logs, and ISO 42001 cybersecurity status without disrupting the patient evaluation workflow.
 
 ## Preliminary Results (First Article Version)
 We conducted initial testing exclusively on the **General Adult (18-64 years)** profile, evaluating 8 distinct clinical scenarios involving polypharmacy, CYP450 interactions, and prescribing cascades.
