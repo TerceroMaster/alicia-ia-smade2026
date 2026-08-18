@@ -24,6 +24,8 @@
 \usepackage{mathtools}
 \usepackage{float}
 \usepackage{textcomp}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds, calc, shadows, decorations.pathmorphing, decorations.pathreplacing}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{tabularx}
@@ -188,13 +190,71 @@ This section details the complete operational pipeline of AlicIA Pharmaceutical.
 
 We present the high-level architectural design and workflow pipeline of AlicIA Pharmaceutical in Figure~\ref{fig:arch}. This diagram illustrates the complete operational process, showing how a single multimodal agent handles different clinical profiles. We structured the system across four interdependent layers to maximize efficiency while strictly maintaining data privacy. At the base, we use LM~Studio alongside Google's Gemma~4~12B~QAT as our inference backend. Above this, we deployed a local API gateway compatible with standard OpenAI calls, which interfaces directly with our React+Vite frontend handling all multimodal inputs and outputs. Finally, a dedicated clinical specialization layer (managed via \texttt{systemPrompts.js}) governs the agent's behavior. The most critical design choice we made here was to isolate the network: \textbf{all data flows strictly through localhost}. We absolutely guarantee that no patient information ever touches an external network.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=1\columnwidth]{pictures/architecture_diagram_1782154710548.png}
-  \caption{High-level pipeline and air-gapped system architecture of AlicIA Pharmaceutical.
-           All inference, storage, and I/O occur on the local machine.}
-  \label{fig:arch}
-\end{figure}
+\begin{figure*}[!ht]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[
+    node distance=1.5cm and 2cm,
+    font=\sffamily\small,
+    % Estilos de Nodos
+    input/.style={rectangle, rounded corners, draw=teal!80, fill=teal!10, thick, minimum width=2.5cm, minimum height=0.8cm, align=center, drop shadow},
+    core/.style={rectangle, rounded corners, draw=purple!80!black, fill=purple!5, very thick, minimum width=4cm, minimum height=2.5cm, align=center, drop shadow},
+    engine/.style={cylinder, draw=orange!80, fill=orange!10, thick, shape border rotate=90, minimum width=3cm, minimum height=1.5cm, align=center, aspect=0.25},
+    profile/.style={rectangle, rounded corners, draw=blue!70!black, fill=white, thick, minimum width=3.8cm, minimum height=0.8cm, align=center, drop shadow={opacity=0.2}},
+    output/.style={rectangle, rounded corners, draw=green!60!black, fill=green!5, thick, minimum width=3.5cm, minimum height=1cm, align=center, drop shadow},
+    % Estilos de Líneas y Flechas
+    arrow/.style={-Stealth, thick, draw=gray!80},
+    boldarrow/.style={-Stealth, line width=1.5mm, draw=gray!60},
+    link/.style={-Stealth, thick, draw=blue!50, dashed}
+]
+
+% 1. Entradas Multimodales (Izquierda)
+\node[input] (text) {Text Input\\(Clinical Case)};
+\node[input, above=0.5cm of text] (vision) {Vision Input\\(Prescription Photo)};
+\node[input, below=0.5cm of text] (voice) {Speech Input\\(Web Speech API)};
+
+% Caja agrupadora para inputs
+\begin{scope}[on background layer]
+    \node[rectangle, draw=teal!30, fill=teal!5, dashed, thick, fit=(vision) (text) (voice), inner sep=10pt, label={[font=\bfseries, text=teal!80!black]above:Multimodal Input}] (inputbox) {};
+\end{scope}
+
+% 2. Motor Central y Modelo (Centro)
+\node[engine, right=2.5cm of text] (prompt) {System Prompt\\Injection Engine};
+\node[core, below=1cm of prompt] (llm) {\Large \textbf{Google Gemma 4 12B}\\ \small (Quantization-Aware Training)\\ \textit{Local Air-Gapped Execution}};
+
+\draw[boldarrow] (inputbox.east) -- (prompt.west |- inputbox.east);
+\draw[boldarrow] (prompt) -- (llm) node[midway, right, align=left, font=\scriptsize] {Profile-Specific\\Context \& Rules};
+
+% 3. Los 7 Perfiles Clínicos (Derecha)
+% Colocados en una columna
+\node[profile, right=3.5cm of prompt, yshift=2cm] (p1) {\textbf{Obstetric} (Pregnancy)\\ \scriptsize FDA PLLR, Teratogens};
+\node[profile, below=0.2cm of p1] (p2) {\textbf{Lactation} (Postpartum)\\ \scriptsize LactMed, RID $\leq$ 10\%};
+\node[profile, below=0.2cm of p2] (p3) {\textbf{Neonatal} (0-12 mo)\\ \scriptsize mg/kg/day, CYP immaturity};
+\node[profile, below=0.2cm of p3] (p4) {\textbf{Pediatric} (1-12 yr)\\ \scriptsize BNF-C, Liquid preference};
+\node[profile, below=0.2cm of p4] (p5) {\textbf{Adolescent} (13-17 yr)\\ \scriptsize CNS risks, Contraceptives};
+\node[profile, below=0.2cm of p5] (p6) {\textbf{General Adult} (18-64 yr)\\ \scriptsize Granada Consensus};
+\node[profile, below=0.2cm of p6] (p7) {\textbf{Geriatric} ($\geq$65 yr)\\ \scriptsize Beers 2023, STOPP/START};
+
+% Caja agrupadora para perfiles
+\begin{scope}[on background layer]
+    \node[rectangle, draw=blue!30, fill=blue!5, dashed, thick, fit=(p1) (p2) (p3) (p4) (p5) (p6) (p7), inner sep=10pt, label={[font=\bfseries, text=blue!80!black]above:Seven-Profile Specialization}] (profilebox) {};
+\end{scope}
+
+% Conexiones del LLM a los perfiles
+\draw[link] (llm.east) -- (profilebox.west);
+
+% 4. Salidas (Abajo)
+\node[output, below=1.5cm of llm, xshift=-2cm] (cot) {Auditable\\Chain-of-Thought};
+\node[output, below=1.5cm of llm, xshift=2cm] (tts) {Text-to-Speech \&\\Clinical Recommendation};
+
+\draw[boldarrow] (llm) -- (cot.north);
+\draw[boldarrow] (llm) -- (tts.north);
+
+\end{tikzpicture}
+}
+\caption{Architecture of the AlicIA Pharmaceutical system. The diagram illustrates the air-gapped workflow where a single base model (Google Gemma 4 12B QAT) processes multimodal inputs (vision, text, voice). Through the system prompt injection engine, the agent dynamically adopts one of the seven demographic clinical profiles, activating the corresponding pharmacological guidelines (e.g., Beers Criteria, LactMed) to produce safe recommendations accompanied by an auditable Chain-of-Thought.}
+\label{fig:arch}
+\end{figure*}
 
 \subsection{Inference Backend: Gemma 4 12B QAT}
 
@@ -372,7 +432,67 @@ only the overhead of prepending a different system prompt to the context window
 model weights. This is the core architectural insight: \textbf{prompt engineering
 is a computationally equivalent and economically superior substitute for
 fine-tuned model multiplicity} when the specialization domain is expressible
-as structured clinical guidelines.
+as structured clinical guidelines (see Figure~\ref{fig:profile_switching}).
+
+\begin{figure*}[!ht]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[
+    node distance=1cm and 1.5cm,
+    font=\sffamily\small,
+    % Styles
+    brain/.style={circle, draw=purple!80!black, fill=purple!10, very thick, minimum size=2.5cm, align=center, drop shadow},
+    prompt/.style={rectangle, rounded corners, draw=orange!80, fill=orange!10, thick, minimum width=2.5cm, minimum height=1cm, align=center},
+    expert/.style={rectangle, rounded corners, draw=blue!70!black, fill=blue!5, very thick, minimum width=3.5cm, minimum height=1.5cm, align=center, drop shadow},
+    case/.style={rectangle, draw=teal!80, fill=teal!5, dashed, thick, minimum width=2.5cm, minimum height=1cm, align=center},
+    arrow/.style={-Stealth, thick, draw=gray!70},
+    timearrow/.style={-Stealth, line width=1.5mm, draw=gray!40},
+    transition/.style={-Stealth, thick, draw=red!60, dashed, bend left=20}
+]
+
+% ------------------- TIME 1: OBSTETRIC -------------------
+\node[case] (c1) {Clinical Case 1\\(Pregnant patient)};
+\node[prompt, below=0.5cm of c1] (p1) {Prompt Injection:\\\textbf{Obstetric Profile}};
+\node[brain, below=0.5cm of p1] (b1) {Gemma\\Brain};
+\node[expert, below=0.5cm of b1] (e1) {Agent State:\\\textbf{Obstetric Expert}\\ \scriptsize Applies FDA PLLR\\ \scriptsize Teratogen alert};
+
+\draw[arrow] (c1) -- (p1);
+\draw[arrow] (p1) -- (b1) node[midway, right, font=\scriptsize] {Context Load};
+\draw[arrow] (b1) -- (e1) node[midway, right, font=\scriptsize] {Transformation};
+
+% ------------------- TIME 2: PEDIATRIC -------------------
+\node[case, right=2.5cm of c1] (c2) {Clinical Case 2\\(6-year-old patient)};
+\node[prompt, below=0.5cm of c2] (p2) {Prompt Injection:\\\textbf{Pediatric Profile}};
+\node[brain, below=0.5cm of p2] (b2) {Gemma\\Brain};
+\node[expert, below=0.5cm of b2] (e2) {Agent State:\\\textbf{Pediatric Expert}\\ \scriptsize Applies BNF-C\\ \scriptsize Adult max dose cap};
+
+\draw[arrow] (c2) -- (p2);
+\draw[arrow] (p2) -- (b2) node[midway, right, font=\scriptsize] {Context Load};
+\draw[arrow] (b2) -- (e2) node[midway, right, font=\scriptsize] {Transformation};
+
+% ------------------- TIME 3: GERIATRIC -------------------
+\node[case, right=2.5cm of c2] (c3) {Clinical Case 3\\(75-year-old patient)};
+\node[prompt, below=0.5cm of c3] (p3) {Prompt Injection:\\\textbf{Geriatric Profile}};
+\node[brain, below=0.5cm of p3] (b3) {Gemma\\Brain};
+\node[expert, below=0.5cm of b3] (e3) {Agent State:\\\textbf{Geriatric Expert}\\ \scriptsize Applies Beers 2023\\ \scriptsize Renal adjustment};
+
+\draw[arrow] (c3) -- (p3);
+\draw[arrow] (p3) -- (b3) node[midway, right, font=\scriptsize] {Context Load};
+\draw[arrow] (b3) -- (e3) node[midway, right, font=\scriptsize] {Transformation};
+
+% ------------------- TIME TRANSITION ARROWS -------------------
+\draw[transition] (e1.east) to node[midway, below, font=\scriptsize, align=center, text=red!80!black] {Clear Context\\\& Switch Profile} (b2.west);
+
+\draw[transition] (e2.east) to node[midway, below, font=\scriptsize, align=center, text=red!80!black] {Clear Context\\\& Switch Profile} (b3.west);
+
+% Time Axis
+\draw[timearrow] ([yshift=1cm, xshift=-1cm]c1.north west) -- ([yshift=1cm, xshift=1cm]c3.north east) node[midway, above, font=\bfseries] {Sequential Temporal Flow of Clinical Consultations};
+
+\end{tikzpicture}
+}
+\caption{Dynamic mechanism of "Profile Switching". The diagram illustrates how the single base model ("Gemma Brain") clears its context window between consultations and receives a new System Prompt injection. This process temporarily transforms the base agent into a highly specialized expert (e.g., from Obstetric to Pediatric, and then to Geriatric), adapting its pharmacological inference rules for each specific patient over time.}
+\label{fig:profile_switching}
+\end{figure*}
 
 
 %\newpage

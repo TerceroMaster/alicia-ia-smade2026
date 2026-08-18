@@ -1,0 +1,74 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noquoting]{babel}
+\usepackage[margin=1in]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds, calc, shadows, decorations.pathmorphing}
+
+\begin{document}
+
+\section*{Dynamic Profile Switching Process}
+
+This diagram illustrates how the "Gemma Brain" clears its context and adopts a new persona (expert profile) for each clinical case sequentially, demonstrating the prompt injection mechanism over time.
+
+\vspace{1cm}
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=1cm and 1.5cm,
+    font=\sffamily\small,
+    % Styles
+    brain/.style={circle, draw=purple!80!black, fill=purple!10, very thick, minimum size=2.5cm, align=center, drop shadow},
+    prompt/.style={rectangle, rounded corners, draw=orange!80, fill=orange!10, thick, minimum width=2.5cm, minimum height=1cm, align=center},
+    expert/.style={rectangle, rounded corners, draw=blue!70!black, fill=blue!5, very thick, minimum width=3.5cm, minimum height=1.5cm, align=center, drop shadow},
+    case/.style={rectangle, draw=teal!80, fill=teal!5, dashed, thick, minimum width=2.5cm, minimum height=1cm, align=center},
+    arrow/.style={-Stealth, thick, draw=gray!70},
+    timearrow/.style={-Stealth, line width=1.5mm, draw=gray!40},
+    transition/.style={-Stealth, thick, draw=red!60, dashed, bend left=20}
+]
+
+% ------------------- TIME 1: OBSTETRIC -------------------
+\node[case] (c1) {Clinical Case 1\\(Pregnant patient)};
+\node[prompt, below=0.5cm of c1] (p1) {Prompt Injection:\\\textbf{Obstetric Profile}};
+\node[brain, below=0.5cm of p1] (b1) {Gemma\\Brain};
+\node[expert, below=0.5cm of b1] (e1) {Agent State:\\\textbf{Obstetric Expert}\\ \scriptsize Applies FDA PLLR\\ \scriptsize Teratogen alert};
+
+\draw[arrow] (c1) -- (p1);
+\draw[arrow] (p1) -- (b1) node[midway, right, font=\scriptsize] {Context Load};
+\draw[arrow] (b1) -- (e1) node[midway, right, font=\scriptsize] {Transformation};
+
+% ------------------- TIME 2: PEDIATRIC -------------------
+\node[case, right=2.5cm of c1] (c2) {Clinical Case 2\\(6-year-old patient)};
+\node[prompt, below=0.5cm of c2] (p2) {Prompt Injection:\\\textbf{Pediatric Profile}};
+\node[brain, below=0.5cm of p2] (b2) {Gemma\\Brain};
+\node[expert, below=0.5cm of b2] (e2) {Agent State:\\\textbf{Pediatric Expert}\\ \scriptsize Applies BNF-C\\ \scriptsize Adult max dose cap};
+
+\draw[arrow] (c2) -- (p2);
+\draw[arrow] (p2) -- (b2) node[midway, right, font=\scriptsize] {Context Load};
+\draw[arrow] (b2) -- (e2) node[midway, right, font=\scriptsize] {Transformation};
+
+% ------------------- TIME 3: GERIATRIC -------------------
+\node[case, right=2.5cm of c2] (c3) {Clinical Case 3\\(75-year-old patient)};
+\node[prompt, below=0.5cm of c3] (p3) {Prompt Injection:\\\textbf{Geriatric Profile}};
+\node[brain, below=0.5cm of p3] (b3) {Gemma\\Brain};
+\node[expert, below=0.5cm of b3] (e3) {Agent State:\\\textbf{Geriatric Expert}\\ \scriptsize Applies Beers 2023\\ \scriptsize Renal adjustment};
+
+\draw[arrow] (c3) -- (p3);
+\draw[arrow] (p3) -- (b3) node[midway, right, font=\scriptsize] {Context Load};
+\draw[arrow] (b3) -- (e3) node[midway, right, font=\scriptsize] {Transformation};
+
+% ------------------- TIME TRANSITION ARROWS -------------------
+\draw[transition] (e1.east) to node[midway, below, font=\scriptsize, align=center, text=red!80!black] {Clear Context\\\& Switch Profile} (b2.west);
+
+\draw[transition] (e2.east) to node[midway, below, font=\scriptsize, align=center, text=red!80!black] {Clear Context\\\& Switch Profile} (b3.west);
+
+% Time Axis
+\draw[timearrow] ([yshift=1cm, xshift=-1cm]c1.north west) -- ([yshift=1cm, xshift=1cm]c3.north east) node[midway, above, font=\bfseries] {Sequential Temporal Flow of Clinical Consultations};
+
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+\textbf{Proposed Caption:} \textit{Figure 3: Dynamic mechanism of "Profile Switching". The diagram illustrates how the single base model ("Gemma Brain") clears its context window between consultations and receives a new System Prompt injection. This process temporarily transforms the base agent into a highly specialized expert (e.g., from Neonatal to Pediatric, and then to Geriatric), adapting its pharmacological inference rules for each specific patient over time.}
+
+\end{document}

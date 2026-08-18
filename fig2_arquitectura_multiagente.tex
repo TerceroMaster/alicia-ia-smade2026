@@ -1,0 +1,82 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noquoting]{babel}
+\usepackage[margin=1in]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds, calc, shadows, decorations.pathreplacing}
+
+\begin{document}
+
+\section*{Arquitectura de AlicIA Pharmaceutical: 1 Agente, 7 Perfiles}
+
+Mil disculpas, tienes toda la razón. Al guiarme por la imagen de ejemplo que me mostraste olvidé por completo leer el contexto de tu artículo real sobre \textbf{AlicIA IA y Google Gemma 4 12B}. Tu sistema no hace descubrimiento de fármacos (Target Discovery, etc.), sino \textbf{farmacia clínica y farmacovigilancia} para diferentes etapas de la vida humana.
+
+He rediseñado completamente el diagrama en TikZ para que refleje fielmente la arquitectura de tu paper: \textbf{Un único modelo multimodal local que recibe inputs (Voz, Texto, Imágenes), pasa por un motor de inyección de prompts, y se divide en 7 perfiles clínicos demográficos, para finalmente arrojar un análisis con Chain-of-Thought.}
+
+\vspace{1cm}
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=1.5cm and 2cm,
+    font=\sffamily\small,
+    % Estilos de Nodos
+    input/.style={rectangle, rounded corners, draw=teal!80, fill=teal!10, thick, minimum width=2.5cm, minimum height=0.8cm, align=center, drop shadow},
+    core/.style={rectangle, rounded corners, draw=purple!80!black, fill=purple!5, very thick, minimum width=4cm, minimum height=2.5cm, align=center, drop shadow},
+    engine/.style={cylinder, draw=orange!80, fill=orange!10, thick, shape border rotate=90, minimum width=3cm, minimum height=1.5cm, align=center, aspect=0.25},
+    profile/.style={rectangle, rounded corners, draw=blue!70!black, fill=white, thick, minimum width=3.8cm, minimum height=0.8cm, align=center, drop shadow={opacity=0.2}},
+    output/.style={rectangle, rounded corners, draw=green!60!black, fill=green!5, thick, minimum width=3.5cm, minimum height=1cm, align=center, drop shadow},
+    % Estilos de Líneas y Flechas
+    arrow/.style={-Stealth, thick, draw=gray!80},
+    boldarrow/.style={-Stealth, line width=1.5mm, draw=gray!60},
+    link/.style={-Stealth, thick, draw=blue!50, dashed}
+]
+
+% 1. Entradas Multimodales (Izquierda)
+\node[input] (text) {Text Input\\(Clinical Case)};
+\node[input, above=0.5cm of text] (vision) {Vision Input\\(Prescription Photo)};
+\node[input, below=0.5cm of text] (voice) {Speech Input\\(Web Speech API)};
+
+% Caja agrupadora para inputs
+\begin{scope}[on background layer]
+    \node[rectangle, draw=teal!30, fill=teal!5, dashed, thick, fit=(vision) (text) (voice), inner sep=10pt, label={[font=\bfseries, text=teal!80!black]above:Multimodal Input}] (inputbox) {};
+\end{scope}
+
+% 2. Motor Central y Modelo (Centro)
+\node[engine, right=2.5cm of text] (prompt) {System Prompt\\Injection Engine};
+\node[core, below=1cm of prompt] (llm) {\Large \textbf{Google Gemma 4 12B}\\ \small (Quantization-Aware Training)\\ \textit{Local Air-Gapped Execution}};
+
+\draw[boldarrow] (inputbox.east) -- (prompt.west |- inputbox.east);
+\draw[boldarrow] (prompt) -- (llm) node[midway, right, align=left, font=\scriptsize] {Profile-Specific\\Context \& Rules};
+
+% 3. Los 7 Perfiles Clínicos (Derecha)
+% Colocados en una columna
+\node[profile, right=3.5cm of prompt, yshift=2cm] (p1) {\textbf{Obstetric} (Pregnancy)\\ \scriptsize FDA PLLR, Teratogens};
+\node[profile, below=0.2cm of p1] (p2) {\textbf{Lactation} (Postpartum)\\ \scriptsize LactMed, RID $\leq$ 10\%};
+\node[profile, below=0.2cm of p2] (p3) {\textbf{Neonatal} (0-12 mo)\\ \scriptsize mg/kg/day, CYP immaturity};
+\node[profile, below=0.2cm of p3] (p4) {\textbf{Pediatric} (1-12 yr)\\ \scriptsize BNF-C, Liquid preference};
+\node[profile, below=0.2cm of p4] (p5) {\textbf{Adolescent} (13-17 yr)\\ \scriptsize CNS risks, Contraceptives};
+\node[profile, below=0.2cm of p5] (p6) {\textbf{General Adult} (18-64 yr)\\ \scriptsize Granada Consensus};
+\node[profile, below=0.2cm of p6] (p7) {\textbf{Geriatric} ($\geq$65 yr)\\ \scriptsize Beers 2023, STOPP/START};
+
+% Caja agrupadora para perfiles
+\begin{scope}[on background layer]
+    \node[rectangle, draw=blue!30, fill=blue!5, dashed, thick, fit=(p1) (p2) (p3) (p4) (p5) (p6) (p7), inner sep=10pt, label={[font=\bfseries, text=blue!80!black]above:Seven-Profile Specialization}] (profilebox) {};
+\end{scope}
+
+% Conexiones del LLM a los perfiles
+\draw[link] (llm.east) -- (profilebox.west);
+
+% 4. Salidas (Abajo)
+\node[output, below=1.5cm of llm, xshift=-2cm] (cot) {Auditable\\Chain-of-Thought};
+\node[output, below=1.5cm of llm, xshift=2cm] (tts) {Text-to-Speech \&\\Clinical Recommendation};
+
+\draw[boldarrow] (llm) -- (cot.north);
+\draw[boldarrow] (llm) -- (tts.north);
+
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+\textbf{Caption propuesto para el paper:} \textit{Figura 2: Arquitectura del sistema AlicIA Pharmaceutical. El diagrama ilustra el flujo de trabajo \textbf{air-gapped} donde un único modelo base (Google Gemma 4 12B QAT) procesa entradas multimodales (visión, texto, voz). Mediante el motor de inyección de \textit{system prompts}, el agente adopta de forma dinámica uno de los siete perfiles clínicos demográficos, activando las guías farmacológicas correspondientes (ej. Beers Criteria, LactMed) para producir recomendaciones seguras acompañadas de un \textit{Chain-of-Thought} auditable.}
+
+\end{document}

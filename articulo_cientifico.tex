@@ -5,8 +5,10 @@
 % ----------------------------------------------
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[spanish,mexico]{babel}
+\usepackage[spanish,mexico,es-noquoting]{babel}
 \usepackage{lmodern}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds, calc, shadows, decorations.pathmorphing, decorations.pathreplacing}
 \usepackage{geometry}
 \geometry{top=2.5cm, bottom=2.5cm, left=3cm, right=3cm}
 
@@ -416,22 +418,58 @@ Esta sección detalla el diseño arquitectónico, las capacidades de interacció
 \textbf{AlicIA Pharmaceutical} implementa una arquitectura de tres capas completamente local. Su diseño operativo la clasifica como un \textbf{Agente Multi-Perfil} (Multi-Profile Agent) con ruteo basado en prompts:
 
 \begin{figure}[H]
-  \centering
-  \begin{tcolorbox}[colback=lightgray, colframe=primary, width=\textwidth]
-    \centering
-    \begin{tabular}{c}
-      \textbf{[CAPA 1] Interfaz de Usuario (Frontend)}\\
-      React 18 + Vite 5 -- Puerto local 5173\\[0.5em]
-      $\downarrow$ Petición HTTP/JSON (API OpenAI-compatible)\\[0.5em]
-      \textbf{[CAPA 2] Motor de Inferencia (Backend)}\\
-      LM Studio -- Servidor local en Puerto 1234\\[0.5em]
-      $\downarrow$ Inferencia GPU/CPU local\\[0.5em]
-      \textbf{[CAPA 3] Modelo de Lenguaje}\\
-      Google Gemma 4 12B QAT (GGUF Q4\_K\_M)\\
-      Almacenado en disco local -- Sin internet
-    \end{tabular}
-  \end{tcolorbox}
-  \caption{Arquitectura de tres capas Air-Gapped de AlicIA Pharmaceutical}
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[
+    node distance=1.5cm and 2cm,
+    font=\sffamily\small,
+    input/.style={rectangle, rounded corners, draw=teal!80, fill=teal!10, thick, minimum width=2.5cm, minimum height=0.8cm, align=center, drop shadow},
+    core/.style={rectangle, rounded corners, draw=purple!80!black, fill=purple!5, very thick, minimum width=4cm, minimum height=2.5cm, align=center, drop shadow},
+    engine/.style={cylinder, draw=orange!80, fill=orange!10, thick, shape border rotate=90, minimum width=3cm, minimum height=1.5cm, align=center, aspect=0.25},
+    profile/.style={rectangle, rounded corners, draw=blue!70!black, fill=white, thick, minimum width=3.8cm, minimum height=0.8cm, align=center, drop shadow={opacity=0.2}},
+    output/.style={rectangle, rounded corners, draw=green!60!black, fill=green!5, thick, minimum width=3.5cm, minimum height=1cm, align=center, drop shadow},
+    arrow/.style={-Stealth, thick, draw=gray!80},
+    boldarrow/.style={-Stealth, line width=1.5mm, draw=gray!60},
+    link/.style={-Stealth, thick, draw=blue!50, dashed}
+]
+
+\node[input] (text) {Entrada de Texto\\(Caso Clínico)};
+\node[input, above=0.5cm of text] (vision) {Visión\\(Foto de Receta)};
+\node[input, below=0.5cm of text] (voice) {Voz\\(Web Speech API)};
+
+\begin{scope}[on background layer]
+    \node[rectangle, draw=teal!30, fill=teal!5, dashed, thick, fit=(vision) (text) (voice), inner sep=10pt, label={[font=\bfseries, text=teal!80!black]above:Entradas Multimodales}] (inputbox) {};
+\end{scope}
+
+\node[engine, right=2.5cm of text] (prompt) {Motor de Inyección\\de System Prompts};
+\node[core, below=1cm of prompt] (llm) {\Large \textbf{Google Gemma 4 12B}\\ \small (Quantization-Aware Training)\\ \textit{Ejecución Local Air-Gapped}};
+
+\draw[boldarrow] (inputbox.east) -- (prompt.west |- inputbox.east);
+\draw[boldarrow] (prompt) -- (llm) node[midway, right, align=left, font=\scriptsize] {Reglas y Contexto\\del Perfil};
+
+\node[profile, right=3.5cm of prompt, yshift=2cm] (p1) {\textbf{Obstétrico} (Embarazo)\\ \scriptsize FDA PLLR, Teratógenos};
+\node[profile, below=0.2cm of p1] (p2) {\textbf{Lactancia} (Posparto)\\ \scriptsize LactMed, DRI $\leq$ 10\%};
+\node[profile, below=0.2cm of p2] (p3) {\textbf{Neonatal} (0-12 meses)\\ \scriptsize mg/kg/día, Inmadurez CYP};
+\node[profile, below=0.2cm of p3] (p4) {\textbf{Pediátrico} (1-12 años)\\ \scriptsize BNF-C, Formas líquidas};
+\node[profile, below=0.2cm of p4] (p5) {\textbf{Adolescente} (13-17 años)\\ \scriptsize Riesgos SNC, Anticonceptivos};
+\node[profile, below=0.2cm of p5] (p6) {\textbf{Adulto General} (18-64 años)\\ \scriptsize Consenso de Granada};
+\node[profile, below=0.2cm of p6] (p7) {\textbf{Geriátrico} ($\geq$65 años)\\ \scriptsize Beers 2023, STOPP/START};
+
+\begin{scope}[on background layer]
+    \node[rectangle, draw=blue!30, fill=blue!5, dashed, thick, fit=(p1) (p2) (p3) (p4) (p5) (p6) (p7), inner sep=10pt, label={[font=\bfseries, text=blue!80!black]above:Especialización de 7 Perfiles}] (profilebox) {};
+\end{scope}
+
+\draw[link] (llm.east) -- (profilebox.west);
+
+\node[output, below=1.5cm of llm, xshift=-2cm] (cot) {Chain-of-Thought\\Auditable};
+\node[output, below=1.5cm of llm, xshift=2cm] (tts) {Recomendación Clínica\\\& Text-to-Speech};
+
+\draw[boldarrow] (llm) -- (cot.north);
+\draw[boldarrow] (llm) -- (tts.north);
+
+\end{tikzpicture}
+}
+\caption{Arquitectura del sistema AlicIA Pharmaceutical, modelo Air-Gapped y motor Multi-Perfil.}
 \end{figure}
 
 \noindent La arquitectura garantiza que \textbf{ninguna petición, ningún dato de paciente y ninguna
@@ -726,6 +764,58 @@ export const SYSTEM_PROMPTS = {
   // ... 5 perfiles adicionales
 };
 \end{lstlisting}
+
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[
+    node distance=1cm and 1.5cm,
+    font=\sffamily\small,
+    brain/.style={circle, draw=purple!80!black, fill=purple!10, very thick, minimum size=2.5cm, align=center, drop shadow},
+    prompt/.style={rectangle, rounded corners, draw=orange!80, fill=orange!10, thick, minimum width=2.5cm, minimum height=1cm, align=center},
+    expert/.style={rectangle, rounded corners, draw=blue!70!black, fill=blue!5, very thick, minimum width=3.5cm, minimum height=1.5cm, align=center, drop shadow},
+    case/.style={rectangle, draw=teal!80, fill=teal!5, dashed, thick, minimum width=2.5cm, minimum height=1cm, align=center},
+    arrow/.style={-Stealth, thick, draw=gray!70},
+    timearrow/.style={-Stealth, line width=1.5mm, draw=gray!40},
+    transition/.style={-Stealth, thick, draw=red!60, dashed, bend left=20}
+]
+
+\node[case] (c1) {Caso Clínico 1\\(Paciente embarazada)};
+\node[prompt, below=0.5cm of c1] (p1) {Inyección Prompt:\\\textbf{Perfil Obstétrico}};
+\node[brain, below=0.5cm of p1] (b1) {Cerebro\\Gemma};
+\node[expert, below=0.5cm of b1] (e1) {Estado del Agente:\\\textbf{Experta Obstétrica}\\ \scriptsize Aplica FDA PLLR\\ \scriptsize Alerta teratógenos};
+
+\draw[arrow] (c1) -- (p1);
+\draw[arrow] (p1) -- (b1) node[midway, right, font=\scriptsize] {Carga Contexto};
+\draw[arrow] (b1) -- (e1) node[midway, right, font=\scriptsize] {Transformación};
+
+\node[case, right=2.5cm of c1] (c2) {Caso Clínico 2\\(Paciente pediátrico)};
+\node[prompt, below=0.5cm of c2] (p2) {Inyección Prompt:\\\textbf{Perfil Pediátrico}};
+\node[brain, below=0.5cm of p2] (b2) {Cerebro\\Gemma};
+\node[expert, below=0.5cm of b2] (e2) {Estado del Agente:\\\textbf{Experta Pediátrica}\\ \scriptsize Aplica BNF-C\\ \scriptsize Dosis max adulto};
+
+\draw[arrow] (c2) -- (p2);
+\draw[arrow] (p2) -- (b2) node[midway, right, font=\scriptsize] {Carga Contexto};
+\draw[arrow] (b2) -- (e2) node[midway, right, font=\scriptsize] {Transformación};
+
+\node[case, right=2.5cm of c2] (c3) {Caso Clínico 3\\(Paciente geriátrico)};
+\node[prompt, below=0.5cm of c3] (p3) {Inyección Prompt:\\\textbf{Perfil Geriátrico}};
+\node[brain, below=0.5cm of p3] (b3) {Cerebro\\Gemma};
+\node[expert, below=0.5cm of b3] (e3) {Estado del Agente:\\\textbf{Experta Geriátrica}\\ \scriptsize Aplica Beers 2023\\ \scriptsize Ajuste renal};
+
+\draw[arrow] (c3) -- (p3);
+\draw[arrow] (p3) -- (b3) node[midway, right, font=\scriptsize] {Carga Contexto};
+\draw[arrow] (b3) -- (e3) node[midway, right, font=\scriptsize] {Transformación};
+
+\draw[transition] (e1.east) to node[midway, below, font=\scriptsize, align=center, text=red!80!black] {Limpia Contexto\\y Cambia Perfil} (b2.west);
+\draw[transition] (e2.east) to node[midway, below, font=\scriptsize, align=center, text=red!80!black] {Limpia Contexto\\y Cambia Perfil} (b3.west);
+
+\draw[timearrow] ([yshift=1cm, xshift=-1cm]c1.north west) -- ([yshift=1cm, xshift=1cm]c3.north east) node[midway, above, font=\bfseries] {Flujo Temporal Secuencial de Consultas Clínicas};
+
+\end{tikzpicture}
+}
+\caption{Mecanismo dinámico de "Profile Switching" entre casos clínicos.}
+\end{figure}
 
 \newpage
 

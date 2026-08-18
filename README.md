@@ -2,7 +2,52 @@
 
 **A Privacy-First, Air-Gapped Multimodal Clinical Pharmacist Multi-Profile Agent on Commodity Hardware**
 
-![Architecture](fig1_architecture.png)
+```mermaid
+graph TD
+    subgraph Inputs ["Multimodal Input"]
+        V[Vision: Prescription Photo]
+        T[Text: Clinical Case]
+        S[Speech: Web Speech API]
+    end
+
+    PI[System Prompt Injection Engine]
+    
+    subgraph Core ["Local Air-Gapped Execution"]
+        Gemma[Google Gemma 4 12B QAT]
+    end
+
+    subgraph Profiles ["Seven-Profile Specialization"]
+        P1[1. Obstetric]
+        P2[2. Lactation]
+        P3[3. Neonatal]
+        P4[4. Pediatric]
+        P5[5. Adolescent]
+        P6[6. General Adult]
+        P7[7. Geriatric]
+    end
+
+    subgraph Outputs ["Outputs"]
+        CoT[Auditable Chain-of-Thought]
+        TTS[Clinical Recommendation + TTS]
+    end
+
+    Inputs --> PI
+    PI -- "Profile-Specific Context" --> Gemma
+    Gemma -. "Dynamic Transformation" .-> Profiles
+    Gemma --> Outputs
+
+    classDef core fill:#e1bee7,stroke:#4a148c,stroke-width:2px;
+    classDef input fill:#e0f2f1,stroke:#00695c,stroke-width:2px;
+    classDef profile fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
+    classDef output fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px;
+    classDef engine fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+
+    class Gemma core;
+    class V,T,S input;
+    class P1,P2,P3,P4,P5,P6,P7 profile;
+    class CoT,TTS output;
+    class PI engine;
+```
 
 ---
 
