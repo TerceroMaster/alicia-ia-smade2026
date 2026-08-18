@@ -4,10 +4,10 @@ Este documento contiene los conceptos clave y la terminología técnica fundamen
 
 ---
 
-### 1. ¿Por qué NO es un "Multi-Agent System" (Sistema Multi-Agente)?
+### 1. ¿Por qué se denomina "Multi-Profile Agent" (Agente Multi-Perfil) y NO "Multi-Agent System"?
 **No, el sistema no es multi-agente.** Un sistema multi-agente ocurre cuando tienes a múltiples inteligencias artificiales hablando entre sí al mismo tiempo (Ejemplo: Un agente AI "Doctor" discutiendo con un agente AI "Farmacéutico" para llegar a un acuerdo). 
 
-Lo nuestro es un **Single-Agent with Prompt-Driven Routing** (Un Agente Único con Ruteo por Prompts). Tenemos un solo cerebro (el modelo Gemma 4 12B cargado en LM Studio), y lo que hace el código en React es cambiarle la "personalidad" (el *system prompt*) dinámicamente dependiendo del botón de perfil que el usuario presione.
+Lo nuestro es un **Single-Agent with Prompt-Driven Routing** (Un Agente Único con Ruteo por Prompts), por lo que hemos adoptado la terminología **Agente Multi-Perfil**. Tenemos un solo cerebro (el modelo Gemma 4 12B cargado en LM Studio), y lo que hace el código en React es cambiarle la "personalidad" (el *system prompt*) dinámicamente dependiendo del botón de perfil que el usuario presione.
 
 ### 2. ¿Qué significa "Privacy-First"?
 Significa **"Privacidad desde el diseño"**. Hoy en día, si un hospital usa ChatGPT, está enviando ilegalmente el historial clínico del paciente a los servidores de OpenAI en California, violando normativas como HIPAA o la NOM mexicana. Nuestro sistema es "Privacy-First" porque está construido con el objetivo principal de que los datos médicos confidenciales (PHI - Protected Health Information) **nunca** salgan de la computadora del farmacéutico. Todo se procesa localmente.
@@ -55,3 +55,13 @@ Debes ser completamente transparente y usar esto como una fortaleza de la invest
 Para esta primera etapa del artículo, la validación se concentró como prueba de concepto en el **Perfil Adulto General (18-64 años)** utilizando 8 escenarios específicos (enfocados en polifarmacia e interacciones como CYP450).
 * **Resultados Preliminares:** Como se observa en los logs del servidor local, Alicia IA logró apegarse estrictamente a su "Chain-of-Thought", razonando primero el mecanismo de acción de la interacción antes de arrojar una recomendación, logrando detectar correctamente los PRM ocultos en los casos.
 * **Trabajo Futuro:** La siguiente fase de la investigación someterá al sistema al set de datos completo de 56 casos para evaluar su capacidad de cambiar de contexto farmacológico (ej. de criterios geriátricos STOPP/START a riesgos teratogénicos obstétricos).
+
+---
+
+### 8. ¿Por qué presentar un Video demostrativo y NO proveer una URL pública?
+**Si el jurado o los revisores preguntan: "¿Por qué no proporcionan un enlace web (URL) para probar el sistema?"**
+
+Debes defender firmemente el principio fundamental de la arquitectura:
+* *"El objetivo central de esta investigación es demostrar la viabilidad de un sistema **Privacy-First y Air-Gapped**."*
+* *"Si publicamos el software en un servidor web público en la nube (AWS, Vercel, Google Cloud) para que cualquier persona acceda mediante una URL, estaríamos enviando datos de pacientes a través de internet, lo cual destruye y contradice toda nuestra premisa de cumplimiento estricto con **HIPAA** y la **NOM-024** mexicana."*
+* *"Para solventar la necesidad de comprobar el funcionamiento del software, hemos provisto un video detallado en el repositorio de GitHub donde se demuestra la ejecución en tiempo real del sistema local, asegurando la reproducibilidad de la investigación sin sacrificar la privacidad de los datos médicos."*

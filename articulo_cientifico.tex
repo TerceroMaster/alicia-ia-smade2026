@@ -150,7 +150,7 @@
   \vspace{1.5cm}
 
   {\huge\bfseries\color{primary}
-    Farmacéutica Alicia IA\\[0.4cm]
+    AlicIA Pharmaceutical\\[0.4cm]
   }
 
   {\Large\bfseries
@@ -203,7 +203,7 @@
 % ==============================================
 
 \begin{infobox}[Resumen en Español]
-  Se presenta \textbf{Farmacéutica Alicia IA}, una plataforma de inteligencia artificial clínica
+  Se presenta \textbf{AlicIA Pharmaceutical}, una plataforma de inteligencia artificial clínica
   multimodal que opera completamente de forma local (sin conexión a internet ni envío de datos a
   servidores externos). El sistema utiliza el modelo de lenguaje grande \textbf{Google Gemma 4 12B QAT},
   ejecutado mediante \textbf{LM Studio}, e integrado a una interfaz web desarrollada con
@@ -225,7 +225,7 @@
 \vspace{0.5cm}
 
 \begin{infobox}[Abstract in English]
-  We present \textbf{Pharmacist Alicia AI}, a multimodal clinical artificial intelligence platform
+  We present \textbf{AlicIA Pharmaceutical}, a multimodal clinical artificial intelligence platform
   operating entirely locally, without internet connectivity or external data transmission.
   The system leverages the large language model \textbf{Google Gemma 4 12B QAT}, served via
   \textbf{LM Studio} and integrated into a web interface built with \textbf{React + Vite}.
@@ -253,6 +253,8 @@ arquitectura Air-Gapped, multimodalidad, criterios de Beers, STOPP/START.
 \section{Introducción y Motivación}
 % ==============================================
 
+Esta sección presenta el contexto y los desafíos actuales en el seguimiento farmacoterapéutico, delineando las barreras operativas y tecnológicas que enfrenta el personal clínico. A continuación, introducimos nuestra propuesta de solución basada en IA local y establecemos los lineamientos éticos fundamentales para su uso.
+
 \subsection{Contexto del Problema}
 
 El seguimiento farmacoterapéutico es una práctica clínica fundamental orientada a identificar,
@@ -277,7 +279,7 @@ existen barreras significativas para implementar este proceso de manera sistemá
 
 \subsection{Propuesta de Solución}
 
-\textbf{Farmacéutica Alicia IA} surge como respuesta directa a estas cuatro barreras. Al ejecutar
+\textbf{AlicIA Pharmaceutical} surge como respuesta directa a estas cuatro barreras. Al ejecutar
 el modelo de lenguaje \textit{completamente en hardware local}, el sistema:
 
 \begin{itemize}
@@ -295,7 +297,7 @@ el modelo de lenguaje \textit{completamente en hardware local}, el sistema:
 \subsection{Declaración Ética de Uso}
 
 \begin{dangerbox}[AVISO IMPORTANTE --- Declaración de Uso Exclusivo Profesional]
-  \textbf{Farmacéutica Alicia IA está diseñada exclusivamente para profesionales del área de la
+  \textbf{AlicIA Pharmaceutical está diseñada exclusivamente para profesionales del área de la
   salud} bajo supervisión clínica habilitada: farmacéuticos titulados, médicos generales y
   especialistas, enfermeros y químicos clínicos, en entornos supervisados (hospitales, farmacias
   comunitarias, centros de salud).
@@ -315,6 +317,8 @@ el modelo de lenguaje \textit{completamente en hardware local}, el sistema:
 % ==============================================
 \section{Marco Teórico y Conceptual}
 % ==============================================
+
+Este apartado define los conceptos fundamentales del seguimiento farmacoterapéutico y contextualiza el papel de los modelos de lenguaje grande y las técnicas de cuantización que hacen posible esta investigación.
 
 \subsection{Problemas Relacionados con Medicamentos (PRM)}
 
@@ -402,12 +406,14 @@ modelos que originalmente requieren 80-100 GB de VRAM en hardware convencional (
 \newpage
 
 % ==============================================
-\section{Arquitectura del Sistema}
+\section{Materiales y Métodos}
 % ==============================================
+
+Esta sección detalla el diseño arquitectónico, las capacidades de interacción y el mecanismo de especialización clínica de AlicIA Pharmaceutical. Describimos la infraestructura local que garantiza la privacidad de los datos, los modos de entrada y salida multimodales, el sistema de perfiles farmacológicos y la interfaz de usuario.
 
 \subsection{Visión General de la Arquitectura}
 
-\textbf{Farmacéutica Alicia IA} implementa una arquitectura de tres capas completamente local:
+\textbf{AlicIA Pharmaceutical} implementa una arquitectura de tres capas completamente local. Su diseño operativo la clasifica como un \textbf{Agente Multi-Perfil} (Multi-Profile Agent) con ruteo basado en prompts:
 
 \begin{figure}[H]
   \centering
@@ -425,7 +431,7 @@ modelos que originalmente requieren 80-100 GB de VRAM en hardware convencional (
       Almacenado en disco local -- Sin internet
     \end{tabular}
   \end{tcolorbox}
-  \caption{Arquitectura de tres capas Air-Gapped de Farmacéutica Alicia IA}
+  \caption{Arquitectura de tres capas Air-Gapped de AlicIA Pharmaceutical}
 \end{figure}
 
 \noindent La arquitectura garantiza que \textbf{ninguna petición, ningún dato de paciente y ninguna
@@ -435,7 +441,7 @@ respuesta del modelo abandona jamás la computadora del profesional de salud}.
 
 \begin{table}[H]
   \centering
-  \caption{Stack tecnológico de Farmacéutica Alicia IA}
+  \caption{Stack tecnológico de AlicIA Pharmaceutical}
   \begin{tabularx}{\textwidth}{llX}
     \toprule
     \textbf{Capa} & \textbf{Tecnología} & \textbf{Justificación} \\
@@ -508,10 +514,10 @@ el proceso lógico que la generó.
 \newpage
 
 % ==============================================
-\section{Capacidades Multimodales}
+\subsection{Capacidades Multimodales}
 % ==============================================
 
-\subsection{Visión Computacional (Recetas e Imágenes Clínicas)}
+\subsubsection{Visión Computacional (Recetas e Imágenes Clínicas)}
 
 Gemma 4 12B es un modelo \textbf{natively multimodal}, lo que significa que su arquitectura
 transformer incluye un \textit{Vision Encoder} integrado. No requiere un pipeline externo de OCR;
@@ -528,7 +534,7 @@ procesa la imagen directamente en el espacio semántico compartido con el lengua
 La imagen se convierte a formato \texttt{base64} y se incluye en el JSON de la petición como tipo
 \texttt{image\_url}, compatible con el estándar OpenAI Vision API.
 
-\subsection{Entrada por Voz (\textit{Speech-to-Text})}
+\subsubsection{Entrada por Voz (\textit{Speech-to-Text})}
 
 El sistema integra la \textbf{Web Speech API} (W3C) para capturar dictado de voz en tiempo real:
 
@@ -547,7 +553,7 @@ recognition.interimResults = true;
   (que usa el motor de voz local de Windows) o \textbf{Firefox} con motor local.
 \end{warningbox}
 
-\subsection{Salida por Voz (\textit{Text-to-Speech} Nativo)}
+\subsubsection{Salida por Voz (\textit{Text-to-Speech} Nativo)}
 
 La síntesis de voz utiliza la API \texttt{window.speechSynthesis}, nativa de todos los navegadores
 modernos. Invoca directamente las voces instaladas en el sistema operativo (Windows, macOS, Linux):
@@ -572,22 +578,24 @@ const speakText = (text) => {
 \newpage
 
 % ==============================================
-\section{Sistema de 7 Perfiles Clínicos Especializados}
+\subsection{Sistema de 7 Perfiles Clínicos Especializados}
 % ==============================================
 
-\subsection{Fundamento Farmacológico}
+\subsubsection{Fundamento Farmacológico}
 
 En farmacología clínica, los parámetros farmacocinéticos (absorción, distribución, metabolismo y
 excreción --- ADME) varían de manera significativa a lo largo del ciclo vital. Una recomendación
 generada bajo el supuesto de un adulto estándar puede ser \textbf{peligrosamente incorrecta} si
 se aplica a un neonato, un anciano con insuficiencia renal, o una mujer embarazada.
 
-La innovación central de \textbf{Farmacéutica Alicia IA} consiste en que \textbf{un único modelo
+Seleccionamos específicamente estos siete perfiles clínicos porque representan los puntos de inflexión farmacocinética más críticos en el desarrollo humano donde la dosificación estandarizada para adultos resulta ineficaz o peligrosamente tóxica. Al abarcar estas siete etapas, el sistema cubre integralmente las variaciones del ciclo de vida farmacológico que se encuentran en la atención hospitalaria estándar.
+
+La innovación central de \textbf{AlicIA Pharmaceutical} consiste en que \textbf{un único modelo
 de lenguaje (Gemma 4 12B) puede operar en 7 modos clínicos distintos} mediante el cambio del
 \textit{System Prompt} inyectado en cada sesión. No se requiere descargar ni mantener modelos
 separados. Esto se implementa en el archivo \texttt{systemPrompts.js}.
 
-\subsection{Descripción de los 7 Perfiles}
+\subsubsection{Descripción de los 7 Perfiles}
 
 \subsubsection{Perfil 1 --- Neonatos y Bebés (0--12 meses)}
 
@@ -699,7 +707,7 @@ separados. Esto se implementa en el archivo \texttt{systemPrompts.js}.
   \end{itemize}
 \end{tcolorbox}
 
-\subsection{Implementación Técnica de los Perfiles}
+\subsubsection{Implementación Técnica de los Perfiles}
 
 Cada perfil activa un System Prompt diferente almacenado en \texttt{systemPrompts.js}:
 
@@ -722,10 +730,10 @@ export const SYSTEM_PROMPTS = {
 \newpage
 
 % ==============================================
-\section{Interfaz de Usuario y Experiencia Clínica}
+\subsection{Interfaz de Usuario y Experiencia Clínica}
 % ==============================================
 
-\subsection{Pantalla de Selección de Perfil (PatientSelector)}
+\subsubsection{Pantalla de Selección de Perfil (PatientSelector)}
 
 \begin{figure}[htbp]
     \centering
@@ -744,7 +752,7 @@ representando un perfil clínico con su color identificador. Esta pantalla:
   \item Exhibe un \textbf{aviso ético} de uso exclusivo para profesionales.
 \end{itemize}
 
-\subsection{Interfaz de Chat por Perfil}
+\subsubsection{Interfaz de Chat por Perfil}
 
 Al seleccionar un perfil, la interfaz de chat adapta:
 \begin{enumerate}
@@ -756,7 +764,7 @@ Al seleccionar un perfil, la interfaz de chat adapta:
     especializadas del perfil correspondiente.
 \end{enumerate}
 
-\subsection{Exportación de Registros Clínicos en PDF}
+\subsubsection{Exportación de Registros Clínicos en PDF}
 
 El botón ``Exportar'' genera un documento HTML estructurado que el navegador convierte en PDF
 mediante su motor de impresión nativo. El documento incluye:
@@ -782,6 +790,8 @@ mediante su motor de impresión nativo. El documento incluye:
 % ==============================================
 \section{Pruebas de Rendimiento y Validación Clínica}
 % ==============================================
+
+Este apartado expone la metodología empleada para evaluar el desempeño técnico del agente y la precisión de sus razonamientos frente a escenarios clínicos simulados, fundamentando la elección de nuestra línea base de validación.
 
 \subsection{Métricas de Rendimiento Técnico}
 
@@ -1056,16 +1066,11 @@ Para contrarrestar estas vulnerabilidades, el sistema implementa múltiples capa
 
 \subsection{Limitaciones de Alicia 1.0}
 
-\begin{itemize}
-  \item \textbf{Sin persistencia de datos:} Cada sesión comienza desde cero. No existe memoria de
-    pacientes entre consultas.
-  \item \textbf{Sin base de conocimiento farmacológico estructurado:} El conocimiento proviene del
-    entrenamiento del modelo, no de bases de datos clínicas actualizadas en tiempo real.
-  \item \textbf{Sin seguimiento longitudinal:} Imposible realizar trazabilidad del tratamiento del
-    mismo paciente a lo largo del tiempo.
-  \item \textbf{Validación clínica pendiente:} Los resultados no han sido validados formalmente
-    por expertos farmacéuticos bajo protocolo de investigación.
-\end{itemize}
+Si bien este estudio preliminar demuestra capacidades prometedoras, está sujeto a varias limitaciones:
+1) \textbf{Tamaño de la muestra:} La evaluación actual se restringe a 8 escenarios para el perfil de Adulto General. Se requiere una validación a gran escala que involucre los 56 escenarios multi-perfil ($n \geq 200$ casos).
+2) \textbf{Línea base de un solo perfil:} Las restricciones especializadas para perfiles no adultos (ej. pediátrico u obstétrico) permanecen teóricamente alineadas mediante prompts pero no han sido evaluadas empíricamente en esta fase.
+3) \textbf{Localización:} El sistema está optimizado para español mexicano; su despliegue en otras regiones requiere una traducción significativa de los prompts y validación cruzada.
+4) \textbf{Conocimiento estático:} Al estar completamente fuera de línea (Air-Gapped), el sistema no tiene acceso a actualizaciones en tiempo real y depende de revisiones periódicas manuales de los prompts para reflejar nueva evidencia clínica publicada.
 
 \subsection{Hoja de Ruta Alicia 2.0}
 
@@ -1216,6 +1221,14 @@ Las principales contribuciones de este trabajo son:
 
 El proyecto sienta las bases técnicas y metodológicas para futuras investigaciones de validación
 clínica formal, con el potencial de publicación en revistas de informática médica de alto impacto.
+
+\newpage
+
+% ==============================================
+\section{Agradecimientos}
+% ==============================================
+
+Los autores agradecen el uso de Gemini 3.1 Pro (Low) como asistente de codificación de Inteligencia Artificial para refinar la implementación del código, reestructurar la arquitectura de la aplicación frontend y corregir partes de este manuscrito. La IA se utilizó únicamente como herramienta de apoyo; todos los protocolos clínicos, opciones de diseño arquitectónico y resultados experimentales fueron diseñados y verificados manualmente por los autores.
 
 \newpage
 
