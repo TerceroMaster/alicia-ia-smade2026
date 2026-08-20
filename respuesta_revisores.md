@@ -51,8 +51,8 @@ Agradecemos sinceramente a los revisores por sus valiosos comentarios, los cuale
 * **Ubicación del cambio:** Sección "Acknowledgments" (inmediatamente antes de las referencias).
 
 **12. "Please add a clear, high-level pipeline diagram or workflow figure illustrating the complete operational process of the proposed system"**
-* **Respuesta:** Como se mencionó anteriormente, la Figura de Arquitectura ha sido adaptada y descrita explícitamente para servir como este diagrama de pipeline de alto nivel.
-* **Ubicación del cambio:** Sección "Materials and Methods", Figura 1.
+* **Respuesta:** Como se mencionó anteriormente, la Figura de Arquitectura ha sido rediseñada para mostrar una arquitectura nueva y profesional, sirviendo explícitamente como este diagrama de pipeline de alto nivel. Adicionalmente, se ha actualizado la captura de la interfaz de usuario (Figura 3) para reflejar las últimas mejoras del sistema, destacando un menú flotante con 8 botones de acceso rápido (Ajustes del Motor IA, Documentación, Manual de Usuario, Guía Técnica LM Studio, Auditoría Clínica, Impacto Científico, Ciberseguridad ISO 42001 y El Futuro: Alicia 2.0) que optimizan el flujo de trabajo clínico.
+* **Ubicación del cambio:** Sección "Materials and Methods", Figura 1 y Figura 3.
 
 ---
 

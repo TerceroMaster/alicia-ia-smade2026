@@ -87,6 +87,7 @@ To ensure reviewers and readers can evaluate the system's functionality without 
 *   **Commodity Hardware**: Proves that frontier-level quantized AI models can run efficiently on standard consumer-grade GPUs (e.g., 6 GB VRAM), eliminating the need for expensive cloud infrastructure.
 *   **ISO/IEC 42001 Governance**: The system incorporates hardcoded semantic guardrails to defeat "Do Anything Now" (DAN) prompts, prevent knowledge leakage, and block image-based prompt injections.
 *   **Multimodal Capabilities**: Includes Vision (for prescription reading), native Web Speech API (dictation), and OS-level Text-to-Speech, all without external API calls.
+*   **Streamlined Clinical UI**: Features a persistent floating menu with 8 quick-access buttons (AI Engine Settings, Project Documentation, User Manual, LM Studio Technical Guide, Clinical Audit, Scientific Impact, ISO 42001 Cybersecurity, and Alicia 2.0), allowing healthcare professionals to access critical resources without leaving the active session.
 
 ---
 

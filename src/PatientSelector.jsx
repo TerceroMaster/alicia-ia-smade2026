@@ -4,6 +4,18 @@ import './App.css';
 
 const PROFILES = [
   {
+    id: 'embarazada', emoji: '🤰', title: 'Embarazada', age: 'Gestación (1er-3er trimestre)',
+    color: '#e74c3c', gradient: 'linear-gradient(135deg, #fab1a0, #e74c3c)', shadow: 'rgba(231,76,60,0.4)',
+    desc: 'Categorías de riesgo FDA/ADEC, paso placentario, fármacos teratogénicos y trimestre de riesgo.',
+    badge: 'Teratogenicidad', badgeColor: '#e74c3c'
+  },
+  {
+    id: 'lactancia', emoji: '🤱', title: 'Lactancia Materna', age: 'Post-parto y lactancia',
+    color: '#16a085', gradient: 'linear-gradient(135deg, #81ecec, #16a085)', shadow: 'rgba(22,160,133,0.4)',
+    desc: 'Paso al leche materna, compatibilidad LactMed, efecto en el lactante y alternativas seguras.',
+    badge: 'Compatibilidad LactMed', badgeColor: '#16a085'
+  },
+  {
     id: 'neonato', emoji: '👶', title: 'Neonatos y Bebés', age: '0 – 12 meses',
     color: '#e91e8c', gradient: 'linear-gradient(135deg, #f8a5c2, #e91e8c)', shadow: 'rgba(233,30,140,0.4)',
     desc: 'Dosificación por peso (mg/kg). Metabolismo hepático y renal inmaduro. Lista farmacológica muy restringida.',
@@ -32,18 +44,6 @@ const PROFILES = [
     color: '#27ae60', gradient: 'linear-gradient(135deg, #55efc4, #27ae60)', shadow: 'rgba(39,174,96,0.4)',
     desc: 'Criterios STOPP/START, polifarmacia, ajuste renal (Cockroft-Gault), riesgo de caídas y deterioro cognitivo.',
     badge: 'Polifarmacia crítica', badgeColor: '#27ae60'
-  },
-  {
-    id: 'embarazada', emoji: '🤰', title: 'Embarazada', age: 'Gestación (1er-3er trimestre)',
-    color: '#e74c3c', gradient: 'linear-gradient(135deg, #fab1a0, #e74c3c)', shadow: 'rgba(231,76,60,0.4)',
-    desc: 'Categorías de riesgo FDA/ADEC, paso placentario, fármacos teratogénicos y trimestre de riesgo.',
-    badge: 'Teratogenicidad', badgeColor: '#e74c3c'
-  },
-  {
-    id: 'lactancia', emoji: '🤱', title: 'Lactancia Materna', age: 'Post-parto y lactancia',
-    color: '#16a085', gradient: 'linear-gradient(135deg, #81ecec, #16a085)', shadow: 'rgba(22,160,133,0.4)',
-    desc: 'Paso al leche materna, compatibilidad LactMed, efecto en el lactante y alternativas seguras.',
-    badge: 'Compatibilidad LactMed', badgeColor: '#16a085'
   }
 ];
 

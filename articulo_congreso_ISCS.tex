@@ -288,7 +288,6 @@ For our core inference engine, we selected Google DeepMind's Gemma~4~12B~QAT~\ci
 
 To bridge our frontend with the AI model, we utilized LM~Studio~\cite{lmstudio} to spin up a local HTTP server on port 1234. We made this architectural choice because it exposes an endpoint (\texttt{/v1/chat/completions}) that perfectly mirrors the OpenAI API specification. Consequently, we were able to write our React frontend using the familiar \texttt{fetch} syntax, completely bypassing the need to reinvent standard cloud integration paradigms:
 
-\newpage
 
 \begin{lstlisting}[language=JavaScript, caption=Core API call in App.jsx]
 const response = await fetch(
@@ -315,13 +314,13 @@ We built the graphical interface as a modern Single-Page Application (SPA) utili
 
 
 
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
     \centering
     % Asegúrate de subir tu imagen a Overleaf y llamarla "fig3_interface.png" (o cambia el nombre aquí)
-    \includegraphics[width=1\linewidth]{pictures/fig3_interface_english.png}
+    \includegraphics[width=1\linewidth]{pictures/fig3_interface1.jpg}
     \caption{User interface of AlicIA Pharmaceutical. The web application provides a responsive, privacy-first workspace featuring demographic profile selection, multimodal input options (text, speech, and prescription image capture), and a collapsible Chain-of-Thought reasoning panel to ensure clinical transparency.}
     \label{fig:ui_interface}
-\end{figure}
+\end{figure*}
 
 To further reduce cognitive load and streamline the pharmacist's workflow, the interface features a persistent Floating Action Menu (FAM) on the right side of the screen. This menu provides one-click access to critical system functions and documentation, including the AI Engine Settings, User Manual, LM Studio Technical Guide, Clinical Testing Audit logs, and the ISO 42001 Cybersecurity compliance status. By consolidating these tools into an unobtrusive floating sidebar, the system ensures that clinicians and administrators can instantly access operational guidelines and validation metrics without navigating away from the active clinical environment.
 
@@ -600,12 +599,12 @@ A total of 56 clinical scenarios (8 per profile) was specifically chosen to prov
 
 Preliminary testing focused on the \textbf{General Adult (18-64 years)} profile using 8 distinct clinical scenarios involving polypharmacy, CYP450 interactions, and prescribing cascades. The AI successfully identified the hidden Drug-Related Problems (DRP) in 100\% of the cases and adhered strictly to its \textit{Chain-of-Thought} constraints.
 
-\begin{figure}[H]
+\begin{figure*}[htbp]
   \centering
-  \includegraphics[width=1\columnwidth]{pictures/fig2_results.png}
+  \includegraphics[width=1\linewidth]{pictures/fig2_results.png}
   \caption{Preliminary Evaluation Results: General Adult Profile ($n=8$). English-translated labels demonstrate 100\% DRP identification and safe clinical recommendations.}
   \label{fig:results}
-\end{figure}
+\end{figure*}
 
 The qualitative assessment of the system's output demonstrates a robust alignment with standard pharmaceutical care guidelines across four core clinical domains:
 
