@@ -129,8 +129,7 @@ If you wish to run the system locally on your own machine (requires an NVIDIA GP
 ## 🔬 Authors & License
 
 *   **Mtro. Luis Ramón Tercero Martínez González**
-*   **Dra. María Teresa Flores Dorantes**
-*Laboratorio de Biología Molecular y Farmacogenética (LBMyFG) - UJAT, México.*
+*   **Dra. María Teresa Flores Dorantes** *Laboratorio de Biología Molecular y Farmacogenética (LBMyFG) - UJAT, México.*
 
 **License**: Open-source academic license. 
 
