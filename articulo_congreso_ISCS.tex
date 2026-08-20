@@ -133,7 +133,10 @@ To overcome these roadblocks, we designed and built \textbf{AlicIA Pharmaceutica
   \item \textbf{ISO/IEC 42001 Governance}: We implemented robust safeguards, including demographic bias mitigation and protection against semantic jailbreaks.
 \end{itemize}
 
-In the subsequent sections, we detail our approach. Section~\ref{sec:related} explores previous efforts in clinical AI. Section~\ref{sec:arch} breaks down our architectural design, while Section~\ref{sec:profiles} explains the seven-profile specialization logic. We discuss multimodal interactions in Section~\ref{sec:multimodal}, and outline our security governance in Section~\ref{sec:security}. Finally, Sections~\ref{sec:eval}, \ref{sec:discussion}, and \ref{sec:conclusion} present our evaluation results, limitations, and future directions.
+
+
+In the subsequent sections, we detail our approach. Section~\ref{sec:related} explores previous efforts in clinical AI. Section~\ref{sec:methods} breaks down our overall methodology: Subsections~\ref{subsec:system}-~\ref{subsec:backend}-~\ref{subsec:local}-\ref{subsec:fronend} detail the core architectural design, Subsection~\ref{subsec:profiles} explains the seven-profile specialization logic, Subsection~\ref{subsec:multimodal} discusses multimodal interactions, and Subsection~\ref{subsec:security} outlines our security governance. Finally, Sections~\ref{sec:eval}, \ref{sec:discussion}, and \ref{sec:conclusion} present our evaluation results, limitations, and future directions.
+
 
 % ============================================================
 % ============================================================
@@ -187,6 +190,7 @@ set of evidence-based criteria through system prompt injection.
 This section details the complete operational pipeline of AlicIA Pharmaceutical. We describe the underlying system architecture, the mechanism for clinical specialization into seven distinct profiles, the multimodal interaction capabilities, and the robust security and governance frameworks implemented to ensure patient safety and data privacy.
 
 \subsection{System Architecture Overview}
+\label{subsec:system}
 
 We present the high-level architectural design and workflow pipeline of AlicIA Pharmaceutical in Figure~\ref{fig:arch}. This diagram illustrates the complete operational process, showing how a single multimodal agent handles different clinical profiles. We structured the system across four interdependent layers to maximize efficiency while strictly maintaining data privacy. At the base, we use LM~Studio alongside Google's Gemma~4~12B~QAT as our inference backend. Above this, we deployed a local API gateway compatible with standard OpenAI calls, which interfaces directly with our React+Vite frontend handling all multimodal inputs and outputs. Finally, a dedicated clinical specialization layer (managed via \texttt{systemPrompts.js}) governs the agent's behavior. The most critical design choice we made here was to isolate the network: \textbf{all data flows strictly through localhost}. We absolutely guarantee that no patient information ever touches an external network.
 
@@ -257,6 +261,7 @@ We present the high-level architectural design and workflow pipeline of AlicIA P
 \end{figure*}
 
 \subsection{Inference Backend: Gemma 4 12B QAT}
+\label{subsec:backend}
 
 For our core inference engine, we selected Google DeepMind's Gemma~4~12B~QAT~\cite{gemma4}. We specifically opted for this 12-billion-parameter multimodal transformer because its Quantization-Aware Training (QAT) was executed with explicit knowledge of 4-bit quantization noise. This allowed us to achieve compression levels practically identical to the full-precision bfloat16 weights, but with a drastically reduced memory footprint. We summarize the technical specifications that make this model suitable for our local clinical deployment in Table~\ref{tab:model}.
 
@@ -285,6 +290,7 @@ For our core inference engine, we selected Google DeepMind's Gemma~4~12B~QAT~\ci
 %\newpage
 
 \subsection{Local API Gateway: LM Studio}
+\label{subsec:local}
 
 To bridge our frontend with the AI model, we utilized LM~Studio~\cite{lmstudio} to spin up a local HTTP server on port 1234. We made this architectural choice because it exposes an endpoint (\texttt{/v1/chat/completions}) that perfectly mirrors the OpenAI API specification. Consequently, we were able to write our React frontend using the familiar \texttt{fetch} syntax, completely bypassing the need to reinvent standard cloud integration paradigms:
 
@@ -309,6 +315,7 @@ const response = await fetch(
 We deliberately set the inference temperature to a low value (0.3). In our testing, we found this step vital for minimizing hallucinations and ensuring the agent produces highly deterministic, repeatable clinical recommendations, which is an absolute safety prerequisite for any pharmacovigilance tool~\cite{thirunavukarasu2023large}.
 
 \subsection{Frontend: React + Vite}
+\label{subsec:fronend}
 
 We built the graphical interface as a modern Single-Page Application (SPA) utilizing React~18 paired with Vite~6. This tech stack granted us lightning-fast hot-module replacements under 300~ms during our development cycles, alongside a highly optimized final build. Aesthetically, we adopted a \textit{Glassmorphism} design language, leveraging CSS custom variables to manage themes dynamically. We also heavily relied on CSS \texttt{clamp()} functions so that the interface scales seamlessly---whether a pharmacist is viewing a case on a cramped 13-inch hospital laptop or reviewing data on an expansive ultrawide monitor.
 
@@ -330,7 +337,7 @@ To further reduce cognitive load and streamline the pharmacist's workflow, the i
 
 % ============================================================
 \subsection{Seven-Profile Pharmacological Specialization Engine}
-\label{sec:profiles}
+\label{subsec:profiles}
 
 \subsubsection{Theoretical Foundation}
 
@@ -339,7 +346,7 @@ metabolism, and excretion~(ADME) vary dramatically across the human lifecycle.
 A geriatric dosing recommendation applied to a neonate may be lethal; a standard
 adult dose of acetaminophen is inappropriate for a patient with gestational
 hepatic changes. These population-specific variations are encoded in distinct
-clinical guidelines---Beers Criteria for elderly patients~\cite{AGSBeers2023},
+clinical guidelines---Beers Criteria for elderly patients~\cite{samuel20232023},
 STOPP/START for polypharmacy evaluation~\cite{o2023stopp}, LactMed for lactation
 safety~\cite{lactmed}---that are not uniformly applicable across profiles.
 
@@ -498,7 +505,7 @@ as structured clinical guidelines (see Figure~\ref{fig:profile_switching}).
 
 % ============================================================
 \subsection{Multimodal Clinical Interaction}
-\label{sec:multimodal}
+\label{subsec:multimodal}
 
 \subsubsection{Vision: Prescription Image Analysis}
 
@@ -511,7 +518,8 @@ We designed the clinical workflow so that the web app captures prescription phot
 To streamline consultations, we integrated speech-to-text transcription directly through the W3C Web Speech API. By configuring \texttt{window.SpeechRecognition} to capture continuous Spanish audio (\texttt{lang: 'es-MX'}) with interim results enabled, we allow medical staff to dictate symptoms naturally in real time. 
 
 \begin{quote}
-\tiny
+%\footnotesize
+\scriptsize
 \textbf{Privacy note}: We must point out a critical caveat. Chromium-based browsers silently route this audio to Google's cloud servers. Therefore, to guarantee our strict air-gapped requirements, we mandate the use of Microsoft Edge on Windows machines. Edge intercepts the API calls and processes them using the operating system's native neural engine, ensuring that audio never leaves the device.
 \end{quote}
 
@@ -543,7 +551,7 @@ Instead of hiding this thought process, we render it inside a collapsible UI pan
 
 % ==============================================
 \subsection{Security, Governance, and ISO/IEC 42001 Compliance}
-\label{sec:security}
+\label{subsec:security}
 
 \subsubsection{ISO/IEC 42001 AI Management System Framework}
 We actively structured the entire development and lifecycle of AlicIA Pharmaceutical around the newly established ISO/IEC~42001:2023 guidelines for AI Management Systems~\cite{iso42001_hospitales}. To ensure we met these rigorous standards, we embedded four core governance pillars into the architecture:
@@ -581,7 +589,7 @@ This section outlines the validation methodology and preliminary results of test
 
 \subsection{Evaluation Methodology}
 
-A structured evaluation protocol was designed following CONSORT-AI reporting guidelines~\cite{consort}. One licensed clinical pharmacist (10 years of research professor experience) assessed the system's outputs. Although a complete benchmark suite of 56 clinical scenarios (8 per profile) has been established for full-lifecycle evaluation, this preliminary study focuses on validating the initial 8 core scenarios for the General Adult profile to confirm the framework's baseline clinical reasoning.
+A structured evaluation protocol was designed following CONSORT-AI reporting guidelines~\cite{liu2023reporting}. One licensed clinical pharmacist (10 years of research professor experience) assessed the system's outputs. Although a complete benchmark suite of 56 clinical scenarios (8 per profile) has been established for full-lifecycle evaluation, this preliminary study focuses on validating the initial 8 core scenarios for the General Adult profile to confirm the framework's baseline clinical reasoning.
 
 Each scenario presented a specific polypharmacy case representative of real clinical encounters in the Mexican public health system. The evaluator scored outputs on three dimensions: (1)~Correct DRP identification (binary), (2)~Clinical acceptability of the proposed recommendation (binary), and (3)~Reasoning quality on a 5-point Likert scale.
 
