@@ -130,7 +130,7 @@ If you wish to run the system locally on your own machine (requires an NVIDIA GP
 
 *   **Mtro. Luis Ramón Tercero Martínez González** *División Académica de Ciencias y Tecnologías de la Información - UJAT, México.*
 *   **Dra. María Teresa Flores Dorantes** *Laboratorio de Biología Molecular y Farmacogenética (LBMyFG) - UJAT, México.*
-*   **José Adán Hernández Nolasco** *(Corresponding Author: adam.hernandez@ujat.mx) División Académica de Ciencias y Tecnologías de la Información - UJAT, México.*
+*   **José Adán Hernández Nolasco** *(Corresponding Author: adan.hernandez@ujat.mx) División Académica de Ciencias y Tecnologías de la Información - UJAT, México.*
 
 **License**: Open-source academic license. 
 
