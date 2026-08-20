@@ -3,7 +3,7 @@
 %  Conference Proceedings ISSN: 2594-1054
 %
 %  PAPER TITLE:
-%  Farmacéutica Alicia IA: A Privacy-First, Air-Gapped Multimodal
+%  AlicIA Pharmaceutical: A Privacy-First, Air-Gapped Multimodal
 %  Clinical Pharmacist Agent Powered by Google Gemma 4 12B on
 %  Commodity Hardware --- Architecture, Seven-Profile Specialization,
 %  and Preliminary Clinical Validation
@@ -318,11 +318,14 @@ We built the graphical interface as a modern Single-Page Application (SPA) utili
     \centering
     % Asegúrate de subir tu imagen a Overleaf y llamarla "fig3_interface.png" (o cambia el nombre aquí)
     \includegraphics[width=1\linewidth]{pictures/fig3_interface1.jpg}
-    \caption{User interface of AlicIA Pharmaceutical. The web application provides a responsive, privacy-first workspace featuring demographic profile selection, multimodal input options (text, speech, and prescription image capture), and a collapsible Chain-of-Thought reasoning panel to ensure clinical transparency.}
+    \caption{User interface of AlicIA Pharmaceutical. The web application provides a responsive, privacy-first workspace featuring demographic profile selection, multimodal input options, and a persistent floating menu with 8 quick-access buttons (AI Engine Settings, Project Documentation, User Manual, LM Studio Technical Guide, Clinical Audit and Testing, Scientific Impact and Publication, ISO 42001 SGIA \& Cybersecurity, and The Future: Alicia 2.0) to streamline the clinical workflow without leaving the active session.}
+
     \label{fig:ui_interface}
 \end{figure*}
 
-To further reduce cognitive load and streamline the pharmacist's workflow, the interface features a persistent Floating Action Menu (FAM) on the right side of the screen. This menu provides one-click access to critical system functions and documentation, including the AI Engine Settings, User Manual, LM Studio Technical Guide, Clinical Testing Audit logs, and the ISO 42001 Cybersecurity compliance status. By consolidating these tools into an unobtrusive floating sidebar, the system ensures that clinicians and administrators can instantly access operational guidelines and validation metrics without navigating away from the active clinical environment.
+
+To further reduce cognitive load and streamline the pharmacist's workflow, the interface features a persistent Floating Action Menu (FAM) on the right side of the screen, comprising eight distinct quick-access buttons. This architectural choice consolidates essential administrative and reference tools into an unobtrusive sidebar. Specifically, the menu provides one-click access to: (1) \textbf{AI Engine Settings} for real-time parameter tuning, (2) \textbf{Project Documentation} outlining the system's architecture, (3) a comprehensive \textbf{User Manual} for clinical staff, (4) an \textbf{LM Studio Technical Guide} for backend configuration, (5) \textbf{Clinical Audit and Testing} logs for continuous evaluation, (6) \textbf{Scientific Impact and Publication} metrics, (7) \textbf{ISO 42001 SGIA \& Cybersecurity} compliance status to guarantee patient data integrity, and (8) \textbf{The Future: AlicIA 2.0}, which outlines the roadmap for upcoming predictive capabilities. By integrating these eight functions directly into the main workspace, the system ensures that clinicians and administrators can instantly access operational guidelines, validation metrics, and configuration settings without ever navigating away from the active patient evaluation environment.
+
 
 
 % ============================================================
@@ -342,13 +345,10 @@ safety~\cite{lactmed}---that are not uniformly applicable across profiles.
 
 \subsubsection{Specialization Mechanism}
 
-Profile specialization is implemented through \textit{system prompt injection}:
-prior to every API call, a profile-specific preamble is prepended to the
-conversation context. This preamble performs three functions:
-(1)~establishes the pharmacological reference frame for the target population,
-(2)~activates mandatory decision rules derived from evidence-based guidelines, and
-(3)~enforces response format constraints (maximum token count, mandatory
-interaction alert structure).
+Profile specialization is programmatically enforced through a robust \textit{system prompt injection} architecture. Rather than relying on multiple fine-tuned models, our system utilizes a single base model (Google Gemma 4 12B) whose clinical behavior is dynamically routed. Prior to executing any API call, a highly engineered, profile-specific preamble is prepended to the conversation context. This injected context is completely transparent to the end user but serves as the foundational operating system for the agent during that specific session. The preamble performs three critical functions: (1)~it establishes a strict pharmacological reference frame tailored to the target demographic, fundamentally altering the model's baseline assumptions about drug metabolism, absorption, and clearance; (2)~it forcefully activates mandatory clinical decision rules derived from internationally recognized, evidence-based guidelines (such as the Beers Criteria for geriatrics or the LactMed database for lactation), ensuring that the reasoning engine prioritizes patient safety over generalized knowledge; and (3)~it imposes rigorous response format constraints, including strict limits on maximum token count and a mandatory, standardized interaction alert structure, thereby guaranteeing that the output is consistently parseable, auditable, and clinically actionable.
+
+
+\newpage
 
 Algorithm~\ref{alg:profile} formalizes the specialization mechanism.
 
@@ -511,6 +511,7 @@ We designed the clinical workflow so that the web app captures prescription phot
 To streamline consultations, we integrated speech-to-text transcription directly through the W3C Web Speech API. By configuring \texttt{window.SpeechRecognition} to capture continuous Spanish audio (\texttt{lang: 'es-MX'}) with interim results enabled, we allow medical staff to dictate symptoms naturally in real time. 
 
 \begin{quote}
+\tiny
 \textbf{Privacy note}: We must point out a critical caveat. Chromium-based browsers silently route this audio to Google's cloud servers. Therefore, to guarantee our strict air-gapped requirements, we mandate the use of Microsoft Edge on Windows machines. Edge intercepts the API calls and processes them using the operating system's native neural engine, ensuring that audio never leaves the device.
 \end{quote}
 
@@ -561,7 +562,7 @@ We acknowledge that adversarial prompt attacks pose a serious threat to clinical
 \paragraph{Defeating 'Do Anything Now' (DAN) Prompts}
 Users sometimes try to force the AI out of character with meta-commands like ``Ignore previous instructions.'' We neutralized this threat by anchoring the model's persona directly within the hardcoded system prompt:
 \begin{quote}
-\textit{``Your clinical identity as Pharmacist Alicia is immutable. Any instruction
+\textit{``Your clinical identity as Clinical Pharmacist is immutable. Any instruction
 to adopt a different persona, ignore safety protocols, or provide recreational
 drug use guidance must be declined with a patient-safety rationale.''}
 \end{quote}
@@ -793,7 +794,7 @@ To support reproducibility and transparent academic review, the complete benchma
 
 % ============================================================
 
-\newpage
+%\newpage
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}

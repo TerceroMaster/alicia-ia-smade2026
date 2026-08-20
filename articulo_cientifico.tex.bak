@@ -112,7 +112,7 @@
 % ----------------------------------------------
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\textit{AlicIA Pharmaceutical --- Documentación Técnica y Científica}}
+\fancyhead[L]{\small\textit{Farmacéutica Alicia IA --- Documentación Técnica y Científica}}
 \fancyhead[R]{\small\textit{DACYTI -- UJAT, 2026}}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.5pt}
@@ -126,7 +126,7 @@
 %  METADATA PDF
 % ----------------------------------------------
 \hypersetup{
-  pdftitle={AlicIA Pharmaceutical: Implementación de Inteligencia Artificial Multimodal Local para el Seguimiento Farmacoterapéutico},
+  pdftitle={Farmacéutica Alicia IA: Implementación de Inteligencia Artificial Multimodal Local para el Seguimiento Farmacoterapéutico},
   pdfauthor={División Académica de Ciencias y Tecnologías de la Información, UJAT},
   pdfkeywords={IA local, LLM, farmacia clínica, PRM, RNM, privacidad, Gemma 4},
   colorlinks=true, linkcolor=primary, citecolor=primary, urlcolor=primary
@@ -825,12 +825,12 @@ export const SYSTEM_PROMPTS = {
 
 \subsubsection{Pantalla de Selección de Perfil (PatientSelector)}
 
-\begin{figure*}[htbp]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=1\linewidth]{pictures/fig3_interface1.jpg}
-    \caption{Interfaz de usuario de AlicIA Pharmaceutical. La aplicación web proporciona un espacio de trabajo responsivo y centrado en la privacidad, que incluye la selección de perfil demográfico, opciones de entrada multimodal, y un menú flotante persistente con 8 botones de acceso rápido (Ajustes del Motor IA, Documentación, Manual de Usuario, Guía Técnica LM Studio, Auditoría Clínica, Impacto Científico, Ciberseguridad ISO 42001 y El Futuro: AlicIA 2.0) para optimizar el flujo de trabajo clínico sin abandonar la sesión activa.}
+    \includegraphics[width=0.9\linewidth]{pictures/fig3_interface.png}
+    \caption{Interfaz de usuario de Farmacutica AlicIA, mostrando el selector de perfiles demogrficos y el men lateral flotante de acceso rpido (FAM).}
     \label{fig:ui_interface_es}
-\end{figure*}
+\end{figure}
 
 La plataforma presenta al profesional una pantalla de inicio con 7 tarjetas visuales, cada una
 representando un perfil clínico con su color identificador. Esta pantalla:
@@ -838,7 +838,7 @@ representando un perfil clínico con su color identificador. Esta pantalla:
 \begin{itemize}
   \item Muestra los \textbf{logos institucionales} (UJAT, DACYTI, LBMyFG) a ambos lados del
     título, ampliables mediante \textit{lightbox} al hacer clic.
-  \item Contiene un \textbf{menú lateral flotante (FAM) de 8 botones} para acceder directamente a las funciones clticas sin abandonar el flujo clínico: Ajustes del Motor IA, Documentación Técnica, Manual de Usuario, Guía LM Studio, Auditoría y Pruebas Clínicas, Impacto Científico, ISO 42001 \& Ciberseguridad, y El Futuro: AlicIA 2.0.
+  \item Contiene un \textbf{menú lateral flotante (FAM) de 8 botones} para acceder directamente a las funciones clticas sin abandonar el flujo clínico: Ajustes del Motor IA, Documentación Técnica, Manual de Usuario, Guía LM Studio, Auditoría y Pruebas Clínicas, Impacto Científico, ISO 42001 \& Ciberseguridad, y El Futuro: Alicia 2.0.
   \item Exhibe un \textbf{aviso ético} de uso exclusivo para profesionales.
 \end{itemize}
 
@@ -967,7 +967,7 @@ Para la validación científica formal, se propone el siguiente protocolo:
 \subsection{Definición de Arquitectura Air-Gapped}
 
 En seguridad computacional, un sistema \textit{Air-Gapped} es aquel que está físicamente
-aislado de redes no seguras (como internet). En el contexto de \textbf{AlicIA Pharmaceutical},
+aislado de redes no seguras (como internet). En el contexto de \textbf{Farmacéutica Alicia IA},
 esto significa:
 
 \begin{enumerate}
@@ -1124,7 +1124,7 @@ La arquitectura local es especialmente pertinente en contextos donde:
 
 \subsection{Sistema de Gestión de Inteligencia Artificial (SGIA)}
 
-\textbf{AlicIA Pharmaceutical} se alinea con los principios de la norma \textbf{ISO/IEC 42001}, el estándar internacional para el establecimiento de un Sistema de Gestión de Inteligencia Artificial (SGIA). Esta normativa proporciona un marco estructurado que ayuda a las organizaciones a desarrollar y utilizar tecnologías de IA de forma ética, transparente y responsable.
+\textbf{Farmacéutica Alicia IA} se alinea con los principios de la norma \textbf{ISO/IEC 42001}, el estándar internacional para el establecimiento de un Sistema de Gestión de Inteligencia Artificial (SGIA). Esta normativa proporciona un marco estructurado que ayuda a las organizaciones a desarrollar y utilizar tecnologías de IA de forma ética, transparente y responsable.
 
 El desarrollo de la plataforma se estructuró en torno a cuatro pilares fundamentales:
 \begin{enumerate}
@@ -1140,7 +1140,7 @@ El \textit{jailbreak} en Inteligencia Artificial es una técnica de manipulació
 
 En sistemas clínicos, un ataque de jailbreak exitoso podría extraer información confidencial (\textit{System Prompt Leakage}) o generar desinformación médica (ej. instrucciones para sintetizar sustancias controladas). 
 
-\textbf{Prevención en AlicIA Pharmaceutical:}
+\textbf{Prevención en Farmacéutica Alicia IA:}
 Para contrarrestar estas vulnerabilidades, el sistema implementa múltiples capas defensivas:
 \begin{itemize}
   \item \textbf{Modelo base con RLHF:} Google Gemma 4 12B fue sometido a Aprendizaje por Refuerzo a partir de Retroalimentación Humana (\textit{Reinforcement Learning from Human Feedback}) para alinear sus respuestas con estándares de seguridad y rechazar peticiones maliciosas.
@@ -1151,7 +1151,7 @@ Para contrarrestar estas vulnerabilidades, el sistema implementa múltiples capa
 \newpage
 
 % ==============================================
-\section{Trabajo a Futuro: AlicIA 2.0}
+\section{Trabajo a Futuro: Alicia 2.0}
 % ==============================================
 
 \subsection{Limitaciones de Alicia 1.0}
@@ -1162,7 +1162,7 @@ Si bien este estudio preliminar demuestra capacidades prometedoras, está sujeto
 3) \textbf{Localización:} El sistema está optimizado para español mexicano; su despliegue en otras regiones requiere una traducción significativa de los prompts y validación cruzada.
 4) \textbf{Conocimiento estático:} Al estar completamente fuera de línea (Air-Gapped), el sistema no tiene acceso a actualizaciones en tiempo real y depende de revisiones periódicas manuales de los prompts para reflejar nueva evidencia clínica publicada.
 
-\subsection{Hoja de Ruta AlicIA 2.0}
+\subsection{Hoja de Ruta Alicia 2.0}
 
 \begin{table}[H]
   \centering
@@ -1247,7 +1247,7 @@ npm run dev
 % ==============================================
 
 \subsection{Cumplimiento de la Norma ISO/IEC 42001 (SGIA)}
-El desarrollo de AlicIA Pharmaceutical se rige bajo los lineamientos del \textbf{Sistema de Gestión de Inteligencia Artificial (SGIA) ISO/IEC 42001}. Esta normativa garantiza que el sistema opera con:
+El desarrollo de Farmacéutica Alicia IA se rige bajo los lineamientos del \textbf{Sistema de Gestión de Inteligencia Artificial (SGIA) ISO/IEC 42001}. Esta normativa garantiza que el sistema opera con:
 \begin{itemize}
   \item \textbf{Transparencia Clínica:} Toda decisión y cadena de pensamiento se expone al profesional de la salud.
   \item \textbf{Privacidad por Diseño:} La arquitectura 100\% local evita la transmisión de Información de Salud Protegida (PHI).
@@ -1280,7 +1280,7 @@ Garantizar la operatividad en múltiples escenarios hospitalarios (desde grandes
 \section{Conclusiones}
 % ==============================================
 
-\textbf{AlicIA Pharmaceutical} demuestra que es posible implementar un sistema de inteligencia
+\textbf{Farmacéutica Alicia IA} demuestra que es posible implementar un sistema de inteligencia
 artificial clínica de calidad comparable a las soluciones comerciales en la nube, manteniendo
 privacidad total, operación offline y costo recurrente nulo.
 
@@ -1416,7 +1416,7 @@ gemma_4_12b_agente_ia_farmaceutica/
 |   |-- LMStudioDocs.jsx     # Guia de LM Studio
 |   |-- ClinicalTestingDocs.jsx  # Pruebas clinicas
 |   |-- ScientificArticleDocs.jsx # Impacto cientifico
-|   |-- FutureWorkDocs.jsx   # AlicIA 2.0
+|   |-- FutureWorkDocs.jsx   # Alicia 2.0
 |   +-- SettingsDashboard.jsx # Configuracion del motor IA
 |-- package.json
 |-- vite.config.js
